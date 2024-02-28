@@ -56,7 +56,7 @@
 
 
 <div class="page">
-    <h1>Dice Roller</h1>
+    <h1>H&S Dice Roller</h1>
 
     <div style="justify-content: space-between;">
         <div style="display:inline-block;">
