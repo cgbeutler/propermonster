@@ -69,7 +69,7 @@
             Chain Low
             <br>
             <Die faces={-3} result={lowRoll} enabled={false}/>
-            <button on:click={()=>lowRoll=currRoll}>Reset</button>
+            <button on:click={()=>lowRoll=currRoll} disabled={lowRoll==currRoll}>Reset</button>
         </div>
     </div>
     

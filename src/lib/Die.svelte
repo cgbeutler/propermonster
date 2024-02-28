@@ -132,6 +132,10 @@
     transform-origin: 50% 50%;
     animation-iteration-count: infinite;
 }
+.die:disabled,
+.die[disabled] {
+    pointer-events: none;
+}
 
 .die.faces-2 { background-image: url('/img/dice/d2.svg'); }
 .die.faces-4 { background-image: url('/img/dice/d4.svg'); }
@@ -193,6 +197,10 @@
     animation-name: roll;
     animation-duration: 1s;
     animation-iteration-count: 1;
+}
+.die:disabled .overlay-anim,
+.die[disabled] .overlay-anim {
+    pointer-events: none;
 }
 
 @keyframes shake {
