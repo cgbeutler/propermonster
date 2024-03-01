@@ -17,6 +17,8 @@
         }]
     let diceComps :Array<SvelteComponent> = []
 
+    let hideResult :boolean = true;
+
     // Aggregate the current selection whenever it changes
     let totalDice = { active: 0, sum: 0, hasPair: false, stunt: 0 }
     $: totalDice = diceData.reduce( (agg,dieData) => {
@@ -29,9 +31,13 @@
         return agg;
     }, { active: 0, sum: 0, hasPair: Boolean(false), stunt: diceData[2].result } )
 
+    let timeout;
     function rerollDice() {
-        if (totalDice.active == 0) diceComps.filter( d => d ).forEach( d => d.roll() )
-        else diceComps.filter( d => d ).forEach( d => d.rollIfActive() )
+        if (timeout) { clearTimeout(timeout); timeout = undefined; }
+        hideResult = true;
+        if (totalDice.active == 0) diceComps.filter( d => d ).forEach( d => d.roll() );
+        else diceComps.filter( d => d ).forEach( d => d.rollIfActive() );
+        timeout = setTimeout(()=> {hideResult = false}, 400)
     }
 
     let modifier = 0
@@ -62,19 +68,19 @@
                 Sum
             </h2>
             <h3 class="result" style="width: 128px; margin: 0 auto 0 auto;">
-                {totalDice.sum}
+                {hideResult ? "?" : totalDice.sum}
             </h3>
         </div>
         <div>
             <h2 class="text-center" style="margin-bottom:0;">
-                {#if totalDice.hasPair}
+                {#if totalDice.hasPair || hideResult}
                 Stunt!
                 {:else}
                 Quality
                 {/if}
             </h2>
             <h3 class="result" style="width: 100px; margin: 0 auto 0 auto;">
-                {totalDice.stunt}
+                {hideResult ? "?" : totalDice.stunt}
             </h3>
         </div>
     </div>
@@ -94,7 +100,7 @@
                 Result
             </h2>
             <h3 class="result" style="width: 100px; margin: 0 auto 0 auto;">
-                {totalDice.sum + modifier}
+                {hideResult ? "?" : totalDice.sum + modifier}
             </h3>
         </div>
     </div>

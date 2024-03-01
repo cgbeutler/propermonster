@@ -8,12 +8,16 @@
     function addDie() {
         diceData = diceData.concat({
             id: nextId++,
-            result: 0,
+            result: Infinity,
             active: false
         })
     }
-    // Handle die removal with null scan
-	$: diceComps = diceComps.filter( c => c );
+    // Handle die rolling and removal
+	$: diceComps = diceComps.filter( (c,i) => {
+        if (!c) return false; // remove cleared dice comps
+        if (diceData[i]?.result == Infinity) c.roll();
+        return true;
+    });
 
 
     // Aggregate the current selection whenever it changes

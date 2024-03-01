@@ -13,6 +13,8 @@
         }]
     let diceComps :Array<SvelteComponent> = []
 
+    let hideResult :boolean = true;
+
     // Aggregate the current selection whenever it changes
     let totalDice = { active: 0, sum: 0, hasPair: false }
     $: totalDice = diceData.reduce( (agg,dieData) => {
@@ -25,9 +27,17 @@
         return agg;
     }, { active: 0, sum: 0, hasPair: Boolean(false) } )
 
+    let timeout;
     function rerollDice() {
-        if (totalDice.active == 0) diceComps.filter( d => d ).forEach( d => d.roll() )
-        else diceComps.filter( d => d ).forEach( d => d.rollIfActive() )
+        if (timeout) { clearTimeout(timeout); timeout = undefined; }
+        hideResult = true;
+        if (totalDice.active == 0) diceComps.filter( d => d ).forEach( d => d.roll() );
+        else diceComps.filter( d => d ).forEach( d => d.rollIfActive() );
+        timeout = setTimeout(()=> {hideResult = false}, 400)
+    }
+
+    function _formatMod( n :number ): string {
+        return (n<0?"":"+") + n;
     }
 
 </script>
@@ -38,36 +48,28 @@
     <h1>Powered Roller</h1>
     <hr>
 </div>
-<p><span class="line">Roller for PbtA games like Monster of the Week.</span><span class="line">Roll 2d6 checked against quality ranges.</span></p>
+<p>Roller for PbtA games like<span class="line">Monster of the Week.</span></p>
 
 <div class="page">
     <div class="dice-box">
         {#each diceData as die, i (die.id)}
             <Die bind:this={diceComps[i]} showPips={true} bind:result={die.result} bind:active={die.active} invert={i == 2} />
         {/each}
+        <span style="font-size:36px; line-height:48px;">={hideResult ? "?" : totalDice.sum}</span>
     </div>
 
     <div style="justify-content: center;margin:0 0 12px 0;">
-        <button class="button-outlined" disabled={diceData.length <= 0} on:click={rerollDice}> {totalDice.active == 0 ? "Reroll" : "Reroll " + String(totalDice.active) } </button>
-    </div>
-    
-    <div class="result-summary">
-        <div>
-            <h2 style="display:inline-block;margin:0.1em;">
-                Sum
-            </h2>
-            <h3 class="result" style="width: 60px; margin: 0 auto 0 auto;">
-                {totalDice.sum}
-            </h3>
-        </div>
+        <button class="button-outlined" style="font-size: 30px;" disabled={diceData.length <= 0} on:click={rerollDice}> {totalDice.active == 0 ? "Reroll" : "Reroll " + String(totalDice.active) } </button>
     </div>
 
-    {#if totalDice.sum == 2}
-        <h3 style="margin-bottom:0;color:rgb(255,100,100);">CRITICAL</h3>
-        <h1 style="margin-top:0.1em;color:rgb(255,100,100);">FAILURE!</h1>
-    {:else if totalDice.sum == 12}
-        <h3 style="margin-bottom:0;color:rgb(100,255,200);">Critical</h3>
-        <h1 style="margin-top:0.1em;color:rgb(100,255,200);">SUCCESS!</h1>
+    {#if !hideResult}
+        {#if totalDice.sum == 2}
+            <h3 style="margin-bottom:0;color:rgb(255,100,100);">CRITICAL</h3>
+            <h1 style="margin-top:0.1em;color:rgb(255,100,100);">FAILURE!</h1>
+        {:else if totalDice.sum == 12}
+            <h3 style="margin-bottom:0;color:rgb(100,255,200);">Critical</h3>
+            <h1 style="margin-top:0.1em;color:rgb(100,255,200);">SUCCESS!</h1>
+        {/if}
     {/if}
 
     <div style="justify-content: center;">
@@ -76,13 +78,13 @@
         </h3>
         <div class="result-mods">
             <h3 class="mod-result ellipse">..</h3>
-            <h3 class="mod-result failure"> {6 - totalDice.sum >= 0? "+" : ""}{6 - totalDice.sum} </h3>
-            <h3 class="mod-result weaksuccess"> {7 - totalDice.sum >= 0? "+" : ""}{7 - totalDice.sum} </h3>
-            <h3 class="mod-result weaksuccess"> {8 - totalDice.sum >= 0? "+" : ""}{8 - totalDice.sum} </h3>
-            <h3 class="mod-result weaksuccess"> {9 - totalDice.sum >= 0? "+" : ""}{9 - totalDice.sum} </h3>
-            <h3 class="mod-result success"> {10 - totalDice.sum >= 0? "+" : ""}{10 - totalDice.sum} </h3>
-            <h3 class="mod-result success"> {11 - totalDice.sum >= 0? "+" : ""}{11 - totalDice.sum} </h3>
-            <h3 class="mod-result advanced"> {12 - totalDice.sum >= 0? "+" : ""}{12 - totalDice.sum} </h3>
+            <h3 class="mod-result failure"> {hideResult? "+?" : _formatMod(6 - totalDice.sum)} </h3>
+            <h3 class="mod-result weaksuccess"> {hideResult? "+?" : _formatMod(7 - totalDice.sum)} </h3>
+            <h3 class="mod-result weaksuccess"> {hideResult? "+?" : _formatMod(8 - totalDice.sum)} </h3>
+            <h3 class="mod-result weaksuccess"> {hideResult? "+?" : _formatMod(9 - totalDice.sum)} </h3>
+            <h3 class="mod-result success"> {hideResult? "+?" : _formatMod(10 - totalDice.sum)} </h3>
+            <h3 class="mod-result success"> {hideResult? "+?" : _formatMod(11 - totalDice.sum)} </h3>
+            <h3 class="mod-result advanced"> {hideResult? "+?" : _formatMod(12 - totalDice.sum)} </h3>
             <h3 class="mod-result ellipse">..</h3>
         </div>
         <div class="result-mods" style="margin-top:0;">
@@ -97,10 +99,10 @@
             <h3 class="mod-result ellipse">..</h3>
         </div>
         <div class="result-labels">
-            <h3 class="text-center mod-result failure" style="width:3em;"> Fail </h3>
+            <h3 class="text-center mod-result failure" style="width:3.5em;"> Fail </h3>
             <h3 class="text-center mod-result weaksuccess" style="width:6em;"> Weak </h3>
             <h3 class="text-center mod-result success" style="width:4em;"> Good </h3>
-            <h3 class="text-center mod-result advanced" style="width:3em;"> Adv. </h3>
+            <h3 class="text-center mod-result advanced" style="width:3.5em;"> Adv. </h3>
         </div>
     </div>
 </div>
@@ -139,13 +141,13 @@
 .result-mods {
     display: grid;
     margin: 0 0 0 0;
-    grid-template-columns: 1em 2em 2em 2em 2em 2em 2em 2em 1em;
+    grid-template-columns: 1.5em 2em 2em 2em 2em 2em 2em 2em 1.5em;
     justify-content: center;
 }
 .result-labels {
     display: grid;
     margin: 0 0 1em 0;
-    grid-template-columns: 3em 6em 4em 3em;
+    grid-template-columns: 3.5em 6em 4em 3.5em;
     justify-content: center;
 }
 
@@ -191,9 +193,10 @@
 }
 
 .mod-result.ellipse {
-    font-size: 0.75em;
+    width: 1.5em;
+    line-height: 1.6em;
     border: 0;
-    width: 1em;
+    text-align: center;
 }
 
 .mod-result.failure {

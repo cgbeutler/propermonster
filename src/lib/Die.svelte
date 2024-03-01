@@ -48,6 +48,7 @@
         die.style.animationDuration = '0.38s';
         die.style.animationDelay = delay;
         overlayAnim.style.animation = null;
+        overlayAnim.style.animationDuration = '1s';
         // overlayAnim.style.animationDuration = 0.3 + (Math.random() * 0.4) + "s";
         overlayAnim.style.animationDelay = delay;
         die.offsetHeight;
@@ -76,7 +77,7 @@
             die.offsetHeight;
             overlayAnim.offsetHeight;
         }
-        else roll();
+        // else roll();
     })
 </script>
 
@@ -199,7 +200,7 @@
     background-position: center;
     background-size: cover;
     animation-name: roll;
-    animation-duration: 1s;
+    animation-duration: 0s;
     animation-iteration-count: 1;
 }
 .die:disabled .overlay-anim,

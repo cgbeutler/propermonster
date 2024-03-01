@@ -10,16 +10,20 @@
         diceData = diceData.concat({
             id: nextId++,
             faces: sides,
-            result: 0,
+            result: Infinity,
             active: false
         })
     }
-    // Handle die removal with null scan
-	$: diceComps = diceComps.filter( c => c );
+    // Handle die rolling and removal
+	$: diceComps = diceComps.filter( (c,i) => {
+        if (!c) return false; // remove cleared dice comps
+        if (diceData[i]?.result == Infinity) c.roll();
+        return true;
+    });
 
     let currDie :Die;
-    let currRoll :number = 9;
-    let lowRoll :number = 9;
+    let currRoll :number = Infinity;
+    let lowRoll :number = Infinity;
     $: lowRoll = Math.min(currRoll, lowRoll);
 
     // Aggregate the current selection whenever it changes
@@ -39,9 +43,21 @@
         return agg;
     }, { active: 0, sum: 0, activeSum: 0, low: Infinity, high: -Infinity, activeLow: Infinity, activeHigh: -Infinity } )
 
-    function rerollDice() {
-        if (diceAgg.active == 0) diceComps.filter( d => d ).forEach( d => d.roll() )
-        else diceComps.filter( d => d ).forEach( d => d.rollIfActive() )
+    let hideAllResult :boolean = true;
+    let hideBoonResult :boolean = false;
+    let timeout;
+    function rollMainDie() {
+        if (timeout) { clearTimeout(timeout); timeout = undefined; }
+        hideAllResult = true;
+        currDie.roll();
+        timeout = setTimeout(()=> {hideAllResult = false}, 400)
+    }
+    function rollBoonBaneDice() {
+        if (timeout) { clearTimeout(timeout); timeout = undefined; }
+        hideBoonResult = true;
+        if (diceAgg.active == 0) diceComps.filter( d => d ).forEach( d => d.roll() );
+        else diceComps.filter( d => d ).forEach( d => d.rollIfActive() );
+        timeout = setTimeout(()=> {hideBoonResult = false}, 400)
     }
 
     function removeDice() {
@@ -51,12 +67,15 @@
 
     let result = 9;
     $: result = lowRoll + (diceData.length == 0? 0 : diceAgg.active > 0 ? diceAgg.activeSum : diceAgg.sum)
-    let modifier = 1
+    
+    function _formatMod( n :number ): string {
+        return (n<0?"":"+") + n;
+    }
 </script>
 
 <div class="page-break">
     <hr>
-    <h1>Hammer & Steel Roller</h1>
+    <h1><span class="line">Hammer & Steel</span> Roller</h1>
     <hr>
 </div>
 
@@ -66,12 +85,12 @@
             Current
             <br/>
             <Die bind:this={currDie} faces={-3} bind:result={currRoll}/>
-            <button on:click={()=>currDie.roll()}>Roll!</button>
+            <button on:click={rollMainDie}>Roll!</button>
         </div>
         <div style="display:inline-block;">
             Chain Low
             <br>
-            <Die faces={-3} result={lowRoll} enabled={false}/>
+            <Die faces={-3} result={hideAllResult ? Infinity : lowRoll} enabled={false}/>
             <button on:click={()=>lowRoll=currRoll} disabled={lowRoll==currRoll}>Reset</button>
         </div>
     </div>
@@ -111,16 +130,16 @@
         
             <div class="operation-button-box">
                 <button class="button-outlined" disabled={diceData.length <= 0} on:click={removeDice}> Clear {diceAgg.active == 0 ? "" : String(diceAgg.active) } </button>
-                <button class="button-outlined" disabled={diceData.length <= 0} on:click={rerollDice}> Reroll {diceAgg.active == 0 ? "" : String(diceAgg.active) } </button>
+                <button class="button-outlined" disabled={diceData.length <= 0} on:click={rollBoonBaneDice}> Reroll {diceAgg.active == 0 ? "" : String(diceAgg.active) } </button>
             </div>
 
             <div class="result-summary">
                 <div>
                     <p class="text-center" style="margin:0;"> <span class="line"> {#if diceAgg.active != 0} SELECTION {/if} SUBTOTAL: </span>
                         {#if diceAgg.active == 0}
-                            <span class="line"> {lowRoll} + {diceAgg.sum} = {lowRoll + diceAgg.sum} </span>
+                            <span class="line"> {hideBoonResult ? "?" : diceAgg.sum} + {hideAllResult ? "?" : lowRoll} = {hideBoonResult || hideAllResult ? "?" : diceAgg.sum + lowRoll} </span>
                         {:else}
-                            <span class="line"> {lowRoll} + {diceAgg.activeSum} = {lowRoll + diceAgg.activeSum} </span>
+                            <span class="line"> {hideBoonResult ? "?" : diceAgg.activeSum} + {hideAllResult ? "?" : lowRoll} = {hideBoonResult || hideAllResult ? "?" : diceAgg.activeSum + lowRoll} </span>
                         {/if}
                     </p>
                 </div>
@@ -134,12 +153,12 @@
             </h3>
             <div class="result-mods">
                 <h3 class="result ellipse">..</h3>
-                <h3 class="result failure"> {5 - result >= 0? "+" : ""}{5 - result} </h3>
-                <h3 class="result weaksuccess"> {6 - result >= 0? "+" : ""}{6 - result} </h3>
-                <h3 class="result weaksuccess"> {7 - result >= 0? "+" : ""}{7 - result} </h3>
-                <h3 class="result success"> {8 - result >= 0? "+" : ""}{8 - result} </h3>
-                <h3 class="result success"> {9 - result >= 0? "+" : ""}{9 - result} </h3>
-                <h3 class="result advanced"> {10 - result >= 0? "+" : ""}{10 - result} </h3>
+                <h3 class="result failure"> {hideAllResult||hideBoonResult ? "+?" : _formatMod(5 - result)} </h3>
+                <h3 class="result weaksuccess"> {hideAllResult||hideBoonResult ? "+?" : _formatMod(6 - result)} </h3>
+                <h3 class="result weaksuccess"> {hideAllResult||hideBoonResult ? "+?" : _formatMod(7 - result)} </h3>
+                <h3 class="result success"> {hideAllResult||hideBoonResult ? "+?" : _formatMod(8 - result)} </h3>
+                <h3 class="result success"> {hideAllResult||hideBoonResult ? "+?" : _formatMod(9 - result)} </h3>
+                <h3 class="result advanced"> {hideAllResult||hideBoonResult ? "+?" : _formatMod(10 - result)} </h3>
                 <h3 class="result ellipse">..</h3>
             </div>
             <div class="result-mods" style="margin-top:0;">
