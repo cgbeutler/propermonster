@@ -19,17 +19,6 @@
   <h1>Main Rollers</h1>
   <hr/>
 </div>
-<Link to="/ageroller" getProps={linkGetProps}>
-  <div class="dice-display-2">
-    <Die faces={6} result={6} showPips={true} enabled={false} />
-    <Die faces={6} result={6} showPips={true} enabled={false} />
-    <Die faces={6} result={6} showPips={true} enabled={false} invert={true} />
-  </div>
-  <div>
-    <h1>Age Roller</h1>
-    <p>3d6 Age System Roller<br>(Fantasy Age, Modern Age, etc.)</p>
-  </div>
-</Link>
 <Link to="/poolroller" getProps={linkGetProps}>
   <div class="dice-display-3">
     <Die faces={2} result={2} enabled={false} />
@@ -62,6 +51,17 @@
   <h1>Other Dice Rollers</h1>
   <hr/>
 </div>
+<Link to="/ageroller" getProps={linkGetProps}>
+  <div class="dice-display-2">
+    <Die faces={6} result={6} showPips={true} enabled={false} />
+    <Die faces={6} result={6} showPips={true} enabled={false} />
+    <Die faces={6} result={6} showPips={true} enabled={false} invert={true} />
+  </div>
+  <div>
+    <h1>Age Roller</h1>
+    <p>3d6 Age System Roller<br>(Fantasy Age, Modern Age, etc.)</p>
+  </div>
+</Link>
 <Link to="/eyeroller" getProps={linkGetProps}>
   <div class="dice-display-2">
     <Die faces={-2} result={1} enabled={false} />
@@ -98,9 +98,6 @@
 .title-float {
   display: block;
   position: relative;
-  /* align-items: center;
-  justify-content: center;
-  flex-wrap: nowrap; */
   aspect-ratio: 413 / 200;
   width: 80%;
   max-width: 413px;
@@ -137,20 +134,6 @@
   margin: 0;
   font-family: 'Times New Roman', Times, serif;
   font-size: 25cqw;
-}
-
-.page-break {
-  width: max-content;
-  margin: 10px auto;
-  padding: 10px;
-  background-clip: padding-box;
-}
-.page-break hr {
-  border-color: #4b4945;
-  width: 100%;
-}
-.page-break hr:last-of-type {
-  width: 80%;
 }
 
 .dice-display-2 {

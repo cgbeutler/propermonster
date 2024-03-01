@@ -54,10 +54,13 @@
     let modifier = 1
 </script>
 
+<div class="page-break">
+    <hr>
+    <h1>Hammer & Steel Roller</h1>
+    <hr>
+</div>
 
 <div class="page">
-    <h1>H&S Dice Roller</h1>
-
     <div style="justify-content: space-between;">
         <div style="display:inline-block;">
             Current
@@ -159,8 +162,13 @@
     {/if}
 </div>
 
+<div class="page-break">
+    <hr>
+    <h3>Guide</h3>
+    <hr>
+</div>
+
 <div class="page">
-    <h2>Hammer and Steel Dice&nbsp;Roller</h2>
     <p class="text-left">
         In Hammer and Steel, you can spend 'Chain' to make multiple Actions on your turn.<br>
         When you chain actions in this way, each action must use the current lowest roll in the chain. This means that the best action

@@ -33,17 +33,22 @@
 </script>
 
 
-<div class="page">
+<div class="page-break">
+    <hr>
     <h1>Powered Roller</h1>
+    <hr>
+</div>
+<p><span class="line">Roller for PbtA games like Monster of the Week.</span><span class="line">Roll 2d6 checked against quality ranges.</span></p>
 
-    <div style="justify-content: center;">
-        <button class="button-outlined" disabled={diceData.length <= 0} on:click={rerollDice}> {totalDice.active == 0 ? "Reroll" : "Reroll " + String(totalDice.active) } </button>
-    </div>
-    
+<div class="page">
     <div class="dice-box">
         {#each diceData as die, i (die.id)}
             <Die bind:this={diceComps[i]} showPips={true} bind:result={die.result} bind:active={die.active} invert={i == 2} />
         {/each}
+    </div>
+
+    <div style="justify-content: center;margin:0 0 12px 0;">
+        <button class="button-outlined" disabled={diceData.length <= 0} on:click={rerollDice}> {totalDice.active == 0 ? "Reroll" : "Reroll " + String(totalDice.active) } </button>
     </div>
     
     <div class="result-summary">
@@ -97,12 +102,23 @@
             <h3 class="text-center mod-result success" style="width:4em;"> Good </h3>
             <h3 class="text-center mod-result advanced" style="width:3em;"> Adv. </h3>
         </div>
-        <p>[..6] is a Failure.<br>[7..9] is a Weak Success.<br>[10..] is a Success.<br>[12..] has extra effects for Advanced Moves.</p>
     </div>
+</div>
 
+<div class="page-break">
+    <hr>
+    <h3>Guide</h3>
+    <hr>
+</div>
+
+<div class="page">
+    <p>Most all Tabletop Games based on Powered by the Apocalypse use 2d6 with a modifier. This is then compared to a set of ranges to tell how well you did.<br>Those ranges are:</p>
+
+    <p>[..6] is a Failure.<br>[7..9] is a Weak Success.<br>[10..] is a Success.<br>[12..] Advanced move bonus.*</p>
+
+    <p>*Some moves can be upgraded allowing you to gain extra effects on a 12 or higher.</p>
 
     <p>Check out Monster of the Week and other PbtA games at <a href="https://evilhat.com/product/monster-of-the-week/">Evil&nbsp;Hat&nbsp;Productions</a> (Not&nbsp;affiliated)</p>
-
 </div>
 
 <style>

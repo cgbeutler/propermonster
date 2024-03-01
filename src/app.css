@@ -66,6 +66,25 @@ body {
   padding: 0px;
 }
 
+.page-break {
+  width: max-content;
+  margin: 10px auto;
+  padding: 10px;
+  background-clip: padding-box;
+}
+.page-break h1,
+.page-break h2,
+.page-break h3 {
+  margin: 0;
+}
+.page-break hr {
+  border-color: #4b4945;
+  width: 100%;
+}
+.page-break hr:last-of-type {
+  width: 80%;
+}
+
 a {
   font-weight: 500;
   color: aqua;
@@ -171,15 +190,7 @@ nav>a.active {
   color: lightgray;
 }
 .banded-menu > a.curr-path {
-  font-weight: 700;
-  color: whitesmoke;
-  background-color: #353535;
-}
-.banded-menu h3 {
-  font-size: larger;
-}
-.banded-menu p {
-  font-size: medium;
+  background-color: rgb(61, 60, 57);
 }
 
 

@@ -65,10 +65,14 @@
 
 </script>
 
+<div class="page-break">
+    <hr>
+    <h1>Eye Roller</h1>
+    <hr>
+</div>
+
 <div class="page">
     <div class="content-box">
-        <h1>Eye Roller</h1>
-
         <button class="button-outlined" on:click={()=>addDie()}>
             {#if diceData.length == 0} Add 1dE
             {:else} Add to {diceData.length}dE
@@ -92,9 +96,14 @@
     </div>
 </div>
 
+<div class="page-break">
+    <hr>
+    <h3>What are Eye Dice?</h3>
+    <hr>
+</div>
+
 <div class="page">
     <div class="content-box">
-        <h2>What are Eye Dice?</h2>
         <p>
         Eye dice are 6-sided dice that have one circle side, two pip sides, and three pip-in-circle sides.
         </p>

@@ -38,20 +38,24 @@
 </script>
 
 
-<h1>Age Dice Roller</h1>
+<div class="page-break">
+    <hr>
+    <h1>Age Dice Roller</h1>
+    <hr>
+</div>
 <p>2d6 with a 1d6 Stunt die.</p>
 
 <div class="page">
-    <div style="justify-content: center;">
-        <button class="button-outlined" disabled={diceData.length <= 0} on:click={rerollDice}> {totalDice.active == 0 ? "Reroll All" : "Reroll " + String(totalDice.active) } </button>
-    </div>
-    
     <div class="dice-box">
         {#each diceData as die, i (die.id)}
             <Die bind:this={diceComps[i]} showPips={true} bind:result={die.result} bind:active={die.active} invert={i == 2} />
         {/each}
     </div>
 
+    <div style="justify-content: center;">
+        <button class="button-outlined" disabled={diceData.length <= 0} on:click={rerollDice}> {totalDice.active == 0 ? "Reroll All" : "Reroll " + String(totalDice.active) } </button>
+    </div>
+    
     <div class="result-summary">
         <div>
             <h2 class="text-center" style="margin-bottom:0;">
@@ -76,7 +80,7 @@
     </div>
 
     <div class="result-mod">
-        <div><h2 style="line-height:3em;">+</h2></div>
+        <div><h2 style="line-height:3em; margin:0;">+</h2></div>
         <div>
             <h2 class="text-center" style="margin-bottom:0;">
                 Mod
@@ -84,7 +88,7 @@
             <input type=number class="result" style="width: 100px; margin: 0 auto 0 auto;" bind:value={modifier}>
             <input type=range class="result" style="width: 100px; margin: 0 auto 0 auto;" bind:value={modifier} min=-10 max=10>
         </div>
-        <div><h2 style="line-height:3em;">=</h2></div>
+        <div><h2 style="line-height:3em; margin:0;">=</h2></div>
         <div>
             <h2 class="text-center" style="margin-bottom:0;">
                 Result
@@ -116,7 +120,7 @@
 }
 .result-mod {
     display: grid;
-    margin: 1em 0 0 0;
+    margin: 1em 0 0.5em 0;
     grid-template-columns: 1em 150px 1em 150px;
     justify-content: center;
 }

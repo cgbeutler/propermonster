@@ -57,10 +57,14 @@
     let modifier = 1
 </script>
 
+<div class="page-break">
+    <hr>
+    <h1>Pool Dice Roller</h1>
+    <hr>
+</div>
+<p>Roll large numbers of different dice.</p>
 
 <div class="page">
-    <h1>Dice Roller</h1>
-    
     <h3 style="margin-bottom:0;">ADD DICE</h3>
     <hr class="underule">
     <div class="dice-button-box">
@@ -190,6 +194,7 @@
             </div>
         </div>
     </div>
+    <br>
 </div>
 
 <style>
