@@ -106,7 +106,6 @@
     max-height: 100vh;
     min-width: 200px;
     max-width: 90vw;
-    margin-right: 20px;
     padding: 0px;
     border-right: 2px solid;
     border-color: rgb(44, 44, 44);

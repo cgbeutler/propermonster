@@ -34,25 +34,31 @@
         if (faces == baneFlag) return -boonFaces[Math.floor( Math.random() * boonFaces.length )];
         return 0;
     }
+    
+    let hideDie :boolean = false;
+    let timeout;
     function _restartRollAnimation() {
         if (!die || !overlayAnim) return;
-        // Hack to clear the animation
-        die.style.animation = 'none';
+        // Clear the animation
         overlayAnim.style.animation = 'none';
-        die.offsetHeight;
-        overlayAnim.offsetHeight;
+        overlayAnim.offsetHeight; //needed hack
 
         // Start anims
-        let delay = "-" + (Math.random() * 0.1) + "s";
-        die.style.animation = null;
-        die.style.animationDuration = '0.38s';
-        die.style.animationDelay = delay;
+        let delay = Math.random() * 0.1;
         overlayAnim.style.animation = null;
         overlayAnim.style.animationDuration = '1s';
-        // overlayAnim.style.animationDuration = 0.3 + (Math.random() * 0.4) + "s";
-        overlayAnim.style.animationDelay = delay;
-        die.offsetHeight;
-        overlayAnim.offsetHeight;
+        overlayAnim.style.animationDelay = "-" + delay + "s";
+        overlayAnim.offsetHeight; //needed hack
+        
+        if (timeout) { clearTimeout(timeout); timeout = undefined; }
+        hideDie = true;
+        timeout = setTimeout(()=> {
+            die.style.animation = 'none';
+            die.offsetHeight; //needed hack
+            die.style.animation = null;
+            die.offsetHeight; //needed hack
+            hideDie = false;
+        }, (0.42 - delay)*1000)
     }
 
     export function roll() {
@@ -84,7 +90,7 @@
 <div>
     <!--was class:inverted={invert} -->
     <button bind:this={die} type="button" class:active={active} class:show-pips={showPips}
-        style="--height: {height}"
+        style="--height: {height}; {hideDie ? "background-size: 0;" : ""}"
         on:click={() => {active = enabled && !active}} disabled={!enabled}
         class="die
             faces-{
@@ -98,8 +104,8 @@
             result-{result}
         "
         >
-        {result == Infinity ? "?" : result}
-        <div bind:this={overlayAnim} class="overlay-anim"></div>
+        {hideDie ? "" : result == Infinity ? "?" : result}
+        <div bind:this={overlayAnim} class="overlay-anim" on:animationstart={()=>{console.log("start")}} on:animationend={()=>{console.log("end")}}></div>
     </button>
 </div>
 
@@ -124,8 +130,8 @@
     font-size: calc(0.375 * var(--height));
     font-weight: bold;
     text-align: center;
-    animation-name: momentary-hide;
-    animation-duration: 0s;
+    animation-name: shake;
+    animation-duration: 0.2s;
     animation-iteration-count: 1;
     transform-origin: 50% 50%;
 }

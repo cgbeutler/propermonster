@@ -46,23 +46,42 @@
     <div slot="backdrop" class="backdrop" transition:fade on:click={closeModal} on:keypress={onKeyPress} />
   </Modals>
 
-  {#if viewWidth >= 1000}
-    <NavMenu />
-  {:else if $locationHref != new URL("/",$locationHref).href}
-    <button bind:this={navBtn} id="nav-button" on:click={()=>openModal(NavModal)} ><img src="/img/ProperMonster2.png" alt="H&S" height="100px"></button>
-    <!-- on:introend={()=>{replayNavBtnAnim()}} -->
-  {/if}
-  
-  <Route component="{NotFound}" />
+  <div class="horizontal">
+    {#if $locationHref != new URL("/",$locationHref).href}
+      {#if viewWidth >= 1000}
+        <div class="nav-embed">
+          <NavMenu />
+        </div>
+      {:else}
+        <button bind:this={navBtn} id="nav-button" on:click={()=>openModal(NavModal)} ><img src="/img/ProperMonster2.png" alt="H&S" height="100px"></button>
+      {/if}
+    {/if}
+    
+    <div class:float-right={$locationHref != new URL("/",$locationHref).href && viewWidth >= 1000}>
+      <Route component="{NotFound}" />
+      <Route path="ageroller" component={AgeRoller} />
+      <Route path="eyeroller" component={EyeRoller} />
+      <Route path="hnsroller" component={HnsRoller} />
+      <Route path="poolroller" component={PoolRoller} />
+      <Route path="poweredroller" component={PoweredRoller} />
+    </div>
+  </div>
   <Route path="/" component={Home} />
-  <Route path="ageroller" component={AgeRoller} />
-  <Route path="eyeroller" component={EyeRoller} />
-  <Route path="hnsroller" component={HnsRoller} />
-  <Route path="poolroller" component={PoolRoller} />
-  <Route path="poweredroller" component={PoweredRoller} />
 </Router>
 
 <style>
+
+  .horizontal {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    max-height: 100vh;
+    max-width: 100vw;
+    overflow: auto;
+  }
 
   .backdrop {
     position: fixed;
@@ -76,6 +95,8 @@
   
   #nav-button {
     position: absolute;
+    left: 0;
+    top: 0;
     display: block;
     float: left;
     width: 100px;
@@ -88,6 +109,33 @@
     animation-name: peek;
     animation-duration: 2s;
     animation-iteration-count: 1;
+  }
+  
+  .nav-embed {
+    display: block;
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    align-self: flex-start;
+    /* float: left; */
+    height: 100vh;
+    min-height: 100vh;
+    max-height: 100vh;
+    min-width: 200px;
+    max-width: 90vw;
+    margin-right: 0;
+    padding: 0;
+    border-right: 0;
+    z-index: 10;
+    /* display: flex; */
+    /* justify-content: left; */
+    /* align-items: flex-start; */
+  }
+
+  .float-right {
+    flex-grow: 1;
+    flex-shrink: 1;
+    /* margin-left: 300px; */
   }
 
   @keyframes peek {

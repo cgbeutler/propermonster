@@ -13,7 +13,6 @@
         }]
     let diceComps :Array<SvelteComponent> = []
 
-    let hideResult :boolean = true;
 
     // Aggregate the current selection whenever it changes
     let totalDice = { active: 0, sum: 0, hasPair: false }
@@ -27,6 +26,7 @@
         return agg;
     }, { active: 0, sum: 0, hasPair: Boolean(false) } )
 
+    let hideResult :boolean = true;
     let timeout;
     function rerollDice() {
         if (timeout) { clearTimeout(timeout); timeout = undefined; }

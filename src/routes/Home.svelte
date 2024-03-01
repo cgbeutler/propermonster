@@ -156,12 +156,9 @@
   display: block;
   position: absolute;
   right: 0;
-  width: fit-content;
   color: whitesmoke;
-  margin: 0 auto;
   padding: 0pt 10px;
   text-align: right;
-  align-content: right;
 }
 
 .ext-nav a {
