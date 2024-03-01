@@ -34,11 +34,10 @@
 
 
 <div class="page">
-    <h1>Monster of the Week Dice&nbsp;Roller</h1>
-    <p>Roll 2d6 and sum them, then find your modifier below.</p>
-    
+    <h1>Powered Roller</h1>
+
     <div style="justify-content: center;">
-        <button class="button-outlined" disabled={diceData.length <= 0} on:click={rerollDice}> {totalDice.active == 0 ? "Reroll All" : "Reroll " + String(totalDice.active) } </button>
+        <button class="button-outlined" disabled={diceData.length <= 0} on:click={rerollDice}> {totalDice.active == 0 ? "Reroll" : "Reroll " + String(totalDice.active) } </button>
     </div>
     
     <div class="dice-box">
@@ -46,49 +45,57 @@
             <Die bind:this={diceComps[i]} showPips={true} bind:result={die.result} bind:active={die.active} invert={i == 2} />
         {/each}
     </div>
-
+    
     <div class="result-summary">
         <div>
-            <h2 class="text-center" style="margin-bottom:0;">
+            <h2 style="display:inline-block;margin:0.1em;">
                 Sum
             </h2>
-            <h3 class="result" style="width: 100px; margin: 0 auto 0 auto;">
+            <h3 class="result" style="width: 60px; margin: 0 auto 0 auto;">
                 {totalDice.sum}
             </h3>
         </div>
     </div>
 
+    {#if totalDice.sum == 2}
+        <h3 style="margin-bottom:0;color:rgb(255,100,100);">CRITICAL</h3>
+        <h1 style="margin-top:0.1em;color:rgb(255,100,100);">FAILURE!</h1>
+    {:else if totalDice.sum == 12}
+        <h3 style="margin-bottom:0;color:rgb(100,255,200);">Critical</h3>
+        <h1 style="margin-top:0.1em;color:rgb(100,255,200);">SUCCESS!</h1>
+    {/if}
+
     <div style="justify-content: center;">
-        <h2 class="text-center" style="margin-top:1.5em;margin-bottom:0;">
+        <h3 class="text-center" style="margin-top:1em;margin-bottom:0.1em;">
             Modifiers
-        </h2>
+        </h3>
         <div class="result-mods">
-            <h3 class="result ellipse">..</h3>
-            <h3 class="result failure"> {6 - totalDice.sum >= 0? "+" : ""}{6 - totalDice.sum} </h3>
-            <h3 class="result weaksuccess"> {7 - totalDice.sum >= 0? "+" : ""}{7 - totalDice.sum} </h3>
-            <h3 class="result weaksuccess"> {8 - totalDice.sum >= 0? "+" : ""}{8 - totalDice.sum} </h3>
-            <h3 class="result weaksuccess"> {9 - totalDice.sum >= 0? "+" : ""}{9 - totalDice.sum} </h3>
-            <h3 class="result success"> {10 - totalDice.sum >= 0? "+" : ""}{10 - totalDice.sum} </h3>
-            <h3 class="result success"> {11 - totalDice.sum >= 0? "+" : ""}{11 - totalDice.sum} </h3>
-            <h3 class="result advanced"> {12 - totalDice.sum >= 0? "+" : ""}{12 - totalDice.sum} </h3>
-            <h3 class="result ellipse">..</h3>
+            <h3 class="mod-result ellipse">..</h3>
+            <h3 class="mod-result failure"> {6 - totalDice.sum >= 0? "+" : ""}{6 - totalDice.sum} </h3>
+            <h3 class="mod-result weaksuccess"> {7 - totalDice.sum >= 0? "+" : ""}{7 - totalDice.sum} </h3>
+            <h3 class="mod-result weaksuccess"> {8 - totalDice.sum >= 0? "+" : ""}{8 - totalDice.sum} </h3>
+            <h3 class="mod-result weaksuccess"> {9 - totalDice.sum >= 0? "+" : ""}{9 - totalDice.sum} </h3>
+            <h3 class="mod-result success"> {10 - totalDice.sum >= 0? "+" : ""}{10 - totalDice.sum} </h3>
+            <h3 class="mod-result success"> {11 - totalDice.sum >= 0? "+" : ""}{11 - totalDice.sum} </h3>
+            <h3 class="mod-result advanced"> {12 - totalDice.sum >= 0? "+" : ""}{12 - totalDice.sum} </h3>
+            <h3 class="mod-result ellipse">..</h3>
         </div>
         <div class="result-mods" style="margin-top:0;">
-            <h3 class="result ellipse">..</h3>
-            <h3 class="result failure"> 6 </h3>
-            <h3 class="result weaksuccess"> 7 </h3>
-            <h3 class="result weaksuccess"> 8 </h3>
-            <h3 class="result weaksuccess"> 9 </h3>
-            <h3 class="result success"> 10 </h3>
-            <h3 class="result success"> 11 </h3>
-            <h3 class="result advanced"> 12 </h3>
-            <h3 class="result ellipse">..</h3>
+            <h3 class="mod-result ellipse">..</h3>
+            <h3 class="mod-result failure"> 6 </h3>
+            <h3 class="mod-result weaksuccess"> 7 </h3>
+            <h3 class="mod-result weaksuccess"> 8 </h3>
+            <h3 class="mod-result weaksuccess"> 9 </h3>
+            <h3 class="mod-result success"> 10 </h3>
+            <h3 class="mod-result success"> 11 </h3>
+            <h3 class="mod-result advanced"> 12 </h3>
+            <h3 class="mod-result ellipse">..</h3>
         </div>
         <div class="result-labels">
-            <h3 class="text-center result failure" style="width:70px;"> Fail </h3>
-            <h3 class="text-center result weaksuccess" style="width:150px;"> Weak </h3>
-            <h3 class="text-center result success" style="width:100px;"> Good </h3>
-            <h3 class="text-center result advanced" style="width:70px;"> Adv. </h3>
+            <h3 class="text-center mod-result failure" style="width:3em;"> Fail </h3>
+            <h3 class="text-center mod-result weaksuccess" style="width:6em;"> Weak </h3>
+            <h3 class="text-center mod-result success" style="width:4em;"> Good </h3>
+            <h3 class="text-center mod-result advanced" style="width:3em;"> Adv. </h3>
         </div>
         <p>[..6] is a Failure.<br>[7..9] is a Weak Success.<br>[10..] is a Success.<br>[12..] has extra effects for Advanced Moves.</p>
     </div>
@@ -116,13 +123,13 @@
 .result-mods {
     display: grid;
     margin: 0 0 0 0;
-    grid-template-columns: 20px 50px 50px 50px 50px 50px 50px 50px 20px;
+    grid-template-columns: 1em 2em 2em 2em 2em 2em 2em 2em 1em;
     justify-content: center;
 }
 .result-labels {
     display: grid;
     margin: 0 0 1em 0;
-    grid-template-columns: 70px 150px 100px 70px;
+    grid-template-columns: 3em 6em 4em 3em;
     justify-content: center;
 }
 
@@ -136,7 +143,7 @@
     font-weight: bold;
 
     color: rgb(204, 204, 204);
-    width: 50px;
+    width: 2em;
     height: 1.75em;
     line-height: 1.75em;
     margin: 0;
@@ -146,27 +153,48 @@
     text-align: center;
 }
 
-.result.ellipse {
-    font-size: 0.75em;
-    border: 0;
-    width: 20px;
+
+.mod-result {
+    display: inline-block;
+    font-size: 1em;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    font-weight: bold;
+
+    color: rgb(204, 204, 204);
+    width: 2em;
+    height: 1.6em;
+    line-height: 1.6em;
+    margin: 0;
+    padding: 0;
+    border: 1px solid rgb(204, 204, 204);
+    justify-self: start;
+    text-align: center;
 }
 
-.result.failure {
+.mod-result.ellipse {
+    font-size: 0.75em;
+    border: 0;
+    width: 1em;
+}
+
+.mod-result.failure {
     background-color: rgb(10, 10, 10);
 }
 
-.result.weaksuccess {
+.mod-result.weaksuccess {
     background-color: rgb(50, 50, 50);
 }
 
-.result.success {
+.mod-result.success {
     background-color: rgb(60, 60, 60);
     background-color: rgb(141, 141, 141);
     color: rgb(40, 40, 40);
 }
 
-.result.advanced {
+.mod-result.advanced {
     background-color: rgb(204, 204, 204);
     color: rgb(40, 40, 40);
 }

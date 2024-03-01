@@ -5,8 +5,19 @@
   function linkGetProps({ location, href, isPartiallyCurrent, isCurrent }) { return { class: "big-link" }; }
 </script>
 
+<div class="title-gradient">
+  <div class="title-float">
+    <img class="title-image" src="/img/ProperMonster2.png" alt="Proper Monster"/>
+    <div class="title"><h1>Proper<br><span class="nobreak">&ensp;Monster</span></h1></div>
+  </div>
+</div>
+
+<div style="display:block;height:20px"></div>
+
 <div class="page-break">
+  <hr/>
   <h1>Main Rollers</h1>
+  <hr/>
 </div>
 <Link to="/ageroller" getProps={linkGetProps}>
   <div class="dice-display-2">
@@ -47,7 +58,9 @@
   </div>
 </Link>
 <div class="page-break">
+  <hr/>
   <h1>Other Dice Rollers</h1>
+  <hr/>
 </div>
 <Link to="/eyeroller" getProps={linkGetProps}>
   <div class="dice-display-2">
@@ -76,6 +89,70 @@
 
 <style>
 
+.title-gradient {
+  display: flex;
+  background: rgb(0,0,0);
+  background: linear-gradient(0deg, rgba(0,0,0,1) 13%, #4b4945 15%);
+  justify-content: center;
+}
+.title-float {
+  display: block;
+  position: relative;
+  /* align-items: center;
+  justify-content: center;
+  flex-wrap: nowrap; */
+  aspect-ratio: 413 / 200;
+  width: 80%;
+  max-width: 413px;
+  max-height: 200px;
+  container-name: title-float;
+}
+.title-image {
+  display: block;
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  height: 100%;
+  object-fit: contain;
+  margin: 0;
+  padding: 0;
+}
+.title {
+  display: flex;
+  position: absolute;
+  height: 90%;
+  width: 52%;
+  right: 0px;
+  padding: 0 5% 10% 0;
+  align-items: center;
+  container-type: inline-size;
+}
+.title > h1 {
+  display: inline-block;
+  width: 100%;
+  text-align: left;
+  color: #FDF6E3;
+  text-shadow: 1px -1px black, 0px -1px black, -1px -1px black, 0px 3px black, 2px 3px black, -1px 2px black;
+  padding: 0;
+  margin: 0;
+  font-family: 'Times New Roman', Times, serif;
+  font-size: 25cqw;
+}
+
+.page-break {
+  width: max-content;
+  margin: 10px auto;
+  padding: 10px;
+  background-clip: padding-box;
+}
+.page-break hr {
+  border-color: #4b4945;
+  width: 100%;
+}
+.page-break hr:last-of-type {
+  width: 80%;
+}
+
 .dice-display-2 {
     display: flex;
     flex-wrap: wrap;
@@ -94,9 +171,12 @@
 
 .ext-nav {
   display: block;
+  position: absolute;
+  right: 0;
+  width: fit-content;
   color: whitesmoke;
-  margin: 10pt auto;
-  padding: 0pt 0px;
+  margin: 0 auto;
+  padding: 0pt 10px;
   text-align: right;
   align-content: right;
 }

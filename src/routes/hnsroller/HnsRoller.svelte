@@ -74,11 +74,11 @@
     </div>
     
     {#if lowRoll == 0}
-        <h3>CRITICAL</h3>
-        <h1>FAILURE!</h1>
+    <h3 style="margin-bottom:0;color:rgb(255,100,100);">CRITICAL</h3>
+    <h1 style="margin-top:0.1em;color:rgb(255,100,100);">FAILURE!</h1>
     {:else if lowRoll == 9}
-        <h3>Critical</h3>
-        <h1>SUCCESS!</h1>
+    <h3 style="margin-bottom:0;color:rgb(100,255,200);">Critical</h3>
+    <h1 style="margin-top:0.1em;color:rgb(100,255,200);">SUCCESS!</h1>
     {:else}
         <h3 style="margin-bottom:0;">Boon and Bane Dice</h3>
         <hr class="underule">
@@ -126,9 +126,9 @@
         
         
         <div style="justify-content: center;">
-            <h2 class="text-center" style="margin-top:1.5em;margin-bottom:0;">
+            <h3 class="text-center" style="margin-top:1.5em;margin-bottom:0.1em;">
                 Modifiers
-            </h2>
+            </h3>
             <div class="result-mods">
                 <h3 class="result ellipse">..</h3>
                 <h3 class="result failure"> {5 - result >= 0? "+" : ""}{5 - result} </h3>
@@ -150,13 +150,70 @@
                 <h3 class="result ellipse">..</h3>
             </div>
             <div class="result-labels">
-                <h3 class="text-center result failure" style="width:70px;"> Fail </h3>
-                <h3 class="text-center result weaksuccess" style="width:100px;"> Weak </h3>
-                <h3 class="text-center result success" style="width:100px;"> Good </h3>
-                <h3 class="text-center result advanced" style="width:70px;"> Adv. </h3>
+                <h3 class="text-center result failure" style="width:3.2em;"> Fail </h3>
+                <h3 class="text-center result weaksuccess" style="width:4.4em;"> Weak </h3>
+                <h3 class="text-center result success" style="width:4.4em;"> Good </h3>
+                <h3 class="text-center result advanced" style="width:3.2em;"> Adv. </h3>
             </div>
         </div>
     {/if}
+</div>
+
+<div class="page">
+    <h2>Hammer and Steel Dice&nbsp;Roller</h2>
+    <p class="text-left">
+        In Hammer and Steel, you can spend 'Chain' to make multiple Actions on your turn.<br>
+        When you chain actions in this way, each action must use the current lowest roll in the chain. This means that the best action
+        you can perform on your turn is always the first action. Each after that may slowly get weaker. If your current chain die is
+        too low, you will likely want to end your turn and save some chain to use next turn.
+    </p>
+    <p class="text-left">
+        Example Turn:
+    </p>
+    <ol>
+        <li>Alice takes her first action.</li>
+        <ol>
+            <li>Alice clicks 'Roll' to roll the power die, and hits 'Reset' indicate that it should be used as the new chain die.
+            <li>Alice clicks to clear old boon/bane dice, then adds the current ones she needs.
+            <li>Alice looks at the modifier chart to see if her modifier is a success. It is! Yay!
+        </ol>
+        <li>Alice decides to use a chain to perform a second action.</li>
+        <ol>
+            <li>Alice clicks 'Roll' and gets a higher value than before. Sadly, she cannot use it. She must use the chain die from the previous roll.
+            <li>Alice clicks to clear old boon/bane dice, then adds the current ones she needs.
+            <li>Alice looks at the modifier chart to see if her modifier is a success. For this mod it is a weak success, but not a total failure.
+        </ol>
+        <li>Alice ends her turn.</li>
+    </ol>
+    <p class="text-left">
+        Note that the Power Die and the Boon/Bane die used are not traditional dice. They instead have a built-in curve:<br>
+    </p>
+    <div>
+        <div style="display:inline-block;margin-right:10px;">
+            {#each [[0,1],[1,2],[2,3],[3,4],[4,5],[5,5],[6,4],[7,3],[8,2],[9,1]] as [n,h]}
+                <div style="display:inline-block;width:12px;height:{h*12}px;padding-left:1px;padding-right:1px;">
+                    {#each [...Array(h).keys()] as _}
+                        <div style="display:block;background-color:gray;width:10px;height:10px;border:1px solid black;"></div>
+                    {/each}
+                    {n}
+                </div>
+            {/each}
+            <br>
+            dPow
+        </div>
+        <div style="display:inline-block;margin-left:10px;">
+            {#each [[0,1],[1,2],[2,2],[3,1]] as [n,h]}
+                <div style="display:inline-block;width:12px;height:{h*12}px;padding-left:1px;padding-right:1px;">
+                    {#each [...Array(h).keys()] as _}
+                        <div style="display:block;background-color:gray;width:10px;height:10px;border:1px solid black;"></div>
+                    {/each}
+                    {n}
+                </div>
+            {/each}
+            <br>
+            dB
+        </div>
+    </div>
 </div>
 
 <style>
@@ -226,19 +283,19 @@
 .result-mods {
     display: grid;
     margin: 0 0 0 0;
-    grid-template-columns: 20px 50px 50px 50px 50px 50px 50px 20px;
+    grid-template-columns: 1em 2.2em 2.2em 2.2em 2.2em 2.2em 2.2em 1em;
     justify-content: center;
 }
 .result-labels {
     display: grid;
     margin: 0 0 1em 0;
-    grid-template-columns: 70px 100px 100px 70px;
+    grid-template-columns: 3.2em 4.4em 4.4em 3.2em;
     justify-content: center;
 }
 
 .result {
     display: inline-block;
-    font-size: 1.17em;
+    font-size: 1em;
     margin-block-start: 1em;
     margin-block-end: 1em;
     margin-inline-start: 0px;
@@ -246,9 +303,9 @@
     font-weight: bold;
 
     color: rgb(204, 204, 204);
-    width: 50px;
-    height: 1.75em;
-    line-height: 1.75em;
+    width: 2.2em;
+    height: 1.6em;
+    line-height: 1.6em;
     margin: 0;
     padding: 0;
     border: 1px solid rgb(204, 204, 204);

@@ -38,10 +38,10 @@
 </script>
 
 
+<h1>Age Dice Roller</h1>
+<p>2d6 with a 1d6 Stunt die.</p>
+
 <div class="page">
-    <h1>Age Dice Roller</h1>
-    <p>Roll 3d6 and sum them. One d6 is special and used for success quality and stunt points.</p>
-    
     <div style="justify-content: center;">
         <button class="button-outlined" disabled={diceData.length <= 0} on:click={rerollDice}> {totalDice.active == 0 ? "Reroll All" : "Reroll " + String(totalDice.active) } </button>
     </div>
@@ -94,11 +94,9 @@
             </h3>
         </div>
     </div>
-
-
-    <p>Check out Fantasy Age and the other Age RPGs by <a href="https://greenronin.com/">Green&nbsp;Ronin</a>&nbsp;(Not&nbsp;affiliated)</p>
-
 </div>
+
+<p>Check out Fantasy Age and the other Age RPGs<br>by <a href="https://greenronin.com/">Green&nbsp;Ronin</a>&nbsp;(Not&nbsp;affiliated)</p>
 
 <style>
 
@@ -118,7 +116,7 @@
 }
 .result-mod {
     display: grid;
-    margin: 1em 0 1em 0;
+    margin: 1em 0 0 0;
     grid-template-columns: 1em 150px 1em 150px;
     justify-content: center;
 }

@@ -7,6 +7,7 @@
     export let active :boolean = false;
     export let enabled :boolean = true;
     export let invert :boolean = false;
+    export let height :string = "48px";
 
     const fateFlag :number = -1;
     const eyeFlag :number = -2;
@@ -82,6 +83,7 @@
 <div>
     <!--was class:inverted={invert} -->
     <button bind:this={die} type="button" class:active={active} class:show-pips={showPips}
+        style="--height: {height}"
         on:click={() => {active = enabled && !active}} disabled={!enabled}
         class="die
             faces-{
@@ -111,14 +113,14 @@
     background-position: center;
     background-size: cover;
     color: black;
-    width: 48px;
-    height: 48px;
+    width: var(--height);
+    height: var(--height);
     margin: 0px;
     border: 0px;
     padding: 0px;
     align-items: center;
     justify-content: center;
-    font-size: 18px;
+    font-size: calc(0.375 * var(--height));
     font-weight: bold;
     text-align: center;
     animation-name: momentary-hide;
@@ -150,6 +152,7 @@
 .die.faces-F { background-image: url('/img/dice/dF.svg'); font-size: 0px; }
 .die.faces-Pow { background-image: url('/img/dice/dPow.svg'); }
 
+.die.show-pips.faces-6.result-0 { background-image: url('/img/dice/d6.svg'); font-size: 0px; }
 .die.show-pips.faces-6.result-1 { background-image: url('/img/dice/d6-1.svg'); font-size: 0px; }
 .die.show-pips.faces-6.result-2 { background-image: url('/img/dice/d6-2.svg'); font-size: 0px; }
 .die.show-pips.faces-6.result-3 { background-image: url('/img/dice/d6-3.svg'); font-size: 0px; }
@@ -157,6 +160,7 @@
 .die.show-pips.faces-6.result-5 { background-image: url('/img/dice/d6-5.svg'); font-size: 0px; }
 .die.show-pips.faces-6.result-6 { background-image: url('/img/dice/d6-6.svg'); font-size: 0px; }
 
+.die.show-pips.faces-6-inverted.result-0 { background-image: url('/img/dice/d6-inverted.svg'); font-size: 0px; }
 .die.show-pips.faces-6-inverted.result-1 { background-image: url('/img/dice/d6-1-inverted.svg'); font-size: 0px; }
 .die.show-pips.faces-6-inverted.result-2 { background-image: url('/img/dice/d6-2-inverted.svg'); font-size: 0px; }
 .die.show-pips.faces-6-inverted.result-3 { background-image: url('/img/dice/d6-3-inverted.svg'); font-size: 0px; }
@@ -220,7 +224,7 @@
 @keyframes momentary-hide {
     0% { background-size: 1%; font-size: 0; }
     99% { background-size: 1%; font-size: 0; }
-    100% { background-size: 100%; font-size: 18px; }
+    100% { background-size: 100%; font-size: calc(0.375 * var(--height)); }
 }
 
 @keyframes roll {
