@@ -79,13 +79,6 @@
       </div>
       <h3>Eye Roller</h3>
     </Link>
-    <Link to="/hnsroller" getProps={getMainLinkProps}>
-      <div class="dice-display">
-        <Die faces={-3} result={9} enabled={false} height={dieHeight} />
-        <Die faces={-4} result={3} showPips={true} enabled={false} height={dieHeight} />
-      </div>
-      <h3>H&S Roller</h3>
-    </Link>
     <br>
   </nav>
 </div>

@@ -12,10 +12,7 @@
     const fateFlag :number = -1;
     const eyeFlag :number = -2;
     const powFlag :number = -3;
-    const boonFlag :number = -4;
-    const baneFlag :number = -5;
     const powFaces :Array<number> = [0,1,1,2,2,2,3,3,3,3,4,4,4,4,4,5,5,5,5,5,6,6,6,6,7,7,7,8,8,9];
-    const boonFaces :Array<number> = [0,1,1,2,2,3];
 
     let die;
     let overlayAnim;
@@ -30,8 +27,6 @@
             if (sixes == 4 || sixes == 5 || sixes == 6) return 3
         }
         if (faces == powFlag) return powFaces[Math.floor( Math.random() * powFaces.length )];
-        if (faces == boonFlag) return boonFaces[Math.floor( Math.random() * boonFaces.length )];
-        if (faces == baneFlag) return -boonFaces[Math.floor( Math.random() * boonFaces.length )];
         return 0;
     }
     
@@ -97,8 +92,6 @@
                 faces == fateFlag ? "F" :
                 faces == eyeFlag ? "E" :
                 faces == powFlag ? "Pow" :
-                faces == boonFlag ? "Boon" :
-                faces == baneFlag ? "Bane" :
                 faces
             }{faces == 6 && invert ? "-inverted" : "" }
             result-{result}
@@ -181,15 +174,6 @@
 .die.faces-E.result-1 { background-image: url('/img/dice/d6-snake.svg'); font-size: 0px; }
 .die.faces-E.result-2 { background-image: url('/img/dice/d6-bat.svg'); font-size: 0px; }
 .die.faces-E.result-3 { background-image: url('/img/dice/d6-fish.svg'); font-size: 0px; }
-
-.die.faces-Boon.result-0 { background-image: url('/img/dice/dBoon.svg'); font-size: 0px; }
-.die.faces-Boon.result-1 { background-image: url('/img/dice/dBoon-1.svg'); font-size: 0px; }
-.die.faces-Boon.result-2 { background-image: url('/img/dice/dBoon-2.svg'); font-size: 0px; }
-.die.faces-Boon.result-3 { background-image: url('/img/dice/dBoon-3.svg'); font-size: 0px; }
-.die.faces-Bane.result-0 { background-image: url('/img/dice/dBane.svg'); font-size: 0px; }
-.die.faces-Bane.result--1 { background-image: url('/img/dice/dBane-1.svg'); font-size: 0px; }
-.die.faces-Bane.result--2 { background-image: url('/img/dice/dBane-2.svg'); font-size: 0px; }
-.die.faces-Bane.result--3 { background-image: url('/img/dice/dBane-3.svg'); font-size: 0px; }
 
 /* .die.inverted { filter: invert(100%); -webkit-filter: invert(100%); } */
 

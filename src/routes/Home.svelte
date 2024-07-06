@@ -73,16 +73,6 @@
     <p>Experimental Eye Dice roller</p>
   </div>
 </Link>
-<Link to="/hnsroller" getProps={linkGetProps}>
-  <div class="dice-display-2">
-    <Die faces={-3} result={9} enabled={false} />
-    <Die faces={-4} result={3} showPips={true} enabled={false} />
-  </div>
-  <div>
-    <h1>H&S Roller</h1>
-    <p>Hamer & Steel Dice Roller</p>
-  </div>
-</Link>
 
 <span class="ext-nav"> Created by<a href="http://corybeutler.com">Cory Beutler</a> </span>
 

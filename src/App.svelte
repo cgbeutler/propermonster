@@ -9,7 +9,6 @@
   import Home from "./routes/Home.svelte";
   import AgeRoller from "./routes/ageroller/AgeRoller.svelte";
   import EyeRoller from "./routes/eyeroller/EyeRoller.svelte";
-  import HnsRoller from './routes/hnsroller/HnsRoller.svelte';
   import PoolRoller from "./routes/poolroller/PoolRoller.svelte";
   import PoweredRoller from './routes/poweredroller/PoweredRoller.svelte';
   import { locationHref } from './lib/stores';
@@ -61,7 +60,6 @@
       <Route component="{NotFound}" />
       <Route path="ageroller" component={AgeRoller} />
       <Route path="eyeroller" component={EyeRoller} />
-      <Route path="hnsroller" component={HnsRoller} />
       <Route path="poolroller" component={PoolRoller} />
       <Route path="poweredroller" component={PoweredRoller} />
     </div>
