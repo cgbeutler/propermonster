@@ -43,8 +43,8 @@ The **Keeper** may stipulate that:
     
     successHeader: `
 Choose the effect of your magic:
-* Inflict 1 **Harm** (**#ignore-armour** **#magic** **#obvious**).
-* Enchant a weapon. It gets +1 **Harm** and is **#magic**.
+* Inflict 1 \`harm\` \`#ignore-armour\` \`#magic\` \`#obvious\`.
+* Enchant a weapon. It gets +1 \`harm\` and is \`#magic\`.
 * Do one thing that is beyond human limitations.
 * Bar a place or portal to a specific person or a type of creature.
 * Trap a specific person, minion, or monster.

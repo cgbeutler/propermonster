@@ -10,6 +10,8 @@ export const NegativeVehicleTags = [
 export const VehicleTags = [ ...PositiveVehicleTags, ...NegativeVehicleTags ] as const;
 
 
+export enum RangeEnum { Intimate = "intimate", Hand = "hand", Close = "close", Far = "far" }
+
 export const ItemTags = [
   // 1-harm, 2-harm, 3-harm, etc. // How much dmg the item can deal out
   "area", "barrier",
@@ -26,7 +28,7 @@ export const ItemTags = [
 ] as const;
 
 
-export const _tagDescriptions: { [key in typeof VehicleTags[number]] } = {
+export const _tagDescriptions: { [key in typeof VehicleTags[number]]: string } = {
   // __ Vehicle Tags __
   "anonymous": "Has no discernable markings.",
   "armored": "While inside, you have +1 **Armor**.",
@@ -54,7 +56,7 @@ export const _tagDescriptions: { [key in typeof VehicleTags[number]] } = {
   "uncomfortable": "Staying it it for long may bring on stiffness and pangs.",
 }
 
-export const ItemTagDescriptions: { [key in typeof ItemTags[number]] } = {
+export const ItemTagDescriptions: { [key in typeof ItemTags[number]]: string } = {
   // __ Item Tags __
   // 1-harm, 2-harm, 3-harm, etc. // How much dmg the item can deal out
   "area": "Can hit multiple foes. Divide the Harm you inflict across multiple targets.",

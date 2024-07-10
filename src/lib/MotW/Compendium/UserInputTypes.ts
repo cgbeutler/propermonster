@@ -1,8 +1,16 @@
+import type {SubFeatDesc} from "./CompendiumTypes";
 
 export enum InputTypes {
-  Text = "text", TextArea = "textarea", MultipleChoice = "multiple-choice", Checks = "checks",
-  Ally = "ally", Bystander = "bystander", Tags = "tags"
+  Label = "label",
+  Text = "text", TextArea = "textarea", MultipleChoice = "multipleChoice", Checks = "checks",
+  Ally = "ally", Bystander = "bystander", Tags = "tags",
+  Augment = "augment", Multiclass = "multiclass", GainWeirdMove = "gainWeirdMove", Items = "items",
 }
+
+export enum MulticlassTypes {
+  Move = "move", Haven = "haven",
+}
+
 export enum AllyType {
   Subordinate = "subordinate", Lieutenant = "lieutenant", Friend = "friend", Bodyguard = "bodyguard",
   Confidante = "confidante", Backup = "backup"
@@ -19,7 +27,7 @@ export const AllyMotivations = {
   confidante: "to give you advice and perspective",
   backup: "to stand with you",
 }
-export function getAllyMotivation( ally: AllyType ) { return AllyMotivations[<string>ally] }
+export function getAllyMotivation( ally: AllyType ) { return AllyMotivations[ally] }
 export const BystanderMotivations = {
   busybody: "to interfere in other people's plans",
   detective:  "to rule out explanations",
@@ -31,12 +39,16 @@ export const BystanderMotivations = {
   victim: "to put themselves in danger",
   witness: "to reveal information",
 }
-export function getBystanderMotivation( bystander: BystanderType ) { return BystanderMotivations[<string>bystander] }
+export function getBystanderMotivation( bystander: BystanderType ) { return BystanderMotivations[bystander] }
 
 interface BaseInput {
   type: InputTypes;
-  name: string;
+  id: string;
   label: string;
+}
+export interface Label extends BaseInput {
+  type: InputTypes.Label;
+  subLabel: string;
 }
 export interface Text extends BaseInput {
   type: InputTypes.Text;
@@ -51,6 +63,7 @@ export interface MultipleChoice extends BaseInput {
   type: InputTypes.MultipleChoice,
   options: Array<string>,
   allowCustom: boolean,
+  choose?: number, // Default 1. If negative, they must choose at least that many or more.
 }
 
 export interface Checks extends BaseInput {
@@ -78,4 +91,25 @@ export interface Tags extends BaseInput {
   min?: number;
 }
 
-export type Input = Text|TextArea|MultipleChoice|Checks|Ally|Bystander|Tags;
+interface AugmentInput extends BaseInput {
+  type: InputTypes.Augment;
+  choose?: number, // Default 1
+  options: Array<SubFeatDesc>,
+}
+interface MulticlassInput extends BaseInput {
+  type: InputTypes.Multiclass;
+  choose?: number, // Default 1
+  optionsType: MulticlassTypes,
+}
+interface GainWeirdMoveInput extends BaseInput {
+  type: InputTypes.GainWeirdMove;
+  choose?: number, // Default 1
+  options: Array<string>,
+}
+interface ItemInput extends BaseInput {
+  type: InputTypes.Items;
+  choose?: number, // Default 1
+  options: Array<string>,
+}
+
+export type UserInput = Label|Text|TextArea|MultipleChoice|Checks|Ally|Bystander|Tags|AugmentInput|MulticlassInput|GainWeirdMoveInput|ItemInput;

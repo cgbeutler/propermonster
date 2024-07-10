@@ -3,8 +3,11 @@ import {StatEnum, type Action, type AutoAction} from "./CompendiumTypes";
 export let BasicAutoMoves: Array<AutoAction> = [
   {
     name: "First Aid",
-    description: "Heal 1 **Harm** of a single wound or condition. Takes a few minutes.",
-    longDescription: `Additional first aid will only help someone if there’s a new injury or condition to treat.`,
+    description: "Take a few minutes to heal 1 \`harm\` of a single wound or condition, and possibly \`Stabilized\` a patient.",
+    longDescription: `Take a few minutes to heal 1 \`harm\` of a single wound or condition.
+If the patient ends up with less than 3 total \`harm\`, they are \`Stabilized\`.
+
+The patient cannot benefit from **'First Aid'** again until there is a new injury or condition to treat.`,
   }
 ]
 
