@@ -1,25 +1,22 @@
-import type {SubFeatDesc} from "./CompendiumTypes";
+import {type Item, type Feat, FeatTypeEnum} from "./CompendiumTypes";
+import type {ItemTag} from "./Tags";
 
 export enum InputTypes {
-  Label = "label",
-  Text = "text", TextArea = "textarea", MultipleChoice = "multipleChoice", Checks = "checks",
-  Ally = "ally", Bystander = "bystander", Tags = "tags",
-  Augment = "augment", Multiclass = "multiclass", GainWeirdMove = "gainWeirdMove", Items = "items",
+  Text = "Text", TextArea = "Textarea", Checks = "Checks",
+  TextChoice = "TextChoice",
+  FeatChoice = "FeatChoice", TypedFeatChoice = "TypedFeatChoice", ItemChoice = "ItemChoice",
+  WeirdMoveChoice = "WeirdMoveChoice",
+  Hunter = "Hunter", Ally = "Ally", Bystander = "Bystander", Minion = "Minion", Monster = "Monster",
 }
-
-export enum MulticlassTypes {
-  Move = "move", Haven = "haven",
+export enum SubInputTypes {
+  Text = "Text", TextArea = "Textarea", Checks = "Checks", TextChoice = "TextChoice",
 }
 
 export enum AllyType {
   Subordinate = "subordinate", Lieutenant = "lieutenant", Friend = "friend", Bodyguard = "bodyguard",
   Confidante = "confidante", Backup = "backup"
 }
-export enum BystanderType {
-  Busybody = "busybody", Detective = "detective", Gossip = "gossip", Helper = "helper", Innocent = "innocent",
-  Official = "official", Skeptic = "skeptic", Victim = "victim", Witness = "witness"
-}
-export const AllyMotivations = {
+export const AllyMotivations: {[key in AllyType]: string} = {
   subordinate: "to follow your exact instructions",
   lieutenant: "to execute the spirit of your instructions",
   friend: "to provide emotional support",
@@ -28,12 +25,18 @@ export const AllyMotivations = {
   backup: "to stand with you",
 }
 export function getAllyMotivation( ally: AllyType ) { return AllyMotivations[ally] }
-export const BystanderMotivations = {
+
+export enum BystanderType {
+  Busybody = "busybody", Detective = "detective", Gossip = "gossip", Helper = "helper", Innocent = "innocent",
+  Mentor = "mentor", Official = "official", Skeptic = "skeptic", Victim = "victim", Witness = "witness"
+}
+export const BystanderMotivations: {[key in BystanderType]: string} = {
   busybody: "to interfere in other people's plans",
   detective:  "to rule out explanations",
   gossip: "to pass on rumours",
   helper: "to join the hunt",
   innocent: "to do the right thing",
+  mentor: "to provide wisdom or guidance",
   official: "to be suspicious",
   skeptic: "to deny supernatural explanations",
   victim: "to put themselves in danger",
@@ -41,75 +44,124 @@ export const BystanderMotivations = {
 }
 export function getBystanderMotivation( bystander: BystanderType ) { return BystanderMotivations[bystander] }
 
+export enum MinionType {
+ Assassin = "Assassin", Brute = "Brute", Cultist = "Cultist", Guardian = "Guardian", RightHand = "RightHand", Plague = "Plague",
+ Renfield = "Renfield", Scout = "Scout", Thief = "Thief", Traitor = "Traitor",
+}
+export const MinionMotivations: {[key in MinionType]: string} = {
+  Assassin: "to kill the hunters",
+  Brute: "to intimidate and attack",
+  Cultist: "to save their own skin at any cost",
+  Guardian: "to bar a way or protect something",
+  RightHand: "to back up the monster",
+  Plague: "to swarm and destroy",
+  Renfield: "to push victims towards the monster",
+  Scout: "to stalk, watch, and report",
+  Thief: "to steal and deliver to the monster",
+  Traitor: "to betray people",
+}
+export function getMinionMotivation( minion: MinionType ) { return MinionMotivations[minion] }
+
+export enum MonsterType {
+  Beast = "Beast", Breeder = "Breeder", Collector = "Collector", Destroyer = "Destroyer", Devourer = "Devourer",
+  Executioner = "Executioner", Parasite = "Parasite", Queen = "Queen", Sorcerer = "Sorcerer", Tempter = "Tempter",
+  Torturer = "Torturer", Trickster = "Trickster",
+  }
+export const MonsterMotivations: {[key in MonsterType]: string} = {
+  Beast: "to run wild, destroying and killing",
+  Breeder: "to give birth to, bring forth, or create evil",
+  Collector: "to steal specific sorts of things",
+  Destroyer: "to bring about the end of the world",
+  Devourer: "to consume people",
+  Executioner: "to punish the guilty",
+  Parasite: "to infest, control and devour",
+  Queen: "to possess and control",
+  Sorcerer: "to usurp unnatural power",
+  Tempter: "to tempt people into evil deeds",
+  Torturer: "to hurt and terrify",
+  Trickster: "to create chaos",
+}
+export function getMonsterMotivation( monster: MonsterType ) { return MonsterMotivations[monster] }
+
 interface BaseInput {
-  type: InputTypes;
-  id: string;
-  label: string;
-}
-export interface Label extends BaseInput {
-  type: InputTypes.Label;
-  subLabel: string;
-}
-export interface Text extends BaseInput {
-  type: InputTypes.Text;
-  placeholder: string;
-}
-export interface TextArea extends BaseInput {
-  type: InputTypes.TextArea;
-  placeholder: string;
+  label: string; // Short name for the field
+  subLabel?: string; // For more detailed descriptions or instructions.
+  inputType: InputTypes;
+  key?: string;
 }
 
-export interface MultipleChoice extends BaseInput {
-  type: InputTypes.MultipleChoice,
-  options: Array<string>,
-  allowCustom: boolean,
-  choose?: number, // Default 1. If negative, they must choose at least that many or more.
+export interface Text extends BaseInput {
+  inputType: InputTypes.Text;
+  placeholder?: string;
+}
+export interface TextArea extends BaseInput {
+  inputType: InputTypes.TextArea;
+  placeholder?: string;
 }
 
 export interface Checks extends BaseInput {
-  type: InputTypes.Checks;
+  inputType: InputTypes.Checks;
   max: number;
   starting?: number; // defaults 0;
   resetPerMystery?: boolean; // defaults false;
 }
-export interface Ally extends BaseInput {
-  type: InputTypes.Ally;
+
+interface BaseChoiceInput extends BaseInput {
+  choose: number, // For some, if negative, they must choose at least that many or more.
+  chooseMax?: number, // If set to 0, there is no max. Defaults: same as ^choose above.
+}
+export interface TextChoice extends BaseChoiceInput {
+  inputType: InputTypes.TextChoice,
+  allowCustom: boolean, // Default: false.
+  options: Array<string>,//TODO: Did we remove this: |Array<[string,Array<string>]>,
+}
+interface TypedFeatChoice extends BaseChoiceInput {
+  inputType: InputTypes.TypedFeatChoice;
+  featType: FeatTypeEnum;
+  playbookOnly?: boolean; // Default: false
+}
+interface FeatChoice extends BaseChoiceInput {
+  inputType: InputTypes.FeatChoice;
+  defaults?: Array<string>,
+  options: Array<Feat>,
+}
+interface ItemChoice extends BaseChoiceInput {
+  inputType: InputTypes.ItemChoice;
+  allowCustom?: boolean, // Default: false.
+  options: Array<Item>,
+}
+interface WeirdMoveChoice extends BaseChoiceInput {
+  inputType: InputTypes.WeirdMoveChoice;
+  options: Array<string>,
+}
+type CharacterInput = Text|TextArea|Checks|TextChoice;
+export interface BaseCharacter extends BaseInput {
   crewMin?: number; // default is 1
   crewMax?: number; // default is 1
+  inputs?: Array<CharacterInput>; // If provided with a crew>1, these inputs will be asked for each NPC individually.
+}
+export interface Hunter extends BaseCharacter {
+  inputType: InputTypes.Hunter;
+  // If crewMin or crewMax exist, then you only have to assign that many to your crew
+} // Will be overlapped with history and other hunter stuff.
+export interface Ally extends BaseCharacter {
+  inputType: InputTypes.Ally;
   startingAllyType?: AllyType; // if left off, they can choose
 }
-export interface Bystander extends BaseInput {
-  type: InputTypes.Bystander;
-  crewMin?: number; // default is 1
-  crewMax?: number; // default is 1
+export interface Bystander extends BaseCharacter {
+  inputType: InputTypes.Bystander;
   startingBystanderType?: BystanderType; // if left off, they can choose
 }
-export interface Tags extends BaseInput {
-  type: InputTypes.Tags;
-  options: Readonly<Array<string>>;
-  allowCustom: boolean;
-  min?: number;
+export interface Minion extends BaseCharacter {
+  inputType: InputTypes.Minion;
+  startingMinionType?: MinionType; // if left off, they can choose
+}
+export interface Monster extends BaseCharacter {
+  inputType: InputTypes.Monster;
+  startingMonsterType?: MonsterType; // if left off, they can choose
 }
 
-interface AugmentInput extends BaseInput {
-  type: InputTypes.Augment;
-  choose?: number, // Default 1
-  options: Array<SubFeatDesc>,
-}
-interface MulticlassInput extends BaseInput {
-  type: InputTypes.Multiclass;
-  choose?: number, // Default 1
-  optionsType: MulticlassTypes,
-}
-interface GainWeirdMoveInput extends BaseInput {
-  type: InputTypes.GainWeirdMove;
-  choose?: number, // Default 1
-  options: Array<string>,
-}
-interface ItemInput extends BaseInput {
-  type: InputTypes.Items;
-  choose?: number, // Default 1
-  options: Array<string>,
-}
-
-export type UserInput = Label|Text|TextArea|MultipleChoice|Checks|Ally|Bystander|Tags|AugmentInput|MulticlassInput|GainWeirdMoveInput|ItemInput;
+export type UserInput =
+  Text|TextArea|Checks|
+  TextChoice|TypedFeatChoice|FeatChoice|ItemChoice|WeirdMoveChoice|
+  Hunter|Ally|Bystander;

@@ -1,26 +1,40 @@
-import type {UserInput} from "./UserInputTypes";
-import type {RangeEnum} from "./Tags";
+import {InputTypes, type UserInput} from "./UserInputTypes";
+import {ItemTag} from "./Tags";
 
 export enum StatEnum { Charm = "Charm", Cool = "Cool", Sharp = "Sharp", Tough = "Tough", Weird = "Weird" }
-export enum ItemType { Weapon, Armor, Artifact }
+export enum FeatTypeEnum {
+  SubFeat,
+  Background, Gear, Move,
+  Improvement, AdvancedImprovement,
+  Item, Haven,
+}
+export enum ItemType {
+  Equipment,
+  Armor, Artifact, Vehicle, Weapon,
+  InnateArmor, InnateWeapon, InnateBarrier,
+}
 
-export interface Action {
+export interface ResultDescription {
+  // The result will be constructed from a combination of the following.
+  // If any are missing, they will just be skipped.
+  resultHeader?: string;
+  miss?: string;
+  successHeader?: string;
+  mixedSuccess?: string;
+  solidSuccess?: string;
+  advancedSuccess?: string;
+  successFooter?: string;
+  resultFooter?: string;
+}
+
+export interface Action extends ResultDescription {
+  id: string;
   name: string;
   description: string;
   longDescription?: string;
   
   coreStat: StatEnum;
   alternateStat?: StatEnum;
-
-  resultHeader?: string | undefined;
-  miss: string;
-  // The result will be constructed from a combination of the following:
-  successHeader?: string | undefined;
-  mixedSuccess: string;
-  solidSuccess: string;
-  advancedSuccess?: string;
-  successFooter?: string | undefined;
-  resultFooter?: string | undefined;
 
   startOfMystery?: boolean;
   uses?: number;
@@ -31,6 +45,7 @@ export interface Action {
 }
   
 export interface AutoAction {
+  id: string;
   name: string;
   description: string;
   longDescription?: string;
@@ -68,64 +83,53 @@ export interface ActionPassive {
   description: string;
 
   alternateStat?: StatEnum;
-  offset?: number;
-  canAutoRoll?: number;
-
   // Only applicable if it has a parent feat or item
   showInputs?: Array<string>;
-  
-  miss2?: string;
-  successHeader2?: string;
-  successFooter2?: string;
-  resultFooter2?: string;
+  amendResults?: ResultDescription;
+  replaceResults?: ResultDescription;
 }
 
-
-export interface Attack {
+export interface ActionModifier {
   name: string;
-  description?: string;
-  overrideStat?: StatEnum;
-  harm: number;
-  ranges: RangeEnum[];
+  applyToMoves?: Array<string>; // If not present, it will be applied to all moves
+  offset?: number;
+  autoRoll?: number;
+  condition?: string; // If present, condition will be displayed in the attack view.
   
-  tags?: string[];
-
-  miss2?: string;
-  successHeader2?: string;
-  successFooter2?: string;
-  resultFooter2?: string;
+  amendResults?: ResultDescription;
+  replaceResults?: ResultDescription;
 
   // Only applicable if it has a parent feat or item
   showInputs?: Array<string>;
+  applyToItem?: Array<string>; // This one just shows the item // TODO: Rename?
 }
 
 export interface AttackModifier {
   name: string;
-  description: string;
-  offset: number;
-  apply?: boolean;
-  showInputs?: Array<string>;
-}
-
-export interface Armor {
-  name: string;
-  description?: string;
-  armor: number;
-  conditional?: boolean; // conditionals are not automatically applied
-  tags?: string[];
+  offset?: number;
+  max?: number;
+  addTags?: Array<ItemTag>;
+  condition?: string; // If present, condition will be displayed in the attack view.
   
-  // Only applicable if it has a parent feat or item
   showInputs?: Array<string>;
+  applyToItem?: Array<string>;
 }
 
 export interface ArmorModifier {
   name: string;
-  description: string;
   offset?: number;
   max?: number;
-  conditional?: boolean; // conditionals are not automatically applied
+  addTags?: Array<ItemTag>;
+  condition?: string; // If present, condition will be displayed in the armor view.
 
   showInputs?: Array<string>;
+  applyToItem?: Array<string>;
+}
+
+export interface ChooseModifier {
+  inputKey: string; // A GUID equal to the key for the input with a 'choose' value to modify.  
+  offset?: number;
+  max?: number;
 }
 
 export interface PerkList {
@@ -135,21 +139,32 @@ export interface PerkList {
   tough?: StatUp;
   weird?: StatUp;
 
-  actions?: Array<Action>;
-  autoActions?: Array<AutoAction>;
-  attacks?: Array<Attack>;
-  attackModifiers?: Array<AttackModifier>;
-  armors?: Array<Armor>;
-  armorModifiers?: Array<ArmorModifier>;
-
   experience?: Array<Passive>;
   health?: Array<Passive>;
   protections?: Array<Passive>;
   luck?: Array<Bonus>;
   social?: Array<Passive>;
   inventory?: Array<Passive>;
-  endOfSession?: Array<Passive>;
+  haven?: Array<Passive>;
+  sessionEnd?: Array<Passive>;
+  sessionStart?: Array<Passive>;
 
+  actions?: Array<Action>;
+  autoActions?: Array<AutoAction>;
+
+  addRotes?: number;
+
+  offsetMaxHealth?: number;
+  offsetMaxLuck?: number;
+
+  modAttack?: Array<AttackModifier>;
+  modArmor?: Array<ArmorModifier>;
+  modChooseInput?: Array<ChooseModifier>;
+  modMoves?: Array<ActionModifier>;
+  
+  grantFeatures?: Array<string>;
+  
+  // TODO: Modify the following to be more flexible with an 'applyToMoves' inside
   kickSomeAss?: Array<ActionPassive>;
   actUnderPressure?: Array<ActionPassive>;
   helpOut?: Array<ActionPassive>;
@@ -160,64 +175,51 @@ export interface PerkList {
   useMagic?: Array<ActionPassive>;
   weirdMove?: Array<ActionPassive>;
 
-  // allCharmMoves?: Array<ActionPassive>,
-  // allCoolMoves?: Array<ActionPassive>,
-  // allSharpMoves?: Array<ActionPassive>,
-  // allToughMoves?: Array<ActionPassive>,
-  // allWeirdMoves?: Array<ActionPassive>, // Pararomantic needs this
   allMoves?: Array<ActionPassive>;
 }
 
-export interface Item {
+export interface Feat {
   id: string;
+  playbooks?: Array<string>;
+  featType?: FeatTypeEnum; // Default is SubFeat
+  
   name: string;
   description?: string;
   longDescription?: string;
+  prerequisites?: Array<string>;
+  prerequisiteMoves?: Array<string>;
+
+  perks?: PerkList;
+  items?: Array<Item>;
+  inputs?: Array<UserInput>;
+  showInputs?: Array<string>; // Displays the short name string next to the short description.
+}
+
+
+export interface TagChoice {
+  label: string;
+  choose?: number, // Default 1. For some, if negative, they must choose at least that many or more.
+  chooseMax?: number, // If set to 0, there is no max. Defaults: same as ^choose above.
+  options: Readonly<Array<ItemTag>>; // Can be used for bad options if bad options is not needed.
+}
+export interface Item extends Feat {
   itemType: ItemType;
   
-  tags?: string[];
-  inputs?: Array<UserInput>;
-
-  perks?: PerkList;
-}
-
-export interface FeatVehicle {
-  description: string;
-}
-
-export interface SubFeatDesc {
-  id: string;
-
-  name: string;
-  description?: string;
-  
-  inputs?: Array<UserInput>;
+  // Default starting tags
+  tags?: Array<ItemTag>;
+  tagInputs?: Array<TagChoice>;
 
   perks?: PerkList;
   items?: Array<Item>;
-  vehicles?: Array<FeatVehicle>;
-}
-
-
-export interface FeatDesc {
-  id: string;
-  playbook: string;
-  startingFeat: boolean;
-  multiclassable: boolean;
-
-  name: string;
-  description: string;
-  // descriptionPattern?: string; // If present, this will be used to build a new short description using choices.
-  longDescription?: string;
-  showInputs?: Array<string>; // Displays the short name string next to the short description.
-
   inputs?: Array<UserInput>;
   
-  perks?: PerkList;
-  items?: Array<Item>;
-  virtualItems?: Array<Item>;
-  vehicles?: Array<FeatVehicle>;
-
-  // TODO: Move this to be an AuxInput
-  borrowMove?: number; // Take a move from another playbook (that's not currently in play. The Monstrous.)
+  // Weapon Item Values
+  overrideStat?: StatEnum;
+  harm?: number;
+  amendResults?: ResultDescription;
+  replaceResults?: ResultDescription;
+  
+  // Armor Item Values
+  armor?: number;
+  armorCondition?: string; // If present, condition will be displayed in the armor view.
 }

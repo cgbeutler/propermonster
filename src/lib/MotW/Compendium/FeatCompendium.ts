@@ -1,187 +1,99 @@
-import {type FeatDesc, StatEnum, type SubFeatDesc} from "./CompendiumTypes";
-import {AllyType, InputTypes, MulticlassTypes} from "./UserInputTypes";
-import {RangeEnum} from "./Tags";
+import {type Feat, FeatTypeEnum, ItemType, StatEnum} from "./CompendiumTypes";
+import {AllyType, BystanderType, InputTypes} from "./UserInputTypes";
 import {itemLookup} from "./Gear";
+import {ItemTag} from "./Tags";
 
-export let UniversalFeats: Array<SubFeatDesc> = [
+
+export let Feats: Array<Feat> = [
   {
-    id: "4cbc4894-e8f2-454b-8e31-a2bebe0f07c9",
-    name: "Default Attacks",
-    description: `Default unarmed and improvised attacks`,
+    name: `Destiny's Plaything`,
+    id: `5a92f2da-ca73-4fac-b859-08f2c745ae9b`,
+    playbooks: [`94a658a0-f5dc-4e4b-a1ec-1b322b08d78f`], // The Chosen
+    featType: FeatTypeEnum.Move,
+
+    description: `At the beginning of each \`mystery\`, roll to see what is revealed about your immediate future.`,
     perks: {
-      attacks: [
-        {
-          name: "Unarmed",
-          description: `Any attack that is equal to or less than a punch in severity.`,
-          harm: 0,
-          ranges: [RangeEnum.Intimate, RangeEnum.Hand],
-        },
-        {
-          name: "Basic Improvised Weapon",
-          description: `A sharp or heavy object (such as a kitchen knife or a lamp.) If it can be thrown effectively, you can use \`#close\`.`,
-          harm: 1,
-          ranges: [RangeEnum.Hand, RangeEnum.Close],
-        },
-        {
-          name: "Heavy Improvised Weapon",
-          description: `A really heavy object (such as a microwave or bar stool.)`,
-          harm: 2,
-          ranges: [RangeEnum.Hand],
-          tags: ["heavy"]
-        },
-      ]
-    }
-  }
-]
+      actions: [{
+        name: `Destiny's Plaything`,
+        id: `7bb53fda-19d2-4244-b2f5-824fdddfdc2a`,
+        coreStat: StatEnum.Weird,
+        
+        description: `At the beginning of each \`mystery\`, roll to see what is revealed about your immediate future.`,
 
-export let Feats: Array<FeatDesc> = [
-  {
-    id: "2b49540f-3629-43db-a879-e8c81d436c86",
-    playbook: "94a658a0-f5dc-4e4b-a1ec-1b322b08d78f", // The Chosen
-    startingFeat: true,
-    multiclassable: false,
+        miss: `Something bad is going to happen to you...`,
 
-    name: "Your Fate",
-    description: "You get to decide what sort of fate is in store for you.",
-    longDescription: `You get to decide what sort of fate is in store for you.
-
-Choose how you found out about your fate (Your Fate Origin.)
-
-Then pick two **Heroic Tags** and two **Doom Tags** for your fate. This is how your fate will unfold.
-It's okay to pick contradictory tags: that means your fate is pulling you both ways.
-Whenever you mark off a point of \`Luck\`, \`The Keeper\` will throw something from your fate at you.`,
-    
-    // TODO: Somehow we need to reach in and change the number of choices for the heroic and doom tags.
-    //       or perhaps just list the chosen ones and let you choose which to remove? Sounds tricky.
-    inputs: [
-      {
-        id: "fateOrigin", type: InputTypes.MultipleChoice,
-        label: "Fate Origin",
-        choose: 1,
-        options: [
-          "Nightmares and Visions", "Some weirdo told you", "An ancient cult found you", "Sought out by your nemesis",
-          "Attacked by Monsters", "Trained from birth", "You found the prophecy"
-        ],
-        allowCustom: true
-      },
-      {
-        id: "heroicTags", type: InputTypes.MultipleChoice,
-        label: "Heroic Tags",
-        choose: 2,
-        options: [
-          "Sacrifice", "You are the Champion", "Visions", "Secret training", "Magical powers", "Mystical inheritance",
-          "A normal life", "True love", "You can save the world", "Hidden allies", "The end of monsters", "Divine help"
-        ],
-        allowCustom: false,
-      },
-      {
-        id: "doomTags", type: InputTypes.MultipleChoice,
-        label: "Doom Tags",
-        choose: 2,
-        options: [
-          "Death", "You can't save everyone", "Impossible love", "Failure", "A nemesis", "No normal life",
-          "Loss of loved ones", "Treachery", "Doubt", "Sympathy with the enemy", "Damnation", "Hosts of monsters",
-          "The end of days", "The source of Evil"
-        ],
-        allowCustom: false,
-      },
-    ]
-  },
-  {
-    id: "5a92f2da-ca73-4fac-b859-08f2c745ae9b",
-    playbook: "94a658a0-f5dc-4e4b-a1ec-1b322b08d78f", // The Chosen
-    startingFeat: true,
-    multiclassable: true,
-
-    name: "Destiny's Plaything",
-    description: `At the beginning of each **Mystery**, roll to see what is revealed about your immediate future.`,
-    perks: {
-      actions: [
-        {
-          name: "Destiny's Plaything",
-          description: `At the beginning of each **Mystery**, roll to see what is revealed about your immediate future.`,
-
-          coreStat: StatEnum.Weird,
-
-          miss: `Something bad is going to happen to you...`,
-
-          mixedSuccess: `You get a vague hint about the coming **Mystery**.`,
-          solidSuccess: `\`The Keeper\` will reveal a useful detail about the coming **Mystery**.`,
-        },
-      ]
+        mixedSuccess: `You get a vague hint about the coming \`mystery\`.`,
+        solidSuccess: `\`The Keeper\` will reveal a useful detail about the coming \`mystery\`.`,
+      }]
     }
   },
   {
-    id: "2f8454d1-2528-428a-af7e-270ddb97019e",
-    playbook: "94a658a0-f5dc-4e4b-a1ec-1b322b08d78f", // The Chosen
-    startingFeat: true,
-    multiclassable: true,
+    name: `I'm Here For A Reason`,
+    id: `2f8454d1-2528-428a-af7e-270ddb97019e`,
+    playbooks: [`94a658a0-f5dc-4e4b-a1ec-1b322b08d78f`], // The Chosen
+    featType: FeatTypeEnum.Move,
 
-    name: "I'm Here For A Reason",
-    description: `You can use **Luck** to come back to life.`,
+    description: `You can use \`luck\` to come back to life.`,
     longDescription: `There's something you are destined to do.
 Work out the details with \`The Keeper\`, based on your **Fate** selection.
 You cannot die until it comes to pass.
 
-If you die in play, then you must spend a **Luck** point. You will then, somehow, recover or be returned to life.
-Once your task is done (or you use up all your **Luck**) all bets are off.`,
+If you die in play, then you must spend a \`luck\` point. You will then, somehow, recover or be returned to life.
+Once your task is done (or you use up all your \`luck\`) all bets are off.`,
+    
+    inputs: [{
+      label: `Destiny`,
+      subLabel: `You are here for a reason. Work with \`The Keeper\` to figure out what you are destined to do using your **fate** tags.`,
+      inputType: InputTypes.Text,
+    }],
+    
     perks: {
-      luck: [
-        {
-          description: `You can use **Luck** to come back to life.`,
-        }
-      ]
+      luck: [{ description: `You can use \`luck\` to come back to life.` }]
     }
   },
   {
-    id: "14f72ee0-bf5b-4958-ac31-f2387246b5dd",
-    playbook: "94a658a0-f5dc-4e4b-a1ec-1b322b08d78f", // The Chosen
-    startingFeat: false,
-    multiclassable: true,
+    name: `The Big Entrance`,
+    id: `14f72ee0-bf5b-4958-ac31-f2387246b5dd`,
+    playbooks: [`94a658a0-f5dc-4e4b-a1ec-1b322b08d78f`], // The Chosen
+    featType: FeatTypeEnum.Move,
 
-    name: "The Big Entrance",
     description: `Make a showy entrance into a dangerous situation.`,
 
     perks: {
-      actions: [
-        {
-          name: "The Big Entrance",
-          description: `Make a showy entrance into a dangerous situation.`,
+      actions: [{
+        name: `The Big Entrance`,
+        id: `5cc465a6-538d-4223-aa19-183a6338ad87`,
+        coreStat: StatEnum.Cool,
+        description: `Make a showy entrance into a dangerous situation.`,
 
-          coreStat: StatEnum.Cool,
-
-          miss: `You're marked as the biggest threat by all enemies who are present.`,
-
-          mixedSuccess: `You pick one person or monster to stop, watch and listen until you finish talking.`,
-          solidSuccess: `Everyone stops to watch and listen until you finish your opening speech.`,
-        }
-      ]
+        miss: `You're marked as the biggest threat by all enemies who are present.`,
+        mixedSuccess: `You pick one person or monster to stop, watch and listen until you finish talking.`,
+        solidSuccess: `Everyone stops to watch and listen until you finish your opening speech.`,
+      }]
     }
   },
   {
-    id: "91102186-f3b3-4836-b2f6-52ca3b567bfa",
-    playbook: "94a658a0-f5dc-4e4b-a1ec-1b322b08d78f", // The Chosen
-    startingFeat: false,
-    multiclassable: true,
+    name: `Devastating`,
+    id: `91102186-f3b3-4836-b2f6-52ca3b567bfa`,
+    playbooks: [`94a658a0-f5dc-4e4b-a1ec-1b322b08d78f`], // The Chosen
+    featType: FeatTypeEnum.Move,
 
-    name: "Devastating",
-    description: `When you inflict **Harm**, you may inflict +1 **Harm**`,
+    description: `When you inflict \`harm\`, you may inflict +1 \`harm\``,
     
     perks: {
-      attackModifiers: [{
-        name: "Devastating",
-        description: `When you inflict **Harm**, you may inflict +1 **Harm**`,
+      modAttack: [{
+        name: `Devastating`,
         offset: 1,
       }]
     }
   },
   {
-    id: "9b5d9bbc-7c9f-4c5f-aef0-c63cf848081e",
-    playbook: "94a658a0-f5dc-4e4b-a1ec-1b322b08d78f", // The Chosen
-    startingFeat: false,
-    multiclassable: true,
+    id: `9b5d9bbc-7c9f-4c5f-aef0-c63cf848081e`,
+    playbooks: [`94a658a0-f5dc-4e4b-a1ec-1b322b08d78f`], // The Chosen
+    featType: FeatTypeEnum.Move,
+    prerequisites: [`2b49540f-3629-43db-a879-e8c81d436c86`], // Your Fate
 
-    name: "Dutiful",
+    name: `Dutiful`,
     description: `When your **Fate** rears its ugly head, and you act in accordance with any of your **Fate Tags** (either heroic or doom) then mark experience. If it's a heroic tag, take +1 \`forward\`.`,
 
     perks: {
@@ -191,251 +103,99 @@ Once your task is done (or you use up all your **Luck**) all bets are off.`,
     }
   },
   {
-    id: "34b4eede-c8b1-40ea-a16b-b2e8ef160d8d",
-    playbook: "94a658a0-f5dc-4e4b-a1ec-1b322b08d78f", // The Chosen
-    startingFeat: false,
-    multiclassable: true,
+    name: `Invincible`,
+    id: `34b4eede-c8b1-40ea-a16b-b2e8ef160d8d`,
+    playbooks: [`94a658a0-f5dc-4e4b-a1ec-1b322b08d78f`], // The Chosen
+    featType: FeatTypeEnum.Move,
 
-    name: "Invincible",
     description: `You always count as having 2 **Armor**. This doesn't stack with other protection.`,
     
-    perks: {
-      armors: [
-        {
-          name: `Plot Armor`,
-          description: `You always count as having 2 **Armor**. This doesn't stack with other protection.`,
-          armor: 2,
-        },
-      ]
-    }
+    items: [{
+      name: `Plot Armor`,
+      id: `34b4eede-c8b1-40ea-a16b-b2e8ef160d8d`,
+
+      description: `You always count as having 2 **Armor**. This doesn't stack with other protection.`,
+      itemType: ItemType.InnateArmor,
+      armor: 2,
+      tags: [],
+    }]
   },
   {
-    id: "a84f5881-0188-4cb1-a303-f913fe939e72",
-    playbook: "94a658a0-f5dc-4e4b-a1ec-1b322b08d78f", // The Chosen
-    startingFeat: false,
-    multiclassable: true,
+    name: `Resilience`,
+    id: `a84f5881-0188-4cb1-a303-f913fe939e72`,
+    playbooks: [`94a658a0-f5dc-4e4b-a1ec-1b322b08d78f`], // The Chosen
+    featType: FeatTypeEnum.Move,
 
-    name: "Resilience",
-    description: `You heal faster than normal people. Any time your **Harm** gets healed, heal an extra point. Additionally, your wounds count as 1 **Harm** less for the purpose of \`The Keeper\`'s harm moves.`,
+    description: `You heal faster than normal people. Any time your \`harm\` gets healed, heal an extra point. Additionally, your wounds count as 1 \`harm\` less for the purpose of \`The Keeper\`'s harm moves.`,
 
     perks: {
       health: [
         {
-          description: `Any time your **Harm** gets healed, heal an extra point.`,
+          description: `Any time your \`harm\` gets healed, heal an extra point.`,
         },
         {
-          description: `Your wounds count as 1 **Harm** less in regard to \`The Keeper\`'s **Harm** moves.`,
+          description: `Your wounds count as 1 \`harm\` less in regard to \`The Keeper\`'s \`harm\` moves.`,
         }
       ]
     }
   },
   {
-    id: "a73676f8-d7f9-4d32-98ac-aeda96b8ebc4",
-    playbook: "bd3e69a8-fcd9-4c7b-8d98-fc778f18ecae", // The Crooked
-    startingFeat: false,
-    multiclassable: false,
+    name: `Artifact`,
+    id: `1a49552b-c007-466a-8e1a-c4b48f13be59`,
+    playbooks: [`bd3e69a8-fcd9-4c7b-8d98-fc778f18ecae`], // The Crooked
+    featType: FeatTypeEnum.Move,
 
-    name: "Background",
-    description: `You worked a less-than-legal job before you bake a monster hunter.`,
-
-    inputs: [{
-      type: InputTypes.Augment,
-      id: "background",
-      label: "Background",
-      choose: 1,
-      options: [
-        {
-          id: "d2b2974c-b330-4c38-aa22-78648ae3f756",
-          name: "Hoodlum",
-          description: `You can use +Tough (instead of +Charm) to **Manipulate Someone** with threats of violence.`,
-  
-          perks: {
-            manipulateSomeone: [{
-              description: `You can use +Tough (instead of +Charm) to **Manipulate Someone** with threats of violence.`,
-              alternateStat: StatEnum.Tough,
-            }]
-          }
-        },
-        {
-          id: "c884798c-32f3-44ca-b9b5-e966c0151c0c",
-          name: "Burglar",
-          description: `Sharp Move: You can break into a secure location.`,
-  
-          perks: {
-            actions: [{
-              name: "Burgle",
-              description: `Break into a secure location.`,
-
-              coreStat: StatEnum.Sharp,
-
-              miss: `\`The Keeper\` can take a hard move against you. You likely did not succeed in your burgle attempt.`,
-
-              mixedSuccess: `Pick Two:`,
-              solidSuccess: `Pick Three:`,
-              successFooter: `
-* You get in undetected.
-* You can get out undetected.
-* You don't leave a mess.
-* You find what you are after.
-        `,
-            }]
-          }
-        },
-        {
-          id: "5c991827-9e8e-4533-ac32-32f49635f906",
-          name: "Grifter",
-          description: `When you are about to **Manipulate Someone**, you can ask \`The Keeper\`, "What will convince this person to do what I want?"
-\`The Keeper\` must answer honestly, but not necessarily completely.`,
-  
-          perks: {
-            manipulateSomeone: [{
-              description: `Before **Manipulate Someone**, you can ask, "What will convince this person to do what I want?"`,
-            }]
-          }
-        },
-        {
-          id: "23f0898d-9dcb-411c-9c39-784fb4a5a4e2",
-          name: "Fixer",
-          description: `You are good at finding a buyer, seller, or someone for-hire using **+Charm**.`,
-  
-          perks: {
-            actions: [{
-              name: "Fixer",
-              description: `You are good at finding a buyer, seller, or someone for-hire using **+Charm**.`,
-
-              coreStat: StatEnum.Charm,
-
-              miss: `The only person who can help is someone who absolutely hates you.`,
-
-              mixedSuccess: `You know the one person who can probably do it, but theres a complication.
-
-Pick One:
-* You owe them.
-* They screwed you over.
-* You screwed them over.`,
-              solidSuccess: `You know just the person who would be interested.`,
-
-            }]
-          }
-        },
-        {
-          id: "1e123c89-81eb-4f7c-93a6-c7ca7fba088d",
-          name: "Assassin",
-          description: `When you take your first shot at an unsuspecting target, do +2 **Harm**`,
-  
-          perks: {
-            attackModifiers: [{
-              name: `Assassin`,
-              description: `When you take your first shot at an unsuspecting target, do +2 **Harm**`,
-              offset: 2,
-              apply: false,
-            }]
-          }
-        },
-        {
-          id: "6772bfde-fda9-4ee6-afc4-a969475bf9d6",
-          name: "Charlatan",
-          description: `When you want people to think you are using magic or when you want to **Manipulate Someone** with fortune telling.
-When you use **Manipulate Someone** with fortune telling, you may ask "What are they hoping for right now?" as a free question (even on a miss.)`,
-  
-          perks: {
-            actions: [{
-              name: "Magic Tricks",
-              description: `Make people think you are using magic.`,
-
-              coreStat: StatEnum.Cool,
-
-              miss: `\`The Keeper\` can take a hard move against you. You likely failed to convince them that you did magic.`,
-
-              mixedSuccess: `You tripped up a couple of times. Someone may have noticed.`,
-              solidSuccess: `Your audience is amazed and fooled by your illusion.`,
-            }],
-            manipulateSomeone: [{description: `When fortune telling, you may ask "What are they hoping for right now?" as a free question (even on a miss.)`}]
-          }
-        },
-        {
-          id: "1e618c4e-b780-4948-8c25-ae60fffc6f26",
-          name: "Pickpocket",
-          description: `Steal something small`,
-
-          perks: {
-            actions: [{
-              name: "Pickpocket",
-              description: `Steal something small`,
-
-              coreStat: StatEnum.Charm,
-
-              miss: `\`The Keeper\` can take a hard move against you. You likely failed your pickpocket attempt.`,
-
-              mixedSuccess: `Choose One:
-* You don't grab it
-* You grab the wrong thing
-* They will remember you later`,
-              solidSuccess: `You get it and they didn't notice you take it.`,
-            }],
-          }
-        }
-      ],
-    }]
-  },
-  {
-    id: "1a49552b-c007-466a-8e1a-c4b48f13be59",
-    playbook: "bd3e69a8-fcd9-4c7b-8d98-fc778f18ecae", // The Crooked
-    startingFeat: false,
-    multiclassable: true,
-
-    name: "Artifact",
     description: `You 'found' a magical artifact with handy powers, and kept it.`,
-    showInputs: [ "artifact" ],
     
     longDescription: `Pick One:
 * Protective Amulet: 1 **Armor** #magic #recharge.
-* Lucky Charm: Use instead of **Luck** only once.
+* Lucky Charm: Use instead of \`luck\` only once.
 * Grimoire: Studying the book gives +1 \`forward\` to **Use Magic** (or an alternate Weird Basic Move.)
 * Skeleton Key: Opens any magically sealed lock.
 * Imp Stone: A weak demon is bound to serve the holder. The imp must be summoned with **Use Magic**.`,
 
     inputs: [{
-      type: InputTypes.Items,
-      id: "artifact",
-      label: "Artifact",
+      label: `Artifact`,
+      inputType: InputTypes.FeatChoice,
       choose: 1,
       options: [
-        itemLookup.ProtectiveAmulet.id,
-        itemLookup.LuckyCharm.id,
-        itemLookup.Grimoir.id,
-        itemLookup.SkeletonKey.id,
-        itemLookup.ImpStone.id,
+        itemLookup.ProtectiveAmulet,
+        itemLookup.LuckyCharm,
+        itemLookup.Grimoir,
+        itemLookup.SkeletonKey,
+        itemLookup.ImpStone,
       ]
     }]
   },
   {
-    id: "8245c701-9ad3-4c48-a519-d17ab595439f",
-    playbook: "bd3e69a8-fcd9-4c7b-8d98-fc778f18ecae", // The Crooked
-    startingFeat: false,
-    multiclassable: true,
+    name: `Crew`,
+    id: `8245c701-9ad3-4c48-a519-d17ab595439f`,
+    playbooks: [`bd3e69a8-fcd9-4c7b-8d98-fc778f18ecae`], // The Crooked
+    featType: FeatTypeEnum.Move,
 
-    name: "Crew",
     description: `You have a regular crew: a team of three or four people who will help you out with pretty much anything. They count as an ally team.`,
 
-    inputs: [{ type: InputTypes.Ally, id: "crew", label: "Gang", crewMin: 3, crewMax: 4 }],
+    inputs: [{
+      label: `Gang`, key: `fda8ddab-ad70-4cd5-873b-a50f69e52f9a`, // Displayed in social
+      inputType: InputTypes.Ally,
+      crewMin: 3,
+      crewMax: 4
+    }],
 
     perks: {
       social: [{
         description: `You have a crew that will help you out with pretty much anything. They count as an ally team.`,
-        showInputs: [ "crew" ]
+        showInputs: [ `fda8ddab-ad70-4cd5-873b-a50f69e52f9a` ] // Gang
       }]
     }
   },
   {
-    id: "9745fbb6-da21-4e2c-bb74-cd2beb5874fe",
-    playbook: "bd3e69a8-fcd9-4c7b-8d98-fc778f18ecae", // The Crooked
-    startingFeat: false,
-    multiclassable: true,
+    name: `Deal with the Devil`,
+    id: `9745fbb6-da21-4e2c-bb74-cd2beb5874fe`,
+    playbooks: [`bd3e69a8-fcd9-4c7b-8d98-fc778f18ecae`], // The Crooked
+    featType: FeatTypeEnum.Move,
 
-    name: "Deal with the Devil",
     description: `You sold your soul to the Devil.`,
-    showInputs: [ "deal" ],
     
     longDescription: `Pick one or two things you got out of the deal:
 * Wealth
@@ -447,178 +207,200 @@ When you use **Manipulate Someone** with fortune telling, you may ask "What are 
 Payment is due when you die in 6 months (if you picked 2 things) or 1 year (if you picked 1 thing.)`,
 
     inputs: [{
-      type: InputTypes.Augment,
-      id: "deal",
-      label: "Deal",
+      label: `Deal`,
+      inputType: InputTypes.FeatChoice,
       choose: 1,
       options: [
         {
-          id: "b4bbe310-89fc-46a7-9db2-d3c931c2951a",
-          name: "You were given 1 perk, but have only 1 year to live.",
-          inputs: [{
-            type: InputTypes.Augment,
-            id: "deal2",
-            label: "Perk",
-            choose: 1,
-            options: [
-              {
-                id: "a684fdef-26a0-492a-9d4f-7050992c92dd",
-                name: "Wealth",
-                perks: {
-                  inventory: [{description: `You sold your soul for wealth. You have only 1 year till your soul is forfeit.`,}]
-                }
-              },
-              {
-                id: "1ed585f3-f6f2-4e21-8e89-0228feb53c76",
-                name: "Fame",
-                perks: {
-                  social: [{description: `You sold your soul for fame. You have only 1 year till your soul is forfeit.`,}]
-                }
-              },
-              {
-                id: "ae1e108a-7328-464f-b43c-c8a14139c3e3",
-                name: "Youth",
-                perks: {
-                  social: [{description: `You sold your soul for youth. You have only 1 year till your soul is forfeit.`,}]
-                }
-              },
-              {
-                id: "8189152a-6e65-40e5-896d-29ed45858eb3",
-                name: "Sexual gratification",
-                perks: {
-                  social: [{description: `You sold your soul for sexual gratification. You have only 1 year till your soul is forfeit.`,}]
-                }
-              },
-              {
-                id: "ec0fdacc-0f6b-4b10-836f-3399a3b5decb",
-                name: "Skill (+1 to a stat)",
-                description: `You gain skill, which grants you +1 to a rating (stat) of your choice`,
-                inputs: [{
-                  type: InputTypes.Augment,
-                  id: "deal3",
-                  label: "Rating",
-                  choose: 1,
-                  options: [
-                    {
-                      id: "0dca3bb3-b019-4315-ac86-a65576f14986",
-                      name: "Charm",
-                      perks: {charm: {bonus: 1, max: 4}}
-                    },
-                    {
-                      id: "a9849b53-3e7c-4fe1-84fe-fb504c2bffe3",
-                      name: "Cool",
-                      perks: {cool: {bonus: 1, max: 4}}
-                    },
-                    {
-                      id: "422b60c7-3f41-42f0-8177-d6e5e9b47440",
-                      name: "Sharp",
-                      perks: {sharp: {bonus: 1, max: 4}}
-                    },
-                    {
-                      id: "9f142324-918a-43ec-a219-83df2269cf50",
-                      name: "Tough",
-                      perks: {tough: {bonus: 1, max: 4}}
-                    },
-                    {
-                      id: "3393b93d-c718-40c2-a44d-134101cf4ae7",
-                      name: "Weird",
-                      perks: {weird: {bonus: 1, max: 4}}
-                    },
-                  ]
-                }]
-              },
-            ]
-          }]
+          id: `b4bbe310-89fc-46a7-9db2-d3c931c2951a`,
+          name: `You were given 1 perk, but have only 1 year to live.`,
+          perks: {
+            sessionStart: [{
+              description: `Ask \`The Keeper\` how much time elapses since the last mystery. Update your months remaining.`,
+              showInputs:[`de86daa1-1ff8-46f7-8d00-614cb173cb8d`] // Months Remaining
+            }]
+          },
+          inputs: [
+            {
+              label: `Months Remaining`, key: `de86daa1-1ff8-46f7-8d00-614cb173cb8d`, // Displayed at the start of the session
+              subLabel: `until the collection day for your soul.`,
+              inputType: InputTypes.Checks,
+              max: 12,
+            },
+            {
+              label: `Perk`,
+              inputType: InputTypes.FeatChoice,
+              choose: 1,
+              options: [
+                {
+                  id: `a684fdef-26a0-492a-9d4f-7050992c92dd`,
+                  name: `Wealth`,
+                  perks: {
+                    inventory: [{description: `You sold your soul for wealth.`}],
+                  }
+                },
+                {
+                  id: `1ed585f3-f6f2-4e21-8e89-0228feb53c76`,
+                  name: `Fame`,
+                  perks: {
+                    social: [{description: `You sold your soul for fame.`}],
+                  }
+                },
+                {
+                  id: `ae1e108a-7328-464f-b43c-c8a14139c3e3`,
+                  name: `Youth`,
+                  perks: {
+                    social: [{description: `You sold your soul for youth.`}],
+                  }
+                },
+                {
+                  id: `8189152a-6e65-40e5-896d-29ed45858eb3`,
+                  name: `Sexual gratification`,
+                  perks: {
+                    social: [{description: `You sold your soul for sexual gratification.`}],
+                  }
+                },
+                {
+                  id: `ec0fdacc-0f6b-4b10-836f-3399a3b5decb`,
+                  name: `Skill (+1 to a stat)`,
+                  description: `You gain skill, which grants you +1 to a rating (stat) of your choice`,
+                  inputs: [{
+                    inputType: InputTypes.FeatChoice,
+                    label: `Rating`,
+                    choose: 1,
+                    options: [
+                      {
+                        id: `0dca3bb3-b019-4315-ac86-a65576f14986`,
+                        name: `Charm`,
+                        perks: {charm: {bonus: 1, max: 4}}
+                      },
+                      {
+                        id: `a9849b53-3e7c-4fe1-84fe-fb504c2bffe3`,
+                        name: `Cool`,
+                        perks: {cool: {bonus: 1, max: 4}}
+                      },
+                      {
+                        id: `422b60c7-3f41-42f0-8177-d6e5e9b47440`,
+                        name: `Sharp`,
+                        perks: {sharp: {bonus: 1, max: 4}}
+                      },
+                      {
+                        id: `9f142324-918a-43ec-a219-83df2269cf50`,
+                        name: `Tough`,
+                        perks: {tough: {bonus: 1, max: 4}}
+                      },
+                      {
+                        id: `3393b93d-c718-40c2-a44d-134101cf4ae7`,
+                        name: `Weird`,
+                        perks: {weird: {bonus: 1, max: 4}}
+                      },
+                    ]
+                  }]
+                },
+              ]
+            }
+          ],
         },
         {
-          id: "b8a364f8-832f-452e-94a0-0ffb2524d51b",
-          name: "You gain 2 perks, but have only 6 months to live.",
-          inputs: [{
-            type: InputTypes.Augment,
-            id: "deal2",
-            label: "Perks",
-            choose: 2,
-            options: [
-              {
-                id: "a684fdef-26a0-492a-9d4f-7050992c92dd",
-                name: "Wealth",
-                perks: {
-                  inventory: [{description: `You sold your soul for wealth. You have only 1 year till your soul is forfeit.`}]
-                }
-              },
-              {
-                id: "1ed585f3-f6f2-4e21-8e89-0228feb53c76",
-                name: "Fame",
-                perks: {
-                  social: [{description: `You sold your soul for fame. You have only 1 year till your soul is forfeit.`}]
-                }
-              },
-              {
-                id: "ae1e108a-7328-464f-b43c-c8a14139c3e3",
-                name: "Youth",
-                perks: {
-                  social: [{description: `You sold your soul for youth. You have only 1 year till your soul is forfeit.`}]
-                }
-              },
-              {
-                id: "8189152a-6e65-40e5-896d-29ed45858eb3",
-                name: "Sexual Gratification",
-                perks: {
-                  social: [{description: `You sold your soul for sexual gratification. You have only 1 year till your soul is forfeit.`}]
-                }
-              },
-              {
-                id: "ec0fdacc-0f6b-4b10-836f-3399a3b5decb",
-                name: "Skill (+1 to a stat)",
-                inputs: [{
-                  type: InputTypes.Augment,
-                  id: "deal3",
-                  label: "Rating",
-                  choose: 1,
-                  options: [
-                    {
-                      id: "0dca3bb3-b019-4315-ac86-a65576f14986",
-                      name: "Charm",
-                      perks: {charm: {bonus: 1, max: 5}}
-                    },
-                    {
-                      id: "a9849b53-3e7c-4fe1-84fe-fb504c2bffe3",
-                      name: "Cool",
-                      perks: {cool: {bonus: 1, max: 5}}
-                    },
-                    {
-                      id: "422b60c7-3f41-42f0-8177-d6e5e9b47440",
-                      name: "Sharp",
-                      perks: {
-                        sharp: {bonus: 1, max: 5}
-                      }
-                    },
-                    {
-                      id: "9f142324-918a-43ec-a219-83df2269cf50",
-                      name: "Tough",
-                      perks: {tough: {bonus: 1, max: 5}}
-                    },
-                    {
-                      id: "3393b93d-c718-40c2-a44d-134101cf4ae7",
-                      name: "Weird",
-                      perks: {weird: {bonus: 1, max: 5}}
-                    },
-                  ]
-                }]
-              },
-            ]
-          }]
+          id: `b8a364f8-832f-452e-94a0-0ffb2524d51b`,
+          name: `You gain 2 perks, but have only 6 months to live.`,
+          perks: {
+            sessionStart: [{
+              description: `Ask \`The Keeper\` how much time elapses since the last mystery. Update your months remaining.`,
+              showInputs: [`f4322cb9-ca6a-4982-864a-f57c7d77e321`] // Months Remaining
+            }]
+          },
+          inputs: [
+            {
+              label: `Months Remaining`, key: `f4322cb9-ca6a-4982-864a-f57c7d77e321`, // Displayed at the start of the session
+              subLabel: `until the collection day for your soul.`,
+              inputType: InputTypes.Checks,
+              max: 6,
+            },
+            {
+              inputType: InputTypes.FeatChoice,
+              label: `Perks`,
+              choose: 2,
+              options: [
+                {
+                  id: `a684fdef-26a0-492a-9d4f-7050992c92dd`,
+                  name: `Wealth`,
+                  perks: {
+                    inventory: [{description: `You sold your soul for wealth. You have only 1 year till your soul is forfeit.`}]
+                  }
+                },
+                {
+                  id: `1ed585f3-f6f2-4e21-8e89-0228feb53c76`,
+                  name: `Fame`,
+                  perks: {
+                    social: [{description: `You sold your soul for fame. You have only 1 year till your soul is forfeit.`}]
+                  }
+                },
+                {
+                  id: `ae1e108a-7328-464f-b43c-c8a14139c3e3`,
+                  name: `Youth`,
+                  perks: {
+                    social: [{description: `You sold your soul for youth. You have only 1 year till your soul is forfeit.`}]
+                  }
+                },
+                {
+                  id: `8189152a-6e65-40e5-896d-29ed45858eb3`,
+                  name: `Sexual Gratification`,
+                  perks: {
+                    social: [{description: `You sold your soul for sexual gratification. You have only 1 year till your soul is forfeit.`}]
+                  }
+                },
+                {
+                  id: `ec0fdacc-0f6b-4b10-836f-3399a3b5decb`,
+                  name: `Skill (+1 to a stat)`,
+                  inputs: [{
+                    label: `Rating`,
+                    inputType: InputTypes.FeatChoice,
+                    choose: 1,
+                    options: [
+                      {
+                        id: `0dca3bb3-b019-4315-ac86-a65576f14986`,
+                        name: `Charm`,
+                        perks: {charm: {bonus: 1, max: 5}}
+                      },
+                      {
+                        id: `a9849b53-3e7c-4fe1-84fe-fb504c2bffe3`,
+                        name: `Cool`,
+                        perks: {cool: {bonus: 1, max: 5}}
+                      },
+                      {
+                        id: `422b60c7-3f41-42f0-8177-d6e5e9b47440`,
+                        name: `Sharp`,
+                        perks: {
+                          sharp: {bonus: 1, max: 5}
+                        }
+                      },
+                      {
+                        id: `9f142324-918a-43ec-a219-83df2269cf50`,
+                        name: `Tough`,
+                        perks: {tough: {bonus: 1, max: 5}}
+                      },
+                      {
+                        id: `3393b93d-c718-40c2-a44d-134101cf4ae7`,
+                        name: `Weird`,
+                        perks: {weird: {bonus: 1, max: 5}}
+                      },
+                    ]
+                  }]
+                },
+              ]
+            }
+          ],
         },
       ]
     }]
   },
   {
-    id: "7f61cb80-f1c2-4fa4-8d42-4e0b61559f38",
-    playbook: "bd3e69a8-fcd9-4c7b-8d98-fc778f18ecae", // The Crooked
-    startingFeat: false,
-    multiclassable: true,
+    name: `Friends on the Force`,
+    id: `7f61cb80-f1c2-4fa4-8d42-4e0b61559f38`,
+    playbooks: [`bd3e69a8-fcd9-4c7b-8d98-fc778f18ecae`], // The Crooked
+    featType: FeatTypeEnum.Move,
 
-    name: "Friends on the Force",
     description: `You know a few cops who can help, for certain considerations. You can lose the cops using **Act Under Pressure**.`,
     longDescription: `You know a few cops who can be persuaded to look the other way or do you a favor, for certain considerations.
 You can **Act Under Pressure** to get in touch with them when you need to divert any law enforcement attention.
@@ -632,36 +414,44 @@ There will be a cost, although maybe not right now.`,
     }
   },
   {
-    id: "85c5b933-f703-42ec-b74c-b14ec16e161c",
-    playbook: "bd3e69a8-fcd9-4c7b-8d98-fc778f18ecae", // The Crooked
-    startingFeat: false,
-    multiclassable: true,
+    name: `Made`,
+    id: `85c5b933-f703-42ec-b74c-b14ec16e161c`,
+    playbooks: [`bd3e69a8-fcd9-4c7b-8d98-fc778f18ecae`], // The Crooked
+    featType: FeatTypeEnum.Move,
 
-    name: "Made",
     description: `You're "made" in a gang. You can call on the gang members to help you out. Your Boss may have jobs for you.`,
     longDescription: `You're "made" in a gang. Name the gang and describe how their operations tie into your background.
 You can call on the gang members to help you out, but they'll expect to be paid. Your bosses will have requests for you now and again, but
 you'll be paid. Minor trouble will be overlooked, but you better not screw over any other "made" gangsters.`,
 
     inputs: [
-      { type: InputTypes.Text, id: "gangName", label: "Gang Name", placeholder: "The Hornets" },
-      { type: InputTypes.TextArea, id: "gangDescription", label: "Gang Description", placeholder: "Gang operations. How the gang relates to your background. etc." },
+      {
+        label: `Gang Name`, key: `080beb57-4a37-4fa6-b002-851ed5698294`, // Displayed in social
+        inputType: InputTypes.Text,
+      },
+      {
+        label: `Gang Description`,
+        inputType: InputTypes.TextArea,
+        placeholder: `Gang operations. How the gang relates to your background. etc.`,
+      },
     ],
 
     perks: {
       social: [
         { description: `You can call on your gang members to help you out. They'll expect to be paid.` },
-        { description: `Your bosses will have requests for you now and again, but you'll be paid.`, showInputs: [ "gangName" ]  },
+        {
+          description: `Your bosses will have requests for you now and again, but you'll be paid.`,
+          showInputs: [ `080beb57-4a37-4fa6-b002-851ed5698294` ] // Gang Name
+        },
       ]
     }
   },
   {
-    id: "15cfa72c-bfee-45ed-a3d4-2923805b31cd",
-    playbook: "bd3e69a8-fcd9-4c7b-8d98-fc778f18ecae", // The Crooked
-    startingFeat: false,
-    multiclassable: true,
+    name: `Driver`,
+    id: `15cfa72c-bfee-45ed-a3d4-2923805b31cd`,
+    playbooks: [`bd3e69a8-fcd9-4c7b-8d98-fc778f18ecae`], // The Crooked
+    featType: FeatTypeEnum.Move,
 
-    name: "Driver",
     description: `You have +1 \`ongoing\` when driving, you can hotwire anything using tools, and you own two vehicles.`,
     longDescription: `You have +1 \`ongoing\` when driving.
     
@@ -671,27 +461,38 @@ you'll be paid. Minor trouble will be overlooked, but you better not screw over 
 
     perks: {
       autoActions: [{
-        name: "Hotwiring",
+        name: `Hotwiring`,
+        id: `1c08723e-716b-47d4-bf1a-775f6c6913fd`,
         description: `You can hotwire anything (the older it is, the fewer tools you need to do it.)`,
       }],
-      allMoves: [{
-        description: `You have +1 \`ongoing\` when driving.`,
+      modMoves: [{
+        name: `Driver`,
         offset: 1,
+        condition: `Apply while driving`,
       }],
     },
-
-    vehicles: [
-      { description: `Driver Vehicle 1. A handy, widely-available vehicle. (Likely lacks armor, monster cages, etc.)` },
-      { description: `Driver Vehicle 2. A handy, widely-available vehicle. (Likely lacks armor, monster cages, etc.)` },
+    
+    inputs: [
+      {
+        label: `Driver Vehicle 1`,
+        inputType: InputTypes.FeatChoice,
+        choose: 1,
+        options: [ itemLookup.Car, itemLookup.Van, itemLookup.Motorcycle ], 
+      },
+      {
+        label: `Driver Vehicle 2`,
+        inputType: InputTypes.FeatChoice,
+        choose: 1,
+        options: [ itemLookup.Car, itemLookup.Van, itemLookup.Motorcycle ],
+      },
     ]
   },
   {
-    id: "0790ae58-043a-45ac-a48f-5c61f4c2d5de",
-    playbook: "bd3e69a8-fcd9-4c7b-8d98-fc778f18ecae", // The Crooked
-    startingFeat: false,
-    multiclassable: true,
+    name: `Home Ground`,
+    id: `0790ae58-043a-45ac-a48f-5c61f4c2d5de`,
+    playbooks: [`bd3e69a8-fcd9-4c7b-8d98-fc778f18ecae`], // The Crooked
+    featType: FeatTypeEnum.Move,
 
-    name: "Home Ground",
     description: `Your crew made a point of keeping the locals happy. Your neighborhood will always be willing to help, no questions asked.`,
     longDescription: `Your crew made a point of keeping the locals happy - keeping them safe, ensuring things always went down okay, etc.
 When you're back in your old neighborhood, you can always find people who will hide you or help you with a minor favor, no questions asked.`,
@@ -701,12 +502,11 @@ When you're back in your old neighborhood, you can always find people who will h
     }
   },
   {
-    id: "707e0de6-f495-4262-b687-46589c965568",
-    playbook: "bd3e69a8-fcd9-4c7b-8d98-fc778f18ecae", // The Crooked
-    startingFeat: false,
-    multiclassable: true,
+    name: `Notorious`,
+    id: `707e0de6-f495-4262-b687-46589c965568`,
+    playbooks: [`bd3e69a8-fcd9-4c7b-8d98-fc778f18ecae`], // The Crooked
+    featType: FeatTypeEnum.Move,
 
-    name: "Notorious",
     description: `You have a reputation from your criminal past. You can reveal it to manipulate people more easily.`,
     longDescription: `You have a reputation from your criminal past.
 When you reveal who you are, your terrifying reputation counts as a reason for people to do what you ask, for the **Manipulate Someone** move.
@@ -717,129 +517,33 @@ Revealing your identity to someone can create problems later, of course.`,
     }
   },
   {
-    id: "54736d93-6bc7-4292-b3ef-810e4d5e8f76",
-    playbook: "bd3e69a8-fcd9-4c7b-8d98-fc778f18ecae", // The Crooked
-    startingFeat: true,
-    multiclassable: false,
+    name: `Boss from Beyond`,
+    id: `6e2397c4-971e-4529-b26d-66bd35168ccd`,
+    playbooks: [`9e9f712c-54d9-4193-b7ad-48c64f7ec9dc`], // The Divine
+    featType: FeatTypeEnum.Move,
 
-    name: "Gear",
-    description: `You have 3 effective weapons`,
-    
-    inputs: [{
-      id: "weapons",
-      type: InputTypes.Augment,
-      label: "Weapons",
-      choose: 3,
-      options: [
-        {
-          id: ".22 Revolver",
-          name: "",
-        }
-      ]
-    }]
-  },
-  {
-    id: "2f980939-7d68-442c-a332-128136b4b7f6",
-    playbook: "9e9f712c-54d9-4193-b7ad-48c64f7ec9dc", // The Divine
-    startingFeat: true,
-    multiclassable: false,
-
-    name: "Mission",
-    description: "You have been put on Earth for a purpose.",
-    showInputs: ["mission"],
-    
-    inputs: [{
-      id: "mission",
-      type: InputTypes.Augment,
-      label: "Mission",
-      choose: 1,
-      options: [
-        {
-          id: "63e20d42-35fc-49fc-ab10-f966252b7a2a",
-          name: "Adversary of the Divine",
-          description: "You are here to fight the schemes of an Adversary.",
-        },
-        {
-          id: "6fb7421e-e702-4407-ad09-e641e3d270e2",
-          name: "Guardian of the End of Days",
-          description: `The End of Days approaches. Your role is to guide these \`Hunters\` and prevent it from coming to pass.`,
-        },
-        {
-          id: "a5ca2fdb-1f94-49ea-8d2b-45377243f9fd",
-          name: "Usher of the End of Days",
-          description: `The End of Days approaches. Your role is to guide these \`Hunters\` and ensure it comes to pass.`,
-        },
-        {
-          id: "250d7930-832d-4c94-ac6a-948febc3e2fe",
-          name: "Exiled",
-          description: `You have been exiled.
-  
-  You must work for the cause of Good without drawing attention from your brothers and sisters,
-  as they are bound to execute you for your crimes.`,
-        },
-        {
-          id: "9b7c2160-a9a8-4206-9f0c-3ed2edd18fce",
-          name: "Apprentice of the Divine",
-          description: `One of the other \`Hunters\` has a crucial role to play in events to come.
-  You must prepare them for their role, and protect them at any cost.`,
-        },
-      ]
-    }]
-  },
-  {
-    id: "70f95c2f-9b6a-4a28-9d74-11d647f14944",
-    playbook: "9e9f712c-54d9-4193-b7ad-48c64f7ec9dc", // The Divine
-    startingFeat: true,
-    multiclassable: false,
-    
-    name: "Gear",
-    description: `You gain one divine weapon and some divine armor.`,
-    longDescription: `Pick one divine weapon. You also get divine armor with 1 \`armor\` that is \`#holy\`.
-Your divine armor has a look suited to your origin.`,
-    
-    inputs: [{
-      id: `divineWeapon`,
-      type: InputTypes.Items,
-      label: `Divine Weapon`,
-      choose: 1,
-      options: [
-        itemLookup.FlamingSword.id,
-        itemLookup.ThunderHammer.id,
-        itemLookup.RazorWhip.id,
-        itemLookup.FiveDemonBag.id,
-        itemLookup.SilverTrident.id,
-      ]
-    }],
-    perks: {
-      armors: [{
-        name: `Divine Armor`,
-        armor: 1,
-        tags: [ `holy` ],
-      }]
-    }
-  },
-  {
-    id: "6e2397c4-971e-4529-b26d-66bd35168ccd",
-    playbook: "9e9f712c-54d9-4193-b7ad-48c64f7ec9dc", // The Divine
-    startingFeat: false,
-    multiclassable: true,
-
-    name: "Boss from Beyond",
     description: `At the beginning of each mystery, roll to meet with the boss.`,
     
     inputs: [
-      { type: InputTypes.TextArea, id: "task", label: "Task(s)", placeholder: "" },
-      { type: InputTypes.Checks, id: "taskFailed", label: "Task(s) Failed", max: 1 },
+      {
+        label: `Task(s)`, key: `a3bce4bd-5490-4bcb-a8f9-56884cbc4058`, // Displayed in action
+        inputType: InputTypes.TextArea,
+      },
+      {
+        label: `Task(s) Failed`, key: `fcd255fd-aeb9-4e2d-9088-8396d5409314`, // Displayed in action
+        inputType: InputTypes.Checks,
+        max: 1,
+      },
     ],
     
     perks: {
       actions: [{
-        name: "Boss from Beyond",
+        name: `Boss from Beyond`,
+        id: `ea0d7a46-ea22-479c-84f0-cd8e6b759aa0`,
         coreStat: StatEnum.Weird,
         description: `At the beginning of each mystery, roll to meet with the boss.`,
 
         miss: `Your superiors require you do a terrible task.`,
-
         mixedSuccess: `Your superiors ask you to do a complicated or difficult task.`,
         solidSuccess: `Your superiors ask you to do a simple task.`,
         successFooter: `Additionally, You can ask your superiors one of the **Investigate a Mystery** questions:
@@ -848,79 +552,103 @@ Your divine armor has a look suited to your origin.`,
         resultFooter: `If you do not accomplish what the boss ordered, you cannot use this move again until you have made up for your failure in some way.`,
 
         startOfMystery: true,
-        showInputs: ["task", "taskFailed"]
+        showInputs: [`a3bce4bd-5490-4bcb-a8f9-56884cbc4058`, `fcd255fd-aeb9-4e2d-9088-8396d5409314`]
+      }],
+      social: [{
+        description: `Your superiors occasionally ask you to perform a task.`,
+        showInputs: [`a3bce4bd-5490-4bcb-a8f9-56884cbc4058`, `fcd255fd-aeb9-4e2d-9088-8396d5409314`]
       }]
     }
   },
   {
-    id: "d68efbb3-0a67-42d1-81c1-86a1d09cecf5",
-    playbook: "9e9f712c-54d9-4193-b7ad-48c64f7ec9dc", // The Divine
-    startingFeat: false,
-    multiclassable: true,
+    name: `Angel Wings`,
+    id: `d68efbb3-0a67-42d1-81c1-86a1d09cecf5`,
+    playbooks: [`9e9f712c-54d9-4193-b7ad-48c64f7ec9dc`], // The Divine
+    featType: FeatTypeEnum.Move,
 
-    name: "Angel Wings",
     description: `You can go instantly to anywhere you've visited before, or to a person you know well. If you try to take 1 or 2 people, you have to roll.`,
     
     perks: {
       actions: [{
-        name: "Angel Wings",
+        name: `Angel Wings`,
+        id: `6b62afd0-43a7-4ddf-830e-9f300a069af9`,
         coreStat: StatEnum.Weird,
         description: `You can go instantly to anywhere you've visited before with 1 or 2 people. (No roll required to travel alone.)`,
+        
         miss: `\`The Keeper\` can take a hard move against you. Your attempt likely failed or went terribly wrong.`,
         mixedSuccess: `You didn't quite manage it. Either you are all separated or you all appear in the wrong place.`,
         solidSuccess: `You all get where you wanted to go.`,
       }],
       autoActions: [{
-        name: "Angel Wings",
+        name: `Angel Wings`,
+        id: `c01e640a-7477-4ce2-a792-2089a36cbc8d`,
         description: `You can go instantly to anywhere you've visited before, or to a person you know well. (See the **Ability** if you want to take people with you.)`
       }]
     }
   },
   {
-    id: "6f96fc77-c094-4aca-94e9-76eee2705815",
-    playbook: "9e9f712c-54d9-4193-b7ad-48c64f7ec9dc", // The Divine
-    startingFeat: false,
-    multiclassable: true,
+    name: `What I Need, When I Need It`,
+    id: `6f96fc77-c094-4aca-94e9-76eee2705815`,
+    playbooks: [`9e9f712c-54d9-4193-b7ad-48c64f7ec9dc`], // The Divine
+    featType: FeatTypeEnum.Move,
 
-    name: "What I Need, When I Need It",
     description: `You may store any small object you own in a magical space no one can get to. You can retrieve stored items any time into your hand.`,
     
     perks: {
       autoActions: [{
-        name: "What I Need, When I Need It",
+        name: `What I Need, When I Need It`,
+        id: `c0243416-2271-4be1-a896-a429eb9ec1c1`,
         description: `You may store any small object you own in a magical space no one can get to. You can retrieve stored items any time into your hand.`
       }]
     }
   },
   {
-    id: "572a1a57-cd59-4362-b7df-a9cd1894a870",
-    playbook: "9e9f712c-54d9-4193-b7ad-48c64f7ec9dc", // The Divine
-    startingFeat: false,
-    multiclassable: true,
+    name: `Smite`,
+    id: `572a1a57-cd59-4362-b7df-a9cd1894a870`,
+    playbooks: [`9e9f712c-54d9-4193-b7ad-48c64f7ec9dc`], // The Divine
+    featType: FeatTypeEnum.Move,
 
-    name: "Smite",
-    description: `Your body and divine weapon always count as a weakness against the monsters you fight. Your unarmed attacks are 2 **Harm** #intimate #hand #messy`,
+    description: `Your unarmed strikes are stronger. Your body and divine weapon count as a weakness for monsters.`,
+    longDescription: `Your body and divine weapon always count as a weakness for the monsters you fight.
+Your unarmed attacks are 2 \`harm\` #intimate #hand #messy`,
 
+    items: [{
+      id: `572a1a57-cd59-4362-b7df-a9cd1894a870`,
+      name: `Unarmed Smite`,
+      description: `Counts as a weakness for monsters`,
+      itemType: ItemType.InnateWeapon,
+      harm: 2,
+      tags: [ ItemTag.intimate, ItemTag.hand, ItemTag.messy, ItemTag.monsterWeakness ],
+    }],
+    
     perks: {
-      attacks: [{
-        name: "Smite - Unarmed", description: `Counts as a weakness against monsters.`,
-        harm: 2, ranges: [ RangeEnum.Intimate, RangeEnum.Hand ], tags: [ "messy" ],
+      modAttack: [{
+        name: `Smite`,
+        offset: 0,
+        addTags: [ItemTag.monsterWeakness],
+        applyToItem: [
+          `f5d91c17-26b4-4c7a-991c-f0554a2939e5`, // Flaming Sword
+          `cdf705e3-86f4-4b3d-b6bf-0d98a20a66e3`, // Thunder Hammer
+          `c483daf7-9ad4-4c62-949c-6595e741daf9`, // Razor Whip,
+          `0d89fa7b-1a2d-4380-a3dd-36d649172f6f`, // Five Demon Bag
+          `d67eb2b2-504a-4461-8eb8-41f29e342159`, // Silver Trident
+        ],
       }]
     }
   },
   {
-    id: "3fa74412-4f53-4b47-b125-f17f7e3eed9e",
-    playbook: "9e9f712c-54d9-4193-b7ad-48c64f7ec9dc", // The Divine
-    startingFeat: false,
-    multiclassable: true,
+    name: `Soothe`,
+    id: `3fa74412-4f53-4b47-b125-f17f7e3eed9e`,
+    playbooks: [`9e9f712c-54d9-4193-b7ad-48c64f7ec9dc`], // The Divine
+    featType: FeatTypeEnum.Move,
 
-    name: "Soothe",
     description: `Talk to someone for a few seconds to calm them.`,
     longDescription: `When you talk to someone for a few seconds in a quiet voice, you can calm them down and block any panic, anger, or other negative emotions they have.
 This works even if the thing freaking them out is still present, as long as your voice can be heard.`,
     perks: {
       autoActions: [{
-        name: "Soothe",
+        name: `Soothe`,
+        id: `e4eee36e-2a22-45af-86e9-d84eaf920d4b`,
         description: `Talk to someone for a few seconds to calm them.`,
         longDescription: `When you talk to someone for a few seconds in a quiet voice, you can calm them down and block any panic, anger, or other negative emotions they have.
 This works even if the thing freaking them out is still present, as long as your voice can be heard.`,
@@ -928,40 +656,42 @@ This works even if the thing freaking them out is still present, as long as your
     }
   },
   {
-    id: "d66c3ec4-38af-46c7-a375-e8eb1359c334",
-    playbook: "9e9f712c-54d9-4193-b7ad-48c64f7ec9dc", // The Divine
-    startingFeat: false,
-    multiclassable: true,
+    name: `Lay On Hands`,
+    id: `d66c3ec4-38af-46c7-a375-e8eb1359c334`,
+    playbooks: [`9e9f712c-54d9-4193-b7ad-48c64f7ec9dc`], // The Divine
+    featType: FeatTypeEnum.Move,
 
-    name: "Lay On Hands",
     description: `Your touch can heal injury and disease.`,
     perks: {
       actions: [{
-        name: "Lay On Hands",
-        description: `Your touch can heal injury and disease.`,
+        name: `Lay On Hands`,
+        id: `0c2e4e1d-7d0f-48ef-85ea-32e38c092a9c`,
         coreStat: StatEnum.Cool,
+        description: `Your touch can heal injury and disease.`,
+        
         miss: `Your aura causes them extra harm`,
-        mixedSuccess: `Heal 2 **Harm** or an illness and **Stabilize** the target.
+        mixedSuccess: `Heal 2 \`harm\` or an illness and **Stabilize** the target.
 
 Unfortunately, you take the damage or illness upon yourself.`,
-        solidSuccess: `Heal 2 **Harm** or an illness and **Stabilize** the target.`
+        solidSuccess: `Heal 2 \`harm\` or an illness and **Stabilize** the target.`
       }]
     }
   },
   {
-    id: "5f13cf64-03d7-489c-8ebf-8578a19b4e44",
-    playbook: "9e9f712c-54d9-4193-b7ad-48c64f7ec9dc", // The Divine
-    startingFeat: false,
-    multiclassable: true,
+    name: `Cast Out Evil`,
+    id: `5f13cf64-03d7-489c-8ebf-8578a19b4e44`,
+    playbooks: [`9e9f712c-54d9-4193-b7ad-48c64f7ec9dc`], // The Divine
+    featType: FeatTypeEnum.Move,
 
-    name: "Cast Out Evil",
     description: `You may banish an unnatural creature from your presence.`,
     longDescription: `You may banish an unnatural creature from your presence. This move may be used on unnatural \`Hunters\`, like 'The Monstrous'.`,
     perks: {
       actions: [{
-        name: "Cast Out Evil",
-        description: `You may banish an unnatural creature from your presence.`,
+        name: `Cast Out Evil`,
+        id: `adece5b7-531c-436c-aca9-d562e3489f87`,
         coreStat: StatEnum.Tough,
+        description: `You may banish an unnatural creature from your presence.`,
+        
         miss: `Something is keeping it here... that's not good.`,
         mixedSuccess: `It takes a little while for the banishing to take effect--the creature has time to make one or two actions.`,
         solidSuccess: `It is banished!`,
@@ -970,51 +700,51 @@ Unfortunately, you take the damage or illness upon yourself.`,
     }
   },
   {
-    id: "6db80acb-2a78-413c-bcb9-ae62ca361f9e",
-    playbook: "689d32a6-faa1-4258-9fda-894b9bdf8571", // The Expert
-    startingFeat: false,
-    multiclassable: true,
-
     name: `I've Read About This Sort Of Thing`,
-    description: `You can roll +Sharp (instead of +Cool) when you **Act Under Pressure**`,
+    id: `6db80acb-2a78-413c-bcb9-ae62ca361f9e`,
+    playbooks: [`689d32a6-faa1-4258-9fda-894b9bdf8571`], // The Expert
+    featType: FeatTypeEnum.Move,
+
+    description: `You can roll +Sharp (instead of +Cool) when you \`act under pressure\``,
 
     perks: {
       actUnderPressure: [{
-        description: `You can roll +Sharp (instead of +Cool) when you **Act Under Pressure**`,
+        description: `You can roll +Sharp (instead of +Cool) when you \`act under pressure\``,
         alternateStat: StatEnum.Sharp
       }]
     }
   },
   {
-    id: "b95e492e-4947-4249-9daf-ee311daede55",
-    playbook: "689d32a6-faa1-4258-9fda-894b9bdf8571", // The Expert
-    startingFeat: false,
-    multiclassable: true,
+    name: `Often Right`,
+    id: `b95e492e-4947-4249-9daf-ee311daede55`,
+    playbooks: [`689d32a6-faa1-4258-9fda-894b9bdf8571`], // The Expert
+    featType: FeatTypeEnum.Move,
 
-    name: "Often Right",
     description: `Grant +1 \`ongoing\` and gain experience when a \`Hunter\` comes to you for advice.`,
     longDescription: `When a \`Hunter\` comes you you for advice, give them your honest opinion or advice. If they take your advice, they get +1 \`ongoing\` while they follow your advice, and you mark **Experience**.`,
     perks: {
       autoActions: [{
-        name: "Often Right",
+        name: `Often Right`,
+        id: `8da7c6d7-46bd-447f-a764-7cb2ef3eeb65`,
         description: `When a \`Hunter\` comes you to for honest advice, giving it will gain **Experience** and grant them +1 \`ongoing\`.`,
         longDescription: `When a \`hunter\` comes you you for advice, give them your honest opinion or advice. If they take your advice, they get +1 \`ongoing\` while they follow your advice, and you mark **Experience**.`,
       }]
     }
   },
   {
-    id: "19b7c2ce-772c-435f-bd76-6d5758a49e76",
-    playbook: "689d32a6-faa1-4258-9fda-894b9bdf8571", // The Expert
-    startingFeat: false,
-    multiclassable: true,
+    name: `Preparedness`,
+    id: `19b7c2ce-772c-435f-bd76-6d5758a49e76`,
+    playbooks: [`689d32a6-faa1-4258-9fda-894b9bdf8571`], // The Expert
+    featType: FeatTypeEnum.Move,
 
-    name: "Preparedness",
     description: `When you need something unusual or rare, you may... just have it.`,
     perks: {
       actions: [{
-        name: "Preparedness",
-        description: `When you need something unusual or rare, you may... just have it.`,
+        name: `Preparedness`,
+        id: `894e5396-6082-4790-ba07-0cd46fae7395`,
         coreStat: StatEnum.Sharp,
+        description: `When you need something unusual or rare, you may... just have it.`,
+        
         miss: `You know where it is, but it's somewhere real bad.`,
         mixedSuccess: `You have it, but not here. It will take some time to get it.`,
         solidSuccess: `You have it right here right now.`
@@ -1022,97 +752,111 @@ Unfortunately, you take the damage or illness upon yourself.`,
     }
   },
   {
-    id: "09d5b526-ab5d-40c1-b59f-40c05e1e5b97",
-    playbook: "689d32a6-faa1-4258-9fda-894b9bdf8571", // The Expert
-    startingFeat: false,
-    multiclassable: true,
+    name: `It Wasn't As Bad As It Looked`,
+    id: `09d5b526-ab5d-40c1-b59f-40c05e1e5b97`,
+    playbooks: [`689d32a6-faa1-4258-9fda-894b9bdf8571`], // The Expert
+    featType: FeatTypeEnum.Move,
 
-    name: "It Wasn't As Bad As It Looked",
     description: `Once per mystery you may attempt to keep going despite your injuries.`,
-
+    
     perks: {
       actions: [{
-        name: "It Wasn't As Bad As It Looked",
-        description: `Once per mystery you may attempt to keep going despite your injuries.`,
+        name: `It Wasn't As Bad As It Looked`,
+        id: `3b8c299a-8a56-4678-883d-4abcc68b5a5c`,
         coreStat: StatEnum.Cool,
+        description: `Once per mystery you may attempt to keep going despite your injuries.`,
+        
+        uses: 1, usesResetAtEndOfMystery: true,
+        
         miss: `It was worse than it looked. The Keeper may inflict a harm move on you or make your wounds unstable.`,
         mixedSuccess: `Choose One: Heal 1 harm -or- stabilize your wounds.`,
         solidSuccess: `Heal 2 harm and stabilize your wounds.`,
-        uses: 1,
-        usesResetAtEndOfMystery: true,
       }]
     }
   },
   {
-    id: "f649cb50-aab1-4681-88a7-6782156f7388",
-    playbook: "689d32a6-faa1-4258-9fda-894b9bdf8571", // The Expert
-    startingFeat: false,
-    multiclassable: true,
+    name: `Precise Strike`,
+    id: `f649cb50-aab1-4681-88a7-6782156f7388`,
+    playbooks: [`689d32a6-faa1-4258-9fda-894b9bdf8571`], // The Expert
+    featType: FeatTypeEnum.Move,
 
-    name: "Precise Strike",
-    description: `When you inflict harm on a monster, you can aim for a weak spot.`,
+    description: `When you **inflict \`harm\` on a monster**, you can aim for a weak spot.`,
     perks: {
       actions: [{
-        name: "Precise Strike",
-        description: `When you inflict harm on a monster, you can aim for a weak spot.`,
+        name: `Precise Strike`,
+        id: `42f4d84f-1fa8-4986-84b3-8b1f49e96209`,
         coreStat: StatEnum.Tough,
+        description: `When you inflict \`harm\` on a monster, you can aim for a weak spot.`,
+        
         miss: `You have left yourself open to the monster.`,
-        mixedSuccess: `You inflict +1 **Harm**.`,
-        solidSuccess: `You inflict +2 **Harm**.`,
+        mixedSuccess: `You inflict +1 \`harm\`.`,
+        solidSuccess: `You inflict +2 \`harm\`.`,
       }]
     }
   },
   {
-    id: "adaa8efc-6b8f-4f28-95a1-7aa333af312d",
-    playbook: "689d32a6-faa1-4258-9fda-894b9bdf8571", // The Expert
-    startingFeat: false,
-    multiclassable: true,
+    name: `The One With The Plan`,
+    id: `adaa8efc-6b8f-4f28-95a1-7aa333af312d`,
+    playbooks: [`689d32a6-faa1-4258-9fda-894b9bdf8571`], // The Expert
+    featType: FeatTypeEnum.Move,
 
-    name: "The One With The Plan",
     description: `At the beginning of each mystery, roll for points to be in the right place at the right time.`,
+    longDescription: `At the beginning of each mystery, you will roll to gain \`holds\`.
+
+Spend \`holds\` to be where you need to be, prepared and ready.
+
+If you fail, \`The Keeper\` gains a \`hold\`, which can be spent to put you in the worst place, unprepared and unready.`,
     
+    showInputs: [`cbc5554a-2843-4605-b965-8e54ae25179a`], // Holds
     inputs: [
-      { type: InputTypes.Checks, id: "holds", label: "Holds", max: 2, resetPerMystery: true },
-      { type: InputTypes.Checks, id: "keeperHolds", label: "Keeper Holds", max: 1, resetPerMystery: true },
+      {
+        label: `Holds`, key: `cbc5554a-2843-4605-b965-8e54ae25179a`, // Displayed in Actions
+        inputType: InputTypes.Checks,
+        max: 2,
+        resetPerMystery: true
+      },
+      {
+        label: `Keeper Holds`, key: `d3d35b7c-3541-4ad1-84f4-d0c2d7c0cbdc`, // Displayed in Actions
+        inputType: InputTypes.Checks,
+        max: 1,
+        resetPerMystery: true
+      },
     ],
     
     perks: {
       actions: [{
-        name: "The One With The Plan",
-        description: `At the beginning of each mystery, roll for **Holds** to use later to be in the right place at the right time.`,
+        name: `The One With The Plan`,
+        id: `0cb627bf-74ba-4d97-b185-e5da34d1be70`,
         coreStat: StatEnum.Tough,
-        miss: `\`The Keeper\` **Holds** 1 and can spend it to put you in the worst place, unprepared and unready.`,
-        mixedSuccess: `**Hold** 1.`,
-        solidSuccess: `**Hold** 2.`,
-        successFooter: `You can spend your **Hold** to be where you need to be, prepared and ready.`,
+        description: `At the beginning of each mystery, roll for **Holds** to use later to be in the right place at the right time.`,
+        
+        miss: `\`The Keeper\` \`holds\` 1 and can spend it to put you in the worst place, unprepared and unready.`,
+        mixedSuccess: `\`Hold\` 1.`,
+        solidSuccess: `\`Hold\` 2.`,
+        successFooter: `You can spend your \`Hold\` to be where you need to be, prepared and ready.`,
         startOfMystery: true,
-        showInputs: ["holds", "keeperHolds"]
+        showInputs: [`cbc5554a-2843-4605-b965-8e54ae25179a`, `d3d35b7c-3541-4ad1-84f4-d0c2d7c0cbdc`] // Holds and Keeper Holds
       }],
-      autoActions: [{
-        name: "The One With The Plan - Spend Hold",
-        description: `Spend **Holds** to be where you need to be, prepared and ready.`,
-        showInputs: ["holds", "keeperHolds"],
-      }]
     }
   },
   {
-    id: "3de6096b-69cb-4ae4-8e93-2cad11d32cda",
-    playbook: "689d32a6-faa1-4258-9fda-894b9bdf8571", // The Expert
-    startingFeat: false,
-    multiclassable: true,
+    name: `Dark Past`,
+    id: `3de6096b-69cb-4ae4-8e93-2cad11d32cda`,
+    playbooks: [`689d32a6-faa1-4258-9fda-894b9bdf8571`], // The Expert
+    featType: FeatTypeEnum.Move,
 
-    name: "Dark Past",
     description: `Trawl through your memories for something relevant to the case at hand.`,
     perks: {
       actions: [{
-        name: "Dark Past",
-        description: `Trawl through your memories for something relevant to the case at hand.`,
+        name: `Dark Past`,
+        id: `d7a18bda-f346-45db-bf64-e2caa0f46326`,
         coreStat: StatEnum.Weird,
+        description: `Trawl through your memories for something relevant to the case at hand.`,
+        
         miss: `You can ask \`The Keeper\` one of these questions, but that will mean you are personally complicit in creating the situation you are now dealing with.`,
         mixedSuccess: `Ask \`The Keeper\` one of these questions:`,
         solidSuccess: `Ask \`The Keeper\` two of these questions:`,
-        resultFooter: `
-* When I dealt this creature (or one of its kind), what did I learn?
+        resultFooter: `* When I dealt this creature (or one of its kind), what did I learn?
 * What black magic do I know that could help here?
 * Do I know anyone who might be behind this?
 * Who do I know who can help us right now?`
@@ -1120,28 +864,41 @@ Unfortunately, you take the damage or illness upon yourself.`,
     }
   },
   {
-    id: "1e8b0a9b-d78d-48ec-8589-379a871999d8",
-    playbook: "3ef37c00-3254-4af4-830a-9a21e7c6d02a", // The Flake
-    startingFeat: false,
-    multiclassable: true,
+    name: `Connect the Dots`,
+    id: `1e8b0a9b-d78d-48ec-8589-379a871999d8`,
+    playbooks: [`3ef37c00-3254-4af4-830a-9a21e7c6d02a`], // The Flake
+    featType: FeatTypeEnum.Move,
 
-    name: "Connect the Dots",
     description: `At the beginning of each mystery, look for wider patterns that the current events may be part of.`,
+
+    showInputs: [`fe159006-3e73-4132-a321-16e4810f05e0`], // Holds
     
-    inputs: [{ type: InputTypes.Checks, id: "holds", label: "Holds", max: 3, resetPerMystery: true }],
+    inputs: [{
+      label: `Holds`, key: `fe159006-3e73-4132-a321-16e4810f05e0`, // Displayed in Actions
+      inputType: InputTypes.Checks,
+      max: 3,
+      resetPerMystery: true,
+    }],
 
     perks: {
       actions: [{
-        name: "Connect the Dots",
-        description: `Look for wider patterns that the current events may be part of.`,
-
+        name: `Connect the Dots`,
+        id: `f7b5b487-640c-48b8-9355-dcb22c56b078`,
         coreStat: StatEnum.Sharp,
+        description: `Look for wider patterns that the current events may be part of.`,
+        longDescription: `At the start of a \`mystery\`, you'll roll to gain \`holds\`.
 
+During the \`mystery\`, you can spend a \`hold\` to ask any one of the following questions:
+* Is this person connected to the current events more than they are saying?
+* When and where will the next critical event occur?
+* What does the monster want from this person?
+* Is this connected to previous mysteries we have investigated?
+* How does this mystery connect to the bigger picture?`,
+        
         miss: `You fail to see any connections. \`The Keeper\` may take a move against you based on your inability to see the bigger picture.`,
-        mixedSuccess: `**Hold** 1.`,
-        solidSuccess: `**Hold** 3.`,
-        successFooter: `
-During the mystery, you can spend your **Hold** to ask any one of the following questions:
+        mixedSuccess: `\`Hold\` 1.`,
+        solidSuccess: `\`Hold\` 3.`,
+        successFooter: `During the \`mystery\`, you can spend a \`hold\` to ask any one of the following questions:
 * Is this person connected to the current events more than they are saying?
 * When and where will the next critical event occur?
 * What does the monster want from this person?
@@ -1149,39 +906,26 @@ During the mystery, you can spend your **Hold** to ask any one of the following 
 * How does this mystery connect to the bigger picture?`,
 
         startOfMystery: true,
-        showInputs: ["holds"]
+        showInputs: [`fe159006-3e73-4132-a321-16e4810f05e0`] // Holds
       }],
-      autoActions: [{
-        name: "Connect the Dots - Spend Hold",
-        description: `Spend your **Holds** to ask any one of the questions, gaining a view of the greater picture.`,
-        longDescription: `During the mystery, you can spend your **Hold** to ask any one of the following questions:
-* Is this person connected to the current events more than they are saying?
-* When and where will the next critical event occur?
-* What does the monster want from this person?
-* Is this connected to previous mysteries we have investigated?
-* How does this mystery connect to the bigger picture?`,
-        showInputs: ["holds"]
-      }]
     }
   },
   {
-    id: "d4880510-6fc2-449e-a6f6-0849c8ec36d1",
-    playbook: "3ef37c00-3254-4af4-830a-9a21e7c6d02a", // The Flake
-    startingFeat: false,
-    multiclassable: true,
+    name: `Crazy Eyes`,
+    id: `d4880510-6fc2-449e-a6f6-0849c8ec36d1`,
+    playbooks: [`3ef37c00-3254-4af4-830a-9a21e7c6d02a`], // The Flake
+    featType: FeatTypeEnum.Move,
 
-    name: "Crazy Eyes",
     description: `Gain +1 Weird (max +3)`,
 
     perks: { weird: { bonus: 1, max: 3 } }
   },
   {
-    id: "98dbb124-67af-4cb9-9a8c-24bf46ee0805",
-    playbook: "3ef37c00-3254-4af4-830a-9a21e7c6d02a", // The Flake
-    startingFeat: false,
-    multiclassable: true,
+    name: `See, It All Fits Together`,
+    id: `98dbb124-67af-4cb9-9a8c-24bf46ee0805`,
+    playbooks: [`3ef37c00-3254-4af4-830a-9a21e7c6d02a`], // The Flake
+    featType: FeatTypeEnum.Move,
 
-    name: "See, It All Fits Together",
     description: `You can roll +Sharp (instead of +Charm) when you \`manipulate someone\``,
 
     perks: {
@@ -1192,12 +936,11 @@ During the mystery, you can spend your **Hold** to ask any one of the following 
     }
   },
   {
-    id: "0e00af10-e0c3-49a7-a922-b54cafa09675",
-    playbook: "3ef37c00-3254-4af4-830a-9a21e7c6d02a", // The Flake
-    startingFeat: false,
-    multiclassable: true,
+    name: `Suspicious Mind`,
+    id: `0e00af10-e0c3-49a7-a922-b54cafa09675`,
+    playbooks: [`3ef37c00-3254-4af4-830a-9a21e7c6d02a`], // The Flake
+    featType: FeatTypeEnum.Move,
 
-    name: "Suspicious Mind",
     description: `If someone lies to you, you know it.`,
 
     perks: {
@@ -1205,19 +948,20 @@ During the mystery, you can spend your **Hold** to ask any one of the following 
     }
   },
   {
-    id: "5a3d28e5-fb9b-4b6c-90d5-2884a963cea3",
-    playbook: "3ef37c00-3254-4af4-830a-9a21e7c6d02a", // The Flake
-    startingFeat: false,
-    multiclassable: true,
+    name: `Often Overlooked`,
+    id: `5a3d28e5-fb9b-4b6c-90d5-2884a963cea3`,
+    playbooks: [`3ef37c00-3254-4af4-830a-9a21e7c6d02a`], // The Flake
+    featType: FeatTypeEnum.Move,
 
-    name: "Often Overlooked",
     description: `When you act all crazy, but are taken as an obvious distraction to be ignored.`,
 
     perks: {
       actions: [{
-        name: "Often Overlooked",
-        description: `When you act all crazy, but are taken as an obvious distraction to be ignored.`,
+        name: `Often Overlooked`,
+        id: `0650cc3c-bb48-4e5b-8e3a-deebb32f959f`,
         coreStat: StatEnum.Weird,
+        description: `When you act all crazy, but are taken as an obvious distraction to be ignored.`,
+        
         miss: `You draw lots (but not all) the attention.`,
         mixedSuccess: `You are regarded as either un-threatening or unimportant (pick one.)`,
         solidSuccess: `You are regarded as un-threatening and unimportant.`
@@ -1225,39 +969,38 @@ During the mystery, you can spend your **Hold** to ask any one of the following 
     }
   },
   {
-    id: "ea9088b8-319b-410d-bfe2-5dfc9e479db6",
-    playbook: "3ef37c00-3254-4af4-830a-9a21e7c6d02a", // The Flake
-    startingFeat: false,
-    multiclassable: true,
+    name: `Contrary`,
+    id: `ea9088b8-319b-410d-bfe2-5dfc9e479db6`,
+    playbooks: [`3ef37c00-3254-4af4-830a-9a21e7c6d02a`], // The Flake
+    featType: FeatTypeEnum.Move,
 
-    name: "Contrary",
     description: `When you seek out and receive honest advice, then do something else instead.`,
     longDescription: `When you seek out and receive honest advice on the best course of action for you and then do something else instead, mark experience.
 If you do exactly the opposite of their advice, you also take +1 \`ongoing\` on any moves you make pursuing that course.`,
 
     perks: {
       experience: [{ description: `When you seek out and receive honest advice, then do something else instead, gain +1 **Experience**.` }],
-      allMoves: [{
-        description: `When you do the exact opposite of honest advice given to you, gain +1 \`ongoing\` (and gain Experience, if you haven't already for this advice.)`,
+      modMoves: [{
+        name: `Contrary`,
         offset: 1,
+        condition: `Apply while you do the exact opposite of honest advice given to you (and gain \`experience\`, if you haven't already for this advice.)`,
       }]
     }
   },
   {
-    id: "981370ad-63a5-4f58-a4cf-79683ac40bdc",
-    playbook: "3ef37c00-3254-4af4-830a-9a21e7c6d02a", // The Flake
-    startingFeat: false,
-    multiclassable: true,
+    name: `Net Friends`,
+    id: `981370ad-63a5-4f58-a4cf-79683ac40bdc`,
+    playbooks: [`3ef37c00-3254-4af4-830a-9a21e7c6d02a`], // The Flake
+    featType: FeatTypeEnum.Move,
 
-    name: "Net Friends",
     description: `You know a lot of people on the Internet. You can contact a net friend to help with a mystery.`,
 
     perks: {
       actions: [{
-        name: "Net Friends",
-        description: `You know a lot of people on the Internet. You can contact a net friend to help with a mystery.`,
-
+        name: `Net Friends`,
+        id: `8e982fb5-f5fc-4a75-8dbd-d9ab32c2f455`,
         coreStat: StatEnum.Charm,
+        description: `You know a lot of people on the Internet. You can contact a net friend to help with a mystery.`,
 
         miss: `You burn some bridges online.`,
         mixedSuccess: `They're prepared to help, but it's either going to take some time or you're going to have to do part of it yourself.`,
@@ -1266,87 +1009,37 @@ If you do exactly the opposite of their advice, you also take +1 \`ongoing\` on 
     }
   },
   {
-    id: "d63fe39c-5505-4ab6-b1d0-6b3223b306fe",
-    playbook: "3ef37c00-3254-4af4-830a-9a21e7c6d02a", // The Flake
-    startingFeat: false,
-    multiclassable: true,
+    name: `Sneaky`,
+    id: `d63fe39c-5505-4ab6-b1d0-6b3223b306fe`,
+    playbooks: [`3ef37c00-3254-4af4-830a-9a21e7c6d02a`], // The Flake
+    featType: FeatTypeEnum.Move,
 
-    name: "Sneaky",
-    description: `When you attack from ambush, or from behind, inflict +2 **Harm**.`,
+    description: `When you attack from ambush, or from behind, inflict +2 \`harm\`.`,
 
     perks: {
-      attackModifiers: [{
+      modAttack: [{
         name: `Sneaky`,
-        description: `When you attack from ambush, or from behind, inflict +2 **Harm**.`,
+        // TODO: Is this right? Does this apply harm instead of roll bonus?
         offset: 2,
-        apply: false,
+        condition: `Apply when you attack from ambush or from behind.`,
       }]
     }
   },
   {
-    id: "d08ea9e4-88fb-46d6-975e-1045575a4ea5",
-    playbook: "12bc1318-24c7-4402-b9bb-be0698c4ed99", // The Gumshoe
-    startingFeat: true,
-    multiclassable: false,
+    name: `Occult Confidential`,
+    id: `5464ec99-8e20-4732-8d4d-b46442036ad4`,
+    playbooks: [`12bc1318-24c7-4402-b9bb-be0698c4ed99`], // The Gumshoe
+    featType: FeatTypeEnum.Move,
 
-    name: "Gumshoe Code",
-    description: `You adhere to a code that helps you \`manipulate someone\`, and protects you from possessions and charms.`,
-    longDescription: `With the agreement of \`The Keeper\`, pick a one-sentence **Code** that your Gumshoe adheres to.
-
-This **Code** defines your Gumshoe. Any time you violate your code, you forfeit:
-* All **Code**-related **Moves** (**'The Postman Always Rings Twice'**, **'The Long Goodbye'**)
-* The ability to spend **Luck** points.
-
-These forfeits last either until the next mystery or until you make amends.
-
-As long as you follow the **Code**, people will sense your sincerity. You gain the following:
-* +1 \`ongoing\` to \`manipulate someone\`
-* Protection from being possessed or charmed by any sort of supernatural, alien, or demonic entity or item
-
-Examples of Codes:
-* Murderers must be punished.
-* Monsters must be destroyed.
-* Innocents must be saved.
-* Laws must be enforced.
-* Evil must be exposed.
-* The weak must be protected from the powerful.`,
-
-    inputs: [
-      { type: InputTypes.Text, id: "code", label: "The Code", placeholder: "The weak must be protected from the powerful." },
-      { type: InputTypes.Checks, id: "codeBroken", label: "Code Broken", max: 1, resetPerMystery: true },
-    ],
-
-    perks: {
-      luck: [{
-        description: `If your code is broken, you cannot use luck.`,
-        showInputs: [ "code", "codeBroken" ]
-      }],
-      manipulateSomeone: [{
-        description: `If your code is unbroken, you have +1 \`ongoing\`.`,
-        offset: 1,
-        showInputs: [ "code", "codeBroken" ]
-      }],
-      protections: [{
-        description: `If your code is unbroken, you cannot be possessed or charmed by any supernatural, alien, or demonic entity or item.`,
-        showInputs: [ "code", "codeBroken" ]
-      }]
-    }
-  },
-  {
-    id: "5464ec99-8e20-4732-8d4d-b46442036ad4",
-    playbook: "12bc1318-24c7-4402-b9bb-be0698c4ed99", // The Gumshoe
-    startingFeat: true,
-    multiclassable: true,
-
-    name: "Occult Confidential",
     description: `The first time in each mystery that you observe a monster, minion, or phenomenon in action, you may ask an "\`investigate a mystery\`" question.`,
-
+    
     perks: {
       autoActions: [{
-        name: "Occult Confidential",
+        name: `Occult Confidential`,
+        id: `978f6c0b-5ca3-4d21-889a-3b080d15ecaa`,
         description: `The first time in each mystery that you observe a monster, minion, or phenomenon in action, you may ask a question.`,
-        uses: 1,
-        usesResetAtEndOfMystery: true,
+        
+        uses: 1, usesResetAtEndOfMystery: true,
 
         longDescription: `The first time in each mystery that you observe a monster, minion, or phenomenon in action, you may ask one of the following questions:
 \`@investigationQuestions\``,
@@ -1355,12 +1048,11 @@ Examples of Codes:
   },
   {
     // TODO: This one is kinda odd. You're supposed to pick 4 things, then all abilities, etc. rely on those choices.
-    id: "65cadd94-cffe-46a9-be0d-840811627edf",
-    playbook: "12bc1318-24c7-4402-b9bb-be0698c4ed99", // The Gumshoe
-    startingFeat: true,
-    multiclassable: true,
+    name: `The Naked City`,
+    id: `65cadd94-cffe-46a9-be0d-840811627edf`,
+    playbooks: [`12bc1318-24c7-4402-b9bb-be0698c4ed99`], // The Gumshoe
+    featType: FeatTypeEnum.Move,
 
-    name: "The Naked City",
     description: `You have lots of personal contacts wherever you go. You can hit them up for clues and small favors.`,
     longDescription: `You have lots of personal contacts wherever you go.
 
@@ -1371,15 +1063,15 @@ Pick four contact types from the provided areas (or from other areas agreed to b
 
     inputs: [
       {
-        id: "contacts", type: InputTypes.MultipleChoice,
-        label: "Contact Types",
+        label: `Contact Types`, key: `59efa6f6-a69f-4626-b16d-98c2027c2cc0`, // Displayed in Actions and modded by improvement
+        inputType: InputTypes.TextChoice,
         choose: 4,
         options: [
-          "Academics", "Accountants", "Artists", "Bartenders", "Clergy", "Conspiracy Theorists", "Construction",
-          "Courts", "Criminals (organized)", "Criminals (street)", "Cultists", "Engineers", "Espionage", "Film and TV",
-          "Forensic Scientists", "Fringe Scientists", "Hackers", "Journalists", "Lawyers", "Mechanics", "Media",
-          "Medical Practitioners", "Military", "Morgue", "Occult", "Police (local)", "Police (national)", "Politicians",
-          "Prisons", "Private Security", "Property Developers", "Stage Magicians", "Technologists", "Transportation"
+          `Academics`, `Accountants`, `Artists`, `Bartenders`, `Clergy`, `Conspiracy Theorists`, `Construction`,
+          `Courts`, `Criminals (organized)`, `Criminals (street)`, `Cultists`, `Engineers`, `Espionage`, `Film and TV`,
+          `Forensic Scientists`, `Fringe Scientists`, `Hackers`, `Journalists`, `Lawyers`, `Mechanics`, `Media`,
+          `Medical Practitioners`, `Military`, `Morgue`, `Occult`, `Police (local)`, `Police (national)`, `Politicians`,
+          `Prisons`, `Private Security`, `Property Developers`, `Stage Magicians`, `Technologists`, `Transportation`
         ],
         allowCustom: true,
       }
@@ -1387,65 +1079,70 @@ Pick four contact types from the provided areas (or from other areas agreed to b
 
     perks: {
       autoActions: [{
-        name: "The Naked City",
+        name: `The Naked City`,
+        id: `2b52b95f-8280-4a63-9ceb-9171cceca70b`,
         description: `You have lots of personal contacts wherever you go. You can hit them up for clues and small favors.`,
         longDescription: `You have lots of personal contacts wherever you go.
   
 You can hit up a contact for info (+1 to one \`investigate a mystery\` roll) or small favor. There may be a small cost involved.
 Personal contacts can provide more significant help. \`The Keeper\` decides their price on a case-by-case basis.`,
-        showInputs: [ "contacts" ],
+        showInputs: [ `59efa6f6-a69f-4626-b16d-98c2027c2cc0` ], // Contacts
       }],
       investigateAMystery: [{
         description: `You have lots of personal contacts wherever you go. You can hit them up for clues and small favors.`,
-        showInputs: [ "contacts" ],
+        showInputs: [ `59efa6f6-a69f-4626-b16d-98c2027c2cc0` ], // Contacts
       }],
     },
   },
   {
-    id: "6104c52f-a784-4f0c-9c7e-366ed0272786",
-    playbook: "12bc1318-24c7-4402-b9bb-be0698c4ed99", // The Gumshoe
-    startingFeat: false,
-    multiclassable: true,
+    id: `6104c52f-a784-4f0c-9c7e-366ed0272786`,
+    playbooks: [`12bc1318-24c7-4402-b9bb-be0698c4ed99`], // The Gumshoe
+    featType: FeatTypeEnum.Move,
+    prerequisites: [`d08ea9e4-88fb-46d6-975e-1045575a4ea5`], // Gumshoe Code
 
-    name: "The Postman Always Rings Twice",
-    description: `Twice per mystery--as long as you adhere to your **Code**--you may reroll a roll`,
+    name: `The Postman Always Rings Twice`,
+    description: `Twice per mystery--as long as you adhere to your **Code**--you may re-roll a roll`,
 
     perks: {
       autoActions: [{
-        name: "The Postman Always Rings Twice",
-        description: `Twice per mystery--as long as you adhere to your **Code**--you may reroll a roll`,
-        uses: 2,
-        usesResetAtEndOfMystery: true,
+        name: `The Postman Always Rings Twice`,
+        id: `1b8f7215-b74c-40bb-9196-ff4d08dff886`,
+        description: `Twice per \`mystery\`--as long as you adhere to your **Code**--you may re-roll a roll`,
+        uses: 2, usesResetAtEndOfMystery: true,
+        showInputs: [`a746bcc2-3317-4002-9852-f63025bdabf9`,`d424ec39-3d3b-4d9a-8cb9-49b7bc723d78`] // Code and Code Broken
       }]
     }
   },
   {
-    id: "4f8fd245-5c7d-4aec-bfb8-1a916d0774fd",
-    playbook: "12bc1318-24c7-4402-b9bb-be0698c4ed99", // The Gumshoe
-    startingFeat: false,
-    multiclassable: true,
+    id: `4f8fd245-5c7d-4aec-bfb8-1a916d0774fd`,
+    playbooks: [`12bc1318-24c7-4402-b9bb-be0698c4ed99`], // The Gumshoe
+    featType: FeatTypeEnum.Move,
+    prerequisites: [`d08ea9e4-88fb-46d6-975e-1045575a4ea5`], // Gumshoe Code
 
-    name: "The Long Goodbye",
+    name: `The Long Goodbye`,
     description: `You can't die wile you have an open case and an unbroken **Code**.`,
-    longDescription: `You can't die with an open case __and__ an unbroken Code. You suffer all **Harm**, as normal,
+    longDescription: `You can't die with an open case __and__ an unbroken Code. You suffer all \`harm\`, as normal,
 but your death is postponed until you have either completed or abandoned the case, or you break your **Code** (then all bets are off.)`,
 
     perks: {
-      health: [{ description: `You can't die wile you have an open case __and__ an unbroken **Code**.` }]
+      health: [{
+        description: `You can't die wile you have an open case __and__ an unbroken **Code**.`,
+        showInputs: [`a746bcc2-3317-4002-9852-f63025bdabf9`,`d424ec39-3d3b-4d9a-8cb9-49b7bc723d78`] // Code and Code Broken
+      }]
     }
   },
   {
-    id: "c5611e67-15b9-481f-887e-8bc776a7459e",
-    playbook: "12bc1318-24c7-4402-b9bb-be0698c4ed99", // The Gumshoe
-    startingFeat: false,
-    multiclassable: true,
+    name: `Jessica Jones Entry`,
+    id: `c5611e67-15b9-481f-887e-8bc776a7459e`,
+    playbooks: [`12bc1318-24c7-4402-b9bb-be0698c4ed99`], // The Gumshoe
+    featType: FeatTypeEnum.Move,
 
-    name: "Jessica Jones Entry",
     description: `When you double-talk your way into a secure location with **+Charm**.`,
 
     perks: {
       actions: [{
-        name: "Jessica Jones Entry",
+        name: `Jessica Jones Entry`,
+        id: `ebd8dcb4-1a70-43e7-85d4-0f0903caebcf`,
         // TODO: This reference is dumb. Add a long description to help.
         description: `When you double-talk your way into a secure location with **+Charm**.`,
         coreStat: StatEnum.Charm,
@@ -1463,34 +1160,44 @@ but your death is postponed until you have either completed or abandoned the cas
     }
   },
   {
-    id: "ae903567-50c4-439b-ae69-cf2ca62ee099",
-    playbook: "12bc1318-24c7-4402-b9bb-be0698c4ed99", // The Gumshoe
-    startingFeat: false,
-    multiclassable: true,
+    name: `Out of the Past`,
+    id: `ae903567-50c4-439b-ae69-cf2ca62ee099`,
+    playbooks: [`12bc1318-24c7-4402-b9bb-be0698c4ed99`], // The Gumshoe
+    featType: FeatTypeEnum.Move,
 
-    name: "Out of the Past",
     description: `A police buddy will do you big favors, but expect something in return.`,
     longDescription: `You have a police buddy who will do you big favors.
 Get in touch with them when you need to redirect law enforcement attention,
 get a heads-up on what operations are planned, or access police files.
 
 You owe them: Expect them to collect it soon.`,
+    inputs: [{
+      key: `4302d123-58bf-4e28-bd89-5933f44d9f97`, // Displayed on action
+      label: `Police Buddy`,
+      subLabel: `A have a police buddy who will do you big favors.
+Get in touch with them when you need to redirect law enforcement attention,
+get a heads-up on what operations are planned, or access police files.`,
+      inputType: InputTypes.Bystander,
+      crewMin: 1,
+      crewMax: 2,
+    }],
     perks: {
       autoActions: [{
-        name: "Out of the Past",
+        name: `Out of the Past`,
+        id: `104ba07d-8deb-4a5f-b336-f16b98149d65`,
         description: `A police buddy will do you big favors, but expect something in return.`,
+        showInputs: [`4302d123-58bf-4e28-bd89-5933f44d9f97`] // Police Buddy
       }]
     }
   },
   {
-    id: "0c3cfd4f-a0a4-45e2-bc14-d7d8ab9b199b",
-    playbook: "12bc1318-24c7-4402-b9bb-be0698c4ed99", // The Gumshoe
-    startingFeat: false,
-    multiclassable: true,
+    name: `Asphalt Jungle`,
+    id: `0c3cfd4f-a0a4-45e2-bc14-d7d8ab9b199b`,
+    playbooks: [`12bc1318-24c7-4402-b9bb-be0698c4ed99`], // The Gumshoe
+    featType: FeatTypeEnum.Move,
 
-    name: "Asphalt Jungle",
     description: `You heal faster than normal people and aren't affected by scuffs and scrapes.`,
-    longDescription: `You heal faster than normal people. Any time your **Harm** gets healed, heal an extra point.
+    longDescription: `You heal faster than normal people. Any time your \`harm\` gets healed, heal an extra point.
 You are immune to all the harm move effects under '0-harm' and '1-harm' (when \`The Keeper\` would apply these, ignore it.)
 
 Example 0-Harm and 1-Harm Move Effects you are immune to:
@@ -1503,24 +1210,25 @@ Example 0-Harm and 1-Harm Move Effects you are immune to:
 * Intense Pain.`,
 
     perks: {
-      health: [{ description: `Any time your **Harm** gets healed, heal an extra point.` }],
+      health: [{ description: `Any time your \`harm\` gets healed, heal an extra point.` }],
       protections: [{ description: `You are immune to **Harm Move** effects under '0-harm' and '1-harm'.` }],
     }
   },
   {
-    id: "86a82955-3477-47da-afd4-209662ebabe6",
-    playbook: "12bc1318-24c7-4402-b9bb-be0698c4ed99", // The Gumshoe
-    startingFeat: false,
-    multiclassable: true,
+    name: `Hacker with a Dragon Tattoo`,
+    id: `86a82955-3477-47da-afd4-209662ebabe6`,
+    playbooks: [`12bc1318-24c7-4402-b9bb-be0698c4ed99`], // The Gumshoe
+    featType: FeatTypeEnum.Move,
 
-    name: "Hacker with a Dragon Tattoo",
-    description: `When you hack into a computer system with **+Sharp**.`,
+    description: `Hack into a computer system.`,
 
     perks: {
       actions: [{
-        name: "Hacker with a Dragon Tattoo",
-        description: `When you hack into a computer system with **+Sharp**.`,
+        name: `Hacker with a Dragon Tattoo`,
+        id: `1d5ad9d0-e566-4c37-9361-49095eeac5ca`,
         coreStat: StatEnum.Sharp,
+        description: `When you hack into a computer system with **+Sharp**.`,
+        
         miss: `\`The Keeper\` can make a hard move against you. You likely failed to hack the computer system.`,
         mixedSuccess: `Pick one:`,
         solidSuccess: `Pick two:`,
@@ -1534,23 +1242,24 @@ Example 0-Harm and 1-Harm Move Effects you are immune to:
     }
   },
   {
-    id: "b47fdf18-3519-4bfa-9418-a31602233cba",
-    playbook: "12bc1318-24c7-4402-b9bb-be0698c4ed99", // The Gumshoe
-    startingFeat: false,
-    multiclassable: true,
-
     name: `"Just one more thing"`,
-    description: `When you ask a suspect leading questions with **+Charm**.`,
+    id: `b47fdf18-3519-4bfa-9418-a31602233cba`,
+    playbooks: [`12bc1318-24c7-4402-b9bb-be0698c4ed99`], // The Gumshoe
+    featType: FeatTypeEnum.Move,
+
+    description: `When you ask a suspect leading questions.`,
 
     perks: {
       actions: [{
         name: `"Just one more thing"`,
-        description: `When you ask a suspect leading questions with **+Charm**.`,
+        id: `db5b2ed9-1e27-4172-8ec4-f1b016d29da0`,
         coreStat: StatEnum.Charm,
-        miss: `**Hold** 1, but something bad is going to happen to you...`,
-        mixedSuccess: `**Hold** 1`,
-        solidSuccess: `**Hold** 2`,
-        resultFooter: `You can spend one **Hold** to ask \`The Keeper\` one of the following questions:
+        description: `When you ask a suspect leading questions.`,
+        
+        miss: `\`Hold\` 1, but something bad is going to happen to you...`,
+        mixedSuccess: `\`Hold\` 1`,
+        solidSuccess: `\`Hold\` 2`,
+        resultFooter: `You can spend one \`hold\` to ask \`The Keeper\` one of the following questions:
 * Was that a lie?
 * What is something you left out that you didn't want me to notice?
 * Are you complicit with any ongoing criminal activity?
@@ -1562,60 +1271,59 @@ OR an \`investigate a mystery\` Question:
     }
   },
   {
-    id: "9669821e-791a-40b0-b37a-0eecaed69e41",
-    playbook: "23bdadbc-b690-4baa-8d96-7c791b4d66da", // The Hex
-    startingFeat: true,
-    multiclassable: true,
+    name: `Bad Luck Charm`,
+    id: `9669821e-791a-40b0-b37a-0eecaed69e41`,
+    playbooks: [`23bdadbc-b690-4baa-8d96-7c791b4d66da`], // The Hex
+    featType: FeatTypeEnum.Move,
 
-    name: "Bad Luck Charm",
     description: `Whenever you fail to \`use magic\`, the backlash will never directly affect __you__.`,
     longDescription: `Whenever you \`use magic\` and miss, the backlash never affects you directly if there's someone else around to hit.
 It'll go for allies, other \`Hunters\`, innocent bystanders, etc. Every so often it may even hit an enemy.`,
 
     perks: {
-      weirdMove: [{ description: `The backlash of a miss will never directly affect you (others on the otherhand...)` }]
+      weirdMove: [{ description: `The backlash of a miss will never directly affect you (others on the other-hand...)` }]
     }
   },
   {
-    id: "e0e31f7a-8ade-4d4c-9707-0587647427aa",
-    playbook: "23bdadbc-b690-4baa-8d96-7c791b4d66da", // The Hex
-    startingFeat: false,
-    multiclassable: true,
+    name: `Burn Everything`,
+    id: `e0e31f7a-8ade-4d4c-9707-0587647427aa`,
+    playbooks: [`23bdadbc-b690-4baa-8d96-7c791b4d66da`], // The Hex
+    featType: FeatTypeEnum.Move,
 
-    name: "Burn Everything",
     description: `When you \`use magic\` to inflict \`harm\`, you can choose to inflict 3 \`harm\` in an \`area\` or 3 \`harm\` that \`ignores armor\``,
 
     perks: {
       useMagic: [{
         description: `When you \`use magic\` to inflict \`harm\`, you can choose to inflict [\`#3-Harm\` \`#area\` \`#magic\` \`#obvious\`] or [\`#3-Harm\` \`#ignore-armor\` \`#magic\` \`#obvious\`]`,
-        successHeader2: `Through **'Burn Everything'**, have the following effect options as well:
+        amendResults: {
+          successHeader: `Through **'Burn Everything'**, have the following effect options as well:
 * Inflict 3 \`harm\` \`#area\` \`#magic\` \`#obvious\`
 * Inflict 3 \`harm\` \`#ignore-armor\` \`#magic\` \`#obvious\``,
+        }
       }]
     }
   },
   {
-    id: "237fa70b-094e-4fd4-9919-581d82acc23d",
-    playbook: "23bdadbc-b690-4baa-8d96-7c791b4d66da", // The Hex
-    startingFeat: false,
-    multiclassable: true,
+    name: `Cast the Bones`,
+    id: `237fa70b-094e-4fd4-9919-581d82acc23d`,
+    playbooks: [`23bdadbc-b690-4baa-8d96-7c791b4d66da`], // The Hex
+    featType: FeatTypeEnum.Move,
 
-    name: "Cast the Bones",
-    description: `Once per **Mystery**, you may perform a kind of divination to see the future using **+Sharp**.`,
-    longDescription: `Once per **Mystery**, you may perform some kind of divination (tarot, casting runes, reading entrails, etc.) to glean information about the future.`,
+    description: `Once per \`mystery\`, you may perform a kind of divination to see the future using **+Sharp**.`,
+    longDescription: `Once per \`mystery\`, you may perform some kind of divination (tarot, casting runes, reading entrails, etc.) to glean information about the future.`,
 
     perks: {
       actions: [{
-        name: "Cast the Bones",
-        description: `Once per **Mystery**, you can perform a kind of divination to see the future.`,
-        longDescription: `Once per **Mystery**, you may perform some kind of divination (tarot, casting runes, reading entrails, etc.) to glean information about the future.`,
-
+        name: `Cast the Bones`,
+        id: `eaa858da-2de9-46bf-95b1-6428cec2df21`,
         coreStat: StatEnum.Sharp,
+        description: `Once per \`mystery\`, you can perform a kind of divination to see the future.`,
+        longDescription: `Once per \`mystery\`, you may perform some kind of divination (tarot, casting runes, reading entrails, etc.) to glean information about the future.`,
 
         miss: `You get some information, but it's not what you wanted to hear.`,
-        mixedSuccess: `**Hold** 1`,
-        solidSuccess: `**Hold** 2`,
-        successFooter: `You can spend one **Hold** to ask \`The Keeper\` one of the following questions.
+        mixedSuccess: `\`Hold\` 1`,
+        solidSuccess: `\`Hold\` 2`,
+        successFooter: `You can spend one \`hold\` to ask \`The Keeper\` one of the following questions.
 \`The Keeper\` will answer truthfully, with either a direct answer or how to find out:
 * What can I gain from this person/place/thing/creature?
 * Who has touched this person/place/thing/creature before me?
@@ -1629,45 +1337,50 @@ You can also ask questions from the "\`investigate a mystery\`" list:
     }
   },
   {
-    id: "9958712b-55a4-48fd-a9d5-c519bdf6a444",
-    playbook: "23bdadbc-b690-4baa-8d96-7c791b4d66da", // The Hex
-    startingFeat: false,
-    multiclassable: true,
+    name: `Force of Will`,
+    id: `9958712b-55a4-48fd-a9d5-c519bdf6a444`,
+    playbooks: [`23bdadbc-b690-4baa-8d96-7c791b4d66da`], // The Hex
+    featType: FeatTypeEnum.Move,
 
-    name: "Force of Will",
-    description: `Apply your will into dispelling a magical effect, blocking a spell, or suspending a phenomenon using **+Weird**.`,
+    description: `Apply your will into dispelling a magical effect, blocking a spell, or suspending a phenomenon.`,
 
     perks: {
       actions: [{
-        name: "Force of Will",
-        description: `Apply your will into dispelling a magical effect, blocking a spell, or suspending a phenomenon using **+Weird**.`,
+        name: `Force of Will`,
+        id: `8bfc2192-346a-473c-b378-60cb8f8c07f2`,
         coreStat: StatEnum.Weird,
+        description: `Apply your will into dispelling a magical effect, blocking a spell, or suspending a phenomenon.`,
+
         miss: `\`The Keeper\` can make a hard move against you. You likely failed at dispelling the target.`,
         successHeader: `Momentary magics are canceled completely. Long lasting spells and effects are suspended temporarily.`,
-        mixedSuccess: `Unfortunately, you take 1 **Harm** as the strain of dismissing the magic unravels you.`,
-        solidSuccess: `You can also spend **Luck** to instantly snuff out a powerful spell or strange effect.`,
+        mixedSuccess: `Unfortunately, you take 1 \`harm\` as the strain of dismissing the magic unravels you.`,
+        solidSuccess: `You can also spend \`luck\` to instantly snuff out a powerful spell or strange effect.`,
       }]
     }
   },
   {
-    id: "50864b4a-29c9-4dfc-86f2-cf11f2883296",
-    playbook: "23bdadbc-b690-4baa-8d96-7c791b4d66da", // The Hex
-    startingFeat: false,
-    multiclassable: true,
+    name: `Luck of the Damned`,
+    id: `50864b4a-29c9-4dfc-86f2-cf11f2883296`,
+    playbooks: [`23bdadbc-b690-4baa-8d96-7c791b4d66da`], // The Hex
+    featType: FeatTypeEnum.Move,
 
-    name: "Luck of the Damned",
     description: `After you \`use magic\` or cast a **Rote**, take +1 \`forward\` on the next roll you make.`,
 
-    perks: { useMagic: [{ description: `After you \`use magic\` or cast a **Rote**, take +1 \`forward\` on the next roll you make.` }] }
-    // TODO: Bonus to all rolls everywhere?
+    perks: {
+      useMagic: [{ description: `After you \`use magic\` or cast a **Rote**, take +1 \`forward\` on the next roll you make.` }],
+      modMoves: [{
+        name: `Luck of the Damned`,
+        condition: `Apply once to the next move you make after you \`use magic\` or cast a **Rote**.`,
+        offset: 1
+      }]
+    }
   },
   {
-    id: "15f9c6e4-67a5-43f0-9bf1-89c94a205400",
-    playbook: "23bdadbc-b690-4baa-8d96-7c791b4d66da", // The Hex
-    startingFeat: false,
-    multiclassable: true,
+    name: `Sympathetic Token`,
+    id: `15f9c6e4-67a5-43f0-9bf1-89c94a205400`,
+    playbooks: [`23bdadbc-b690-4baa-8d96-7c791b4d66da`], // The Hex
+    featType: FeatTypeEnum.Move,
 
-    name: "Sympathetic Token",
     description: `While carrying a token from someone, you gain +1 \`ongoing\` to \`use magic\` to target them and you can target them distance. Token is lost on a miss.`,
     longDescription: `As long as you carry a personal object belonging to someone, such as a lock of hair, a full set of toenails, or a treasured family heirloom,
 you get +1 \`ongoing\` to \`use magic\` against them. You can also \`use magic\` against them from a distance.
@@ -1676,23 +1389,21 @@ If you try to \`use magic\` against them and miss, the token is lost, destroyed,
     perks: { useMagic: [{ description: `While carrying a token from someone, you gain +1 \`ongoing\` when targeting them and you can target them distance. Token is lost on a miss.` }] }
   },
   {
-    id: "b8635e43-5b46-4a26-a39e-ed33dbe13b14",
-    playbook: "23bdadbc-b690-4baa-8d96-7c791b4d66da", // The Hex
-    startingFeat: false,
-    multiclassable: true,
+    name: `This Might Sting`,
+    id: `b8635e43-5b46-4a26-a39e-ed33dbe13b14`,
+    playbooks: [`23bdadbc-b690-4baa-8d96-7c791b4d66da`], // The Hex
+    featType: FeatTypeEnum.Move,
 
-    name: "This Might String",
-    description: `You can \`use magic\` to heal 3 **Harm**, but the process is exceptionally painful. On a [7..9] it also leaves a gnarly scar.`,
+    description: `You can \`use magic\` to heal 3 \`harm\`, but the process is exceptionally painful. On a [7..9] it also leaves a gnarly scar.`,
 
-    perks: { useMagic: [{ description: `You can heal 3 **Harm**, but the process is exceptionally painful. On a [7..9] it also leaves a gnarly scar.`, }] }
+    perks: { useMagic: [{ description: `You can heal 3 \`harm\`, but the process is exceptionally painful. On a [7..9] it also leaves a gnarly scar.`, }] }
   },
   {
-    id: "6632c6fd-082d-425d-9f16-aeb87ecc2809",
-    playbook: "23bdadbc-b690-4baa-8d96-7c791b4d66da", // The Hex
-    startingFeat: false,
-    multiclassable: true,
+    name: `Wise Soul`,
+    id: `6632c6fd-082d-425d-9f16-aeb87ecc2809`,
+    playbooks: [`23bdadbc-b690-4baa-8d96-7c791b4d66da`], // The Hex
+    featType: FeatTypeEnum.Move,
 
-    name: "Wise Soul",
     description: `Whenever you \`use magic\`, you can get a glimpse of of the worst result and back out before the roll.`,
     longDescription: `Whenever you \`use magic\`, right before you roll, you can ask \`The Keeper\` what exactly would happen on a miss.
 If you dislike the risk, you can stop casting at the last second and let the spell fizzle harmlessly. All effort is wasted.`,
@@ -1700,98 +1411,116 @@ If you dislike the risk, you can stop casting at the last second and let the spe
     perks: { useMagic: [{ description: `Before you roll, you can ask what would happen on a miss and decide to end the spell before it is rolled.`, }] }
   },
   {
-    id: "96ee3021-d46d-42b6-8b77-8aeea00288d4",
-    playbook: "a78c7ee1-eb8d-4622-adeb-22d9d87169b5", // The Initiate
-    startingFeat: true,
-    multiclassable: true,
+    name: `The Call`,
+    id: `96ee3021-d46d-42b6-8b77-8aeea00288d4`,
+    playbooks: [`a78c7ee1-eb8d-4622-adeb-22d9d87169b5`], // The Initiate
+    featType: FeatTypeEnum.Move,
 
-    name: "The Call",
-    description: `While in good standing with your **Sect**, roll for help (and possibly a mission) at the start of each **Mystery** using **+Charm**.`,
+    description: `While in good standing with your **Sect**, roll for help (and possibly a mission) at the start of each \`mystery\`.`,
 
     inputs: [
-      { type: InputTypes.TextArea, id: "mission", label: "Mission", placeholder: "Protect the boy" },
-      { type: InputTypes.Checks, id: "failed", label: "Failed", max: 1 },
+      {
+        label: `Mission`, key: `22c70019-eb32-4c07-a57d-f1900545cd80`, // Displayed in action
+        inputType: InputTypes.TextArea,
+        placeholder: `Protect the boy`,
+      },
+      {
+        label: `Failed`, key: `264a6d5d-d0d4-4939-ae33-f3e5f8a0a34c`, // Displayed in action
+        inputType: InputTypes.Checks,
+        max: 1,
+      },
     ],
     
     perks: {
       actions: [{
-        name: "The Call",
-        description: `While in good standing with your **Sect**, roll for help at the start of each **Mystery**.`,
+        name: `The Call`,
+        id: `e98c877c-36f8-4d96-b805-59e60b995691`,
         coreStat: StatEnum.Charm,
+        description: `While in good standing with your **Sect**, roll for help at the start of each \`mystery\`.`,
+        
         miss: `They ask you to do something bad.`,
-        mixedSuccess: `You get a mission associated with the coming **Mystery**. If you do it, they'll give you some info or help.`,
+        mixedSuccess: `You get a mission associated with the coming \`mystery\`. If you do it, they'll give you some info or help.`,
         solidSuccess: `They provide some useful info or help in the field.`,
         resultFooter: `If you fail a mission or refuse an order, you'll be in trouble with the **Sect** until you atone.`,
         startOfMystery: true,
-      }]
+        showInputs: [`22c70019-eb32-4c07-a57d-f1900545cd80`,`264a6d5d-d0d4-4939-ae33-f3e5f8a0a34c`] // Mission and Failed
+      }],
     }
   },
   {
-    id: "ce09e84b-504e-447e-a3d5-bbfe71c0e84c",
-    playbook: "a78c7ee1-eb8d-4622-adeb-22d9d87169b5", // The Initiate
-    startingFeat: false,
-    multiclassable: true,
+    name: `Ancient Fighting Arts`,
+    id: `ce09e84b-504e-447e-a3d5-bbfe71c0e84c`,
+    playbooks: [`a78c7ee1-eb8d-4622-adeb-22d9d87169b5`], // The Initiate
+    featType: FeatTypeEnum.Move,
 
-    name: "Ancient Fighting Arts",
-    description: `When using an old-fashioned \`#hand\` weapon, you inflict +1 **Harm** and gain a +1 whenever you roll to \`protect someone\`.`,
+    description: `When using an old-fashioned \`#hand\` weapon, you inflict +1 \`harm\` and gain a +1 whenever you roll to \`protect someone\`.`,
 
     perks: {
-      attackModifiers: [{
+      modAttack: [{
         name: `Ancient Fighting Arts`,
-        description: `When using an old-fashioned \`#hand\` weapon, you inflict +1 **Harm**.`,
         offset: 1,
-        apply: false,
+        applyToItem: [
+          itemLookup.Sword.id,
+          itemLookup.Axe.id,
+          itemLookup.BigSword.id,
+          itemLookup.BigAxe.id,
+          itemLookup.SilverKnife.id,
+          itemLookup.FightingSticks.id,
+          itemLookup.Spear.id,
+          itemLookup.Mace.id,
+        ],
       }],
-      protectSomeone: [{
-        description: `When using an old-fashioned \`#hand\` weapon, you gain a +1 whenever you roll to \`protect someone\`.`,
+      modMoves: [{
+        name: `Ancient Fighting Arts`,
+        applyToMoves: [`48664b18-63e2-47fb-8363-ddcbefabe02e`], // Protect Someone
         offset: 1,
+        condition: `Apply while using an old-fashioned \`#hand\` weapon.`,
       }]
     }
   },
   {
-    id: "6d558030-3af3-47d7-aca6-1011403dbbc4",
-    playbook: "a78c7ee1-eb8d-4622-adeb-22d9d87169b5", // The Initiate
-    startingFeat: false,
-    multiclassable: true,
+    name: `Mystic`,
+    id: `6d558030-3af3-47d7-aca6-1011403dbbc4`,
+    playbooks: [`a78c7ee1-eb8d-4622-adeb-22d9d87169b5`], // The Initiate
+    featType: FeatTypeEnum.Move,
 
-    name: "Mystic",
     description: `Every time you successfully \`use magic\`, take +1 \`forward\``,
 
     perks: { allMoves: [{ description: `Every time you successfully \`use magic\`, take +1 \`forward\`` }] }
   },
   {
-    id: "1e12c3e8-cdcb-47c6-b23d-31e9051e9969",
-    playbook: "a78c7ee1-eb8d-4622-adeb-22d9d87169b5", // The Initiate
-    startingFeat: false,
-    multiclassable: true,
+    name: `Fortunes`,
+    id: `1e12c3e8-cdcb-47c6-b23d-31e9051e9969`,
+    playbooks: [`a78c7ee1-eb8d-4622-adeb-22d9d87169b5`], // The Initiate
+    featType: FeatTypeEnum.Move,
 
-    name: "Fortunes",
-    description: `Weird Move: Use Sect secrets to predict the future once per mystery.`,
+    description: `Use Sect secrets to predict the future once per mystery.`,
 
     perks: {
       actions: [{
-        name: "Fortunes",
-        description: `Use Sect secrets to predict the future once per mystery.`,
+        name: `Fortunes`,
+        id: `e14faa72-4ecb-4c4b-b182-548026072bfe`,
         coreStat: StatEnum.Weird,
+        description: `Use Sect secrets to predict the future once per mystery.`,
+
         miss: `You get bad information and \`The Keeper\` decides how that affects you.`,
-        mixedSuccess: `**Hold** 1`,
-        solidSuccess: `**Hold** 3`,
-        successFooter: `Spend your **Hold** to:
+        mixedSuccess: `\`Hold\` 1`,
+        solidSuccess: `\`Hold\` 3`,
+        successFooter: `Spend a \`hold\` to:
 * Have a useful object ready.
 * Be somewhere you are needed, just in time.
-* Take +1 \`forward\`, or give +1 \`forward\` to another \`Hunter\`.
+* Take +1 \`forward\`, or give +1 \`forward\` to another \`hunter\`.
 * Retroactively warn someone about an attack, so it doesn't happen.`,
       }]
     }
   },
   {
-    id: "13b1c4d5-b513-421f-bf16-61a9093fe62b",
-    playbook: "a78c7ee1-eb8d-4622-adeb-22d9d87169b5", // The Initiate
-    startingFeat: false,
-    multiclassable: true,
+    name: `Sacred Oath`,
+    id: `13b1c4d5-b513-421f-bf16-61a9093fe62b`,
+    playbooks: [`a78c7ee1-eb8d-4622-adeb-22d9d87169b5`], // The Initiate
+    featType: FeatTypeEnum.Move,
 
-    name: "Sacred Oath",
-    description: `Bind yourself to a single goal. This oath empowers you and can gain you \`Experience\``,
+    description: `Bind yourself to a single goal. This oath empowers you and can gain you \`experience\``,
     longDescription: `You may bind yourself to a single goal, forsaking something during your quest
 (e.g. speech, all sustenance but bread and water, alcohol, lying, sex, etc).
 Get \`The Keeper\`'s agreement on this--it should match the goal in importance and difficulty.
@@ -1800,575 +1529,160 @@ mark **Experience** at the end of every session and get +1 on any rolls that dir
 If you break the oath, take -1 \`ongoing\` until you have atoned.`,
 
     inputs: [
-      { type: InputTypes.Text, id: "oathGoal", label: "Oath Goal", placeholder: "Kill Dracula" },
-      { type: InputTypes.Text, id: "oathSacrifice", label: "Oath Sacrifice", placeholder: "Eat not but bread and water." },
-      { type: InputTypes.Checks, id: "oathBroken", label: "Oath Broken", max: 1 }
+      {
+        label: `Oath Goal`, key: `f3e3a5b3-6ecd-429e-88f7-262c22c0ad14`,
+        inputType: InputTypes.Text,
+        placeholder: `Kill Dracula`,
+      },
+      {
+        label: `Oath Sacrifice`, key: `f148a7ab-213b-443c-b5f4-9695766c4f81`,
+        inputType: InputTypes.Text,
+        placeholder: `Eat not but bread and water.`
+      },
+      {
+        label: `Oath Broken`, key: `079f2681-d57c-469a-a36c-058f08968f95`,
+        inputType: InputTypes.Checks,
+        max: 1,
+      }
     ],
 
     perks: {
-      allMoves: [
+      modMoves: [
         {
-          description: `While your Oath is intact, get +1 to any roll that directly helps you achieve your goal.`,
+          name: `Intact Sacred Oath`,
           offset: 1,
+          condition: `Apply while your Oath is intact and this action would directly help you achieve your goal.`,
           // Oath details show in next item
         },{
-          description: `If your Oath is broken, take -1 \`ongoing\` until you atone.`,
+          name: `Broken Sacred Oath`,
           offset: -1,
-          showInputs: [ "oathGoal", "oathSacrifice", "oathBroken" ]
+          condition: `Apply while your Oath is broken (until you atone.)`,
+          showInputs: [ `f3e3a5b3-6ecd-429e-88f7-262c22c0ad14`, `f148a7ab-213b-443c-b5f4-9695766c4f81`, `079f2681-d57c-469a-a36c-058f08968f95` ] // Oath Goal, Sacrifice, and Broken
         }
       ],
-      endOfSession: [{
+      sessionEnd: [{
         description: `While your Oath is intact and you are working toward your goal, take +1 \`Experience\` at the end of each session.`,
-        showInputs: [ "oathGoal", "oathSacrifice", "oathBroken" ]
+        showInputs: [ `f3e3a5b3-6ecd-429e-88f7-262c22c0ad14`, `f148a7ab-213b-443c-b5f4-9695766c4f81`, `079f2681-d57c-469a-a36c-058f08968f95` ] // Oath Goal, Sacrifice, and Broken
       }],
     }
   },
   {
-    id: "dea250ab-6c99-4b41-b732-16e2671d010a",
-    playbook: "a78c7ee1-eb8d-4622-adeb-22d9d87169b5", // The Initiate
-    startingFeat: false,
-    multiclassable: true,
+    name: `Mentor`,
+    id: `dea250ab-6c99-4b41-b732-16e2671d010a`,
+    playbooks: [`a78c7ee1-eb8d-4622-adeb-22d9d87169b5`], // The Initiate
+    featType: FeatTypeEnum.Move,
 
-    name: "Mentor",
-    description: `Sharp Move: Contact your mentor in the Sect for information.`,
+    description: `Contact your mentor in the Sect for information.`,
 
-    inputs: [
-      { type: InputTypes.Text, id: "mentor", label: "Mentor's Name", placeholder: "Atticus Greymore III" },
-      { type: InputTypes.TextArea, id: "mentorDescription", label: "Mentor Description", placeholder: "Summary, Note, etc." }
-    ],
+    inputs: [{
+      label: `Mentor`, key: `c598494b-e8bc-43e3-b226-fe965b21fd8a`, // Displayed in Action
+      inputType: InputTypes.Bystander,
+      startingBystanderType: BystanderType.Mentor,
+    }],
 
     perks: {
       actions: [{
-        name: "Mentor",
-        description: `Contact your mentor in the Sect for information.`,
+        name: `Contact Mentor`,
+        id: `071484c2-f07d-41e3-af79-826f8d7bc969`,
         coreStat: StatEnum.Sharp,
+        description: `Contact your mentor in the Sect for information.`,
+        
         miss: `Your question causes trouble.`,
         mixedSuccess: `Choose: They're either busy and can't help --OR-- They answer the question but you owe them a favour.`,
         solidSuccess: `You get an answer to your question, no problem.`,
+        showInputs: [`c598494b-e8bc-43e3-b226-fe965b21fd8a`], // Mentor
       }]
     }
   },
   {
-    id: "bf7257f4-7422-4a9d-8361-1169e3ecf467",
-    playbook: "a78c7ee1-eb8d-4622-adeb-22d9d87169b5", // The Initiate
-    startingFeat: false,
-    multiclassable: true,
+    name: `Apprentice`,
+    id: `bf7257f4-7422-4a9d-8361-1169e3ecf467`,
+    playbooks: [`a78c7ee1-eb8d-4622-adeb-22d9d87169b5`], // The Initiate
+    featType: FeatTypeEnum.Move,
 
-    name: "Apprentice",
     description: `You have an apprentice. Your job is to teach them the Sect's ways. They count as a \`ally/subordinate\`.`,
     
-    inputs: [{ type: InputTypes.Ally, id: "apprentice", label: "Apprentice", startingAllyType: AllyType.Subordinate }],
-
-    perks: {
-      social: [{
-        description: `You have an apprentice. Your job is to teach them the Sect's ways.`,
-        showInputs: [ "apprentice" ]
-      }]
-    }
+    inputs: [{
+      label: `Apprentice`,
+      subLabel: `You have an apprentice. Your job is to teach them the Sect's ways.`,
+      inputType: InputTypes.Ally,
+      startingAllyType: AllyType.Subordinate,
+    }],
   },
   {
-    id: "b41a4186-7467-46a0-8d5e-17e7ec4ceda1",
-    playbook: "a78c7ee1-eb8d-4622-adeb-22d9d87169b5", // The Initiate
-    startingFeat: false,
-    multiclassable: true,
+    name: `Helping Hand`,
+    id: `b41a4186-7467-46a0-8d5e-17e7ec4ceda1`,
+    playbooks: [`a78c7ee1-eb8d-4622-adeb-22d9d87169b5`], // The Initiate
+    featType: FeatTypeEnum.Move,
 
-    name: "Helping Hand",
     description: `When you successfully \`help out\` another \`Hunter\`, they get +2 instead of the usual +1.`,
 
     perks: {
       helpOut: [{
         description: `When you successfully \`help out\` another \`Hunter\`, they get +2 instead of the usual +1.`,
-        offset: 1,
+        replaceResults: {
+          successHeader: `Your help grants them +2 to their roll.`
+        }
       }],
     }
   },
   {
-    id: "01d31b85-9d83-4c02-ac6a-c3b75ad0f9d8",
-    playbook: "a78c7ee1-eb8d-4622-adeb-22d9d87169b5", // The Initiate
-    startingFeat: false,
-    multiclassable: true,
+    name: `That Old Black Magic`,
+    id: `01d31b85-9d83-4c02-ac6a-c3b75ad0f9d8`,
+    playbooks: [`a78c7ee1-eb8d-4622-adeb-22d9d87169b5`], // The Initiate
+    featType: FeatTypeEnum.Move,
 
-    name: "That Old Black Magic",
     description: `When you \`use magic\`, you can ask a question from the **Investigate a Mystery** move as your effect.`,
 
     perks: {
       useMagic: [{
         description: `When you \`use magic\`, you can ask a question from the **Investigate a Mystery** move as your effect.`,
-        successHeader2: `Using **'That Old Black Magic'**, you can also ask one of these questions as an effect:
+        amendResults: {
+          successHeader: `Using **'That Old Black Magic'**, you can also ask one of these questions as an effect:
 \`@investigationQuestions\``,
+        }
       }]
     }
   },
   {
-    id: "66bf0e35-8b78-4543-a75b-048ad8b12ff2",
-    playbook: "a5f796af-dd20-4ee0-8920-18b80e20ec24", // The Monstrous
-    startingFeat: true,
-    multiclassable: false,
+    name: `Immortal`,
+    id: `56ad962b-c655-43f7-b241-c0546efb0566`,
+    playbooks: [`a5f796af-dd20-4ee0-8920-18b80e20ec24`], // The Monstrous
+    featType: FeatTypeEnum.Move,
 
-    name: "Monster Breed",
-    description: "Choose your breed of monster and all that that entails.",
-    longDescription: `You will need to decide the following:
-* Pick one Classification:
-  * Half-Human: You were always this way
-  * Half-Monster: You you were originally human and transformed somehow.
-* Pick one Alignment:
-  * Good Natured: You were always fighting to be Good.
-  * Turncoat: You were evil and changed sides.
-* Pick a curse and your natural attacks.
-
-Create the monster you want to be. Whatever you choose defines your breed in the game.
-Some classic monsters with suggestions for picks are listed below.
-These are only suggestions: feel free to make a different version!
-
-> * Vampire:
->   * Curse: Feed (blood or life-force).
->   * Natural Attacks: Life-drain or teeth with add +1 harm.
->   * Moves: Immortal, Unquenchable Vitality, or Mental Domination.
-> * Werewolf:
->   * Curse: Vulnerability (silver).
->   * Natural Attacks: claws and teeth.
->   * Moves: Shapeshifter (wolf and/or wolfman), Claws of the Beast, or Unholy Strength.
-> * Ghost:
->   * Curse: Vulnerability (rock salt).
->   * Natural Attacks: magical force with add range for \`#hand\`.
->   * Moves: Incorporeal and Immortal.
-> * Faerie:
->   * Curse: Pure Drive (Joy).
->   * Natural Attacks: Magical force with ignore-armor.
->   * Moves: Flight and Preternatural Speed.
-> * Demon:
->   * Curse: Pure Drive (Cruelty).
->   * Natural Attacks: Claws with +1 harm.
->   * Moves: Dark negotiator and Unquenchable Vitality.
-> * Orc:
->   * Curse: Dark Master (the orc overlord).
->   * Natural Attacks: Teeth with ignore-armor.
->   * Moves: Unholy Strength and Dark Negotiator.
-> * Zombie:
->   * Curse: Pure Drive (hunger) or feed (flesh or brains).
->   * Natural Attacks: teeth with +1 harm.
->   * Moves: Immortal and Unquenchable Vitality.
-`,
-    
-    inputs: [
-      {
-        id: "", type: InputTypes.Label,
-        label: "Archetype",
-        subLabel: `Pick one Classification:
-  * Half-Human: You were always this way
-  * Half-Monster: You you were originally human and transformed somehow.
-Then pick one Alignment:
-  * Good Natured: You were always fighting to be Good.
-  * Turncoat: You were evil and changed sides.`,
-      },
-      {
-        id: "classification", type: InputTypes.MultipleChoice,
-        label: "Classification",
-        choose: 1,
-        options: [ "Half-Human", "Half-Monster" ],
-        allowCustom: true,
-      },
-      {
-        id: "alignment", type: InputTypes.MultipleChoice,
-        label: "Alignment",
-        choose: 1,
-        options: [ "Good Natured", "Turncoat" ],
-        allowCustom: true,
-      },
-      {
-        id: "", type: InputTypes.Label,
-        label: "Curse",
-        subLabel: `Try to align your curse with the type of monster you are. See the description for examples.`,
-      },
-      {
-        type: InputTypes.Augment,
-        id: "curse",
-        label: "Curse",
-        options: [
-          {
-            id: "79aeaee6-5e7a-457d-8180-84067d40d19e",
-            name: "Feed Curse",
-            description: `You must subsist on living humans—it might take the form of blood, brains, or spiritual essence
-  but it must be from people. You need to \`act under pressure\` to resist feeding whenever a perfect opportunity
-  presents itself.`,
-            inputs: [{
-              id: "weakness",
-              type: InputTypes.Text,
-              label: "Food",
-              placeholder: "Brains, life-force, etc."
-            }],
-            perks: {
-              social: [{
-                description: `You must subsist on living human tissue or essence.
-  You need to \`act under pressure\` to resist feeding whenever a perfect opportunity presents itself.`,
-                showInputs: ["weakness"]
-              }],
-              actUnderPressure: [{
-                description: `You must subsist on living human tissue or essence.
-  You need to \`act under pressure\` to resist feeding whenever a perfect opportunity presents itself.`,
-                showInputs: ["weakness"]
-              }]
-            }
-          },
-          {
-            id: "44307474-8772-492d-b5a6-aacc7e38f7a0",
-            name: "Vulnerability",
-            description: `Pick a substance. You suffer +1 harm when you suffer harm from it.
-  If you are bound or surrounded by it, you must \`act under pressure\` to use your powers.`,
-            inputs: [{
-              id: "weakness",
-              type: InputTypes.Text,
-              label: "Weakness",
-              placeholder: "Silver, Rock Salt, Tree Sap, etc."
-            }],
-            perks: {
-              health: [{
-                description: `You suffer +1 harm when you suffer harm from your weakness.`,
-                showInputs: ["weakness"]
-              }],
-              allMoves: [{
-                description: `If you are bound by or surrounded by your weakness, you must \`act under pressure\` to use your monstrous powers.`,
-                showInputs: ["weakness"]
-              }],
-            }
-          },
-          {
-            id: "a4b962ca-e8bc-4439-889d-37845a8970ec",
-            name: "Pure Drive",
-            description: `One emotion rules you. Whenever you have a chance to indulge that emotion, you must do so immediately, or \`act under pressure\` to resist it.`,
-            inputs: [{
-              id: "weakness", type: InputTypes.MultipleChoice,
-              label: "Emotion",
-              options: ["hunger", "hate", "anger", "fear", "jealousy", "greed", "joy", "pride", "envy", "lust", "cruelty"],
-              allowCustom: true
-            }],
-            perks: {
-              social: [{
-                description: `Whenever you have a chance to indulge the emotion that rules you, you must do so immediately, or \`act under pressure\` to resist it.`,
-                showInputs: ["weakness"]
-              }],
-              actUnderPressure: [{
-                description: `Whenever you have a chance to indulge the emotion that rules you, you must do so immediately, or \`act under pressure\` to resist it.`,
-                showInputs: ["weakness"]
-              }]
-            }
-          },
-          {
-            id: "b9a00011-326d-4dc8-be1a-03bd551b4451",
-            name: "Dark Master",
-            description: "You have an evil lord who doesn't know you changed sides. They still give you orders. They do not tolerate refusal or failure.",
-            inputs: [{id: "master", type: InputTypes.Text, label: "Dark Master", placeholder: "Dracula"}],
-            perks: {
-              social: [{
-                description: `You have an evil lord who doesn't know you changed sides. They still give you orders. They do not tolerate refusal or failure.`,
-                showInputs: ["master"]
-              }],
-            }
-          },
-        ],
-      },
-      {
-        id: "", type: InputTypes.Label,
-        label: "Natural Attacks",
-        subLabel: `Try to align your Natural Attacks with the type of monster you are. See the description for examples.`,
-      },
-      {
-        type: InputTypes.Augment,
-        id: "naturalAttackType",
-        label: "Natural Attacks",
-        choose: 1,
-        options: [
-          {
-            id: "6a42a3fe-8860-4dbc-a1c2-05ef3d212f79",
-            name: "Choose two Bases",
-            description: `Choose two Bases for your Natural Attacks`,
-            inputs: [{
-              type: InputTypes.Augment,
-              id: "naturalAttackBases",
-              label: "Natural Attack Bases",
-              choose: 2,
-              options: [
-                {
-                  id: "c4abb750-2e86-458b-9cd1-eb7069d4736a",
-                  name: "Teeth",
-                  description: `Teeth attack with \`#3-harm\` \`#intimate\``,
-                  perks: {
-                    attacks: [{
-                      name: "Teeth", description: "Monstrous Natural Attack with your Teeth",
-                      harm: 3, ranges: [ RangeEnum.Intimate ],
-                    }]
-                  }
-                },
-                {
-                  id: "780dbbb3-9dd1-40b2-9e18-cc8b053a77b9",
-                  name: "Claws",
-                  description: `Claws attack with \`#2-harm\` \`#hand\``,
-                  perks: {
-                    attacks: [{
-                      name: "Claws", description: "Monstrous Natural Attack with your Claws",
-                      harm: 2, ranges: [ RangeEnum.Hand ],
-                    }]
-                  }
-                },
-                {
-                  id: "e777c55b-b424-44d8-8f3c-7728186916ca",
-                  name: "Magical Force",
-                  description: `Magical Force attack with \`#1-harm\` \`#magical\` \`#close\``,
-                  perks: {
-                    attacks: [{
-                      name: "Magical Force", description: "Monstrous Natural Attack with a Magical Force",
-                      harm: 1, ranges: [ RangeEnum.Close ], tags: [ "magical" ]
-                    }]
-                  }
-                },
-                {
-                  id: "7a14d1ba-917b-4dbb-b346-ccfb9d2d9f56",
-                  name: "Life Drain",
-                  description: `Life Drain attack with \`#1-harm\` \`#intimate\` \`#life-drain\``,
-                  perks: {
-                    attacks: [{
-                      name: "Life Drain", description: "Monstrous Natural Attack with a Life Drain",
-                      harm: 1, ranges: [ RangeEnum.Intimate ], tags: [ "life-drain" ]
-                    }]
-                  }
-                }
-              ]
-            }]
-          },
-          {
-            id: "1650807d-d542-4714-9dd2-6b245364075d",
-            name: "Choose a Base and add an Extra to it.",
-            description: `Choose one Base for a Natural Attack and add one Extra to it.`,
-            inputs: [{
-              type: InputTypes.Augment,
-              id: "naturalAttack",
-              label: "Natural Attack",
-              choose: 1,
-              options: [
-                {
-                  id: "c4abb750-2e86-458b-9cd1-eb7069d4736a",
-                  name: "Teeth +1 Harm",
-                  description: `Teeth attack with \`#4-harm\` \`#intimate\``,
-                  perks: {
-                    attacks: [{
-                      name: "Teeth", description: "Monstrous Natural Attack with your Teeth",
-                      harm: 4, ranges: [ RangeEnum.Intimate ],
-                    }]
-                  }
-                },
-                {
-                  id: "c4abb750-2e86-458b-9cd1-eb7069d4736a",
-                  name: "Teeth +ignore-armor",
-                  description: `Teeth attack with \`#3-harm\` \`#intimate\` \`ignore-armor\``,
-                  perks: {
-                    attacks: [{
-                      name: "Teeth", description: "Monstrous Natural Attack with your Teeth",
-                      harm: 3, ranges: [ RangeEnum.Intimate ], tags: [ "ignore-armor" ],
-                    }]
-                  }
-                },
-                {
-                  id: "c4abb750-2e86-458b-9cd1-eb7069d4736a",
-                  name: "Teeth +hand range",
-                  description: `Teeth attack with \`#3-harm\` \`#intimate\` \`#hand\``,
-                  perks: {
-                    attacks: [{
-                      name: "Teeth", description: "Monstrous Natural Attack with your Teeth",
-                      harm: 3, ranges: [ RangeEnum.Intimate, RangeEnum.Hand ],
-                    }]
-                  }
-                },
-                {
-                  id: "c4abb750-2e86-458b-9cd1-eb7069d4736a",
-                  name: "Teeth +close range",
-                  description: `Teeth attack with \`#3-harm\` \`#intimate\` \`close\``,
-                  perks: {
-                    attacks: [{
-                      name: "Teeth", description: "Monstrous Natural Attack with your Teeth",
-                      harm: 3, ranges: [ RangeEnum.Intimate, RangeEnum.Close ],
-                    }]
-                  }
-                },
-                {
-                  id: "780dbbb3-9dd1-40b2-9e18-cc8b053a77b9",
-                  name: "Claws +1 Harm",
-                  description: `Claws attack with \`#3-harm\` \`#hand\``,
-                  perks: {
-                    attacks: [{
-                      name: "Claws", description: "Monstrous Natural Attack with your Claws",
-                      harm: 3, ranges: [ RangeEnum.Hand ],
-                    }]
-                  }
-                },
-                {
-                  id: "780dbbb3-9dd1-40b2-9e18-cc8b053a77b9",
-                  name: "Claws +ignore-armor",
-                  description: `Claws attack with \`#2-harm\` \`#ignore-armor\` \`#hand\``,
-                  perks: {
-                    attacks: [{
-                      name: "Claws", description: "Monstrous Natural Attack with your Claws",
-                      harm: 2, ranges: [ RangeEnum.Hand ], tags: [ "ignore-armor" ],
-                    }]
-                  }
-                },
-                {
-                  id: "780dbbb3-9dd1-40b2-9e18-cc8b053a77b9",
-                  name: "Claws +intimate range",
-                  description: `Claws attack with \`#2-harm\` \`#intimate\` \`#hand\``,
-                  perks: {
-                    attacks: [{
-                      name: "Claws", description: "Monstrous Natural Attack with your Claws",
-                      harm: 2, ranges: [ RangeEnum.Intimate, RangeEnum.Hand ],
-                    }]
-                  }
-                },
-                {
-                  id: "780dbbb3-9dd1-40b2-9e18-cc8b053a77b9",
-                  name: "Claws +close range",
-                  description: `Claws attack with \`#2-harm\` \`#hand\` \`#close\``,
-                  perks: {
-                    attacks: [{
-                      name: "Claws", description: "Monstrous Natural Attack with your Claws",
-                      harm: 2, ranges: [ RangeEnum.Hand, RangeEnum.Close ],
-                    }]
-                  }
-                },
-                {
-                  id: "e777c55b-b424-44d8-8f3c-7728186916ca",
-                  name: "Magical Force +1 Harm",
-                  description: `Magical Force attack with \`#2-harm\` \`#magical\` \`#close\``,
-                  perks: {
-                    attacks: [{
-                      name: "Magical Force", description: "Monstrous Natural Attack with a Magical Force",
-                      harm: 2, ranges: [ RangeEnum.Close ], tags: [ "magical" ],
-                    }]
-                  }
-                },
-                {
-                  id: "e777c55b-b424-44d8-8f3c-7728186916ca",
-                  name: "Magical Force +ignore-armor",
-                  description: `Magical Force attack with \`#1-harm\` \`#magical\` \`#ignore-armor\` \`#close\``,
-                  perks: {
-                    attacks: [{
-                      name: "Magical Force", description: "Monstrous Natural Attack with a Magical Force",
-                      harm: 1, ranges: [ RangeEnum.Close ], tags: [ "magical", "ignore-armor" ],
-                    }]
-                  }
-                },
-                {
-                  id: "e777c55b-b424-44d8-8f3c-7728186916ca",
-                  name: "Magical Force +intimate range",
-                  description: `Magical Force attack with \`#1-harm\` \`#magical\` \`#intimate\` \`#close\``,
-                  perks: {
-                    attacks: [{
-                      name: "Magical Force", description: "Monstrous Natural Attack with a Magical Force",
-                      harm: 1, ranges: [RangeEnum.Intimate, RangeEnum.Close], tags: [ "magical", "intimate", "close" ],
-                    }]
-                  }
-                },
-                {
-                  id: "e777c55b-b424-44d8-8f3c-7728186916ca",
-                  name: "Magical Force +hand range",
-                  description: `Magical Force attack with \`#1-harm\` \`#magical\` \`#hand\` \`#close\``,
-                  perks: {
-                    attacks: [{
-                      name: "Magical Force", description: "Monstrous Natural Attack with a Magical Force",
-                      harm: 1, ranges: [ RangeEnum.Hand, RangeEnum.Close ], tags: [ "magical" ],
-                    }]
-                  }
-                },
-                {
-                  id: "7a14d1ba-917b-4dbb-b346-ccfb9d2d9f56",
-                  name: "Life Drain +1 Harm",
-                  description: `Life Drain attack with \`#2-harm\` \`#intimate\` \`#life-drain\``,
-                  perks: {
-                    attacks: [{
-                      name: "Life Drain", description: "Monstrous Natural Attack with a Life Drain",
-                      harm: 2, ranges: [ RangeEnum.Intimate ], tags: [ "life-drain" ],
-                    }]
-                  }
-                },
-                {
-                  id: "7a14d1ba-917b-4dbb-b346-ccfb9d2d9f56",
-                  name: "Life Drain +ignore-armor",
-                  description: `Life Drain attack with \`#1-harm\` \`#ignore-armor\` \`#intimate\` \`#life-drain\``,
-                  perks: {
-                    attacks: [{
-                      name: "Life Drain", description: "Monstrous Natural Attack with a Life Drain",
-                      harm: 1, ranges: [RangeEnum.Intimate], tags: ["ignore-armor", "life-drain"],
-                    }]
-                  }
-                },
-                {
-                  id: "7a14d1ba-917b-4dbb-b346-ccfb9d2d9f56",
-                  name: "Life Drain +hand range",
-                  description: `Life Drain attack with \`#1-harm\` \`#intimate\` \`hand\` \`#life-drain\``,
-                  perks: {
-                    attacks: [{
-                      name: "Life Drain", description: "Monstrous Natural Attack with a Life Drain",
-                      harm: 1, ranges: [ RangeEnum.Intimate, RangeEnum.Hand ], tags: [ "life-drain" ],
-                    }]
-                  }
-                },
-                {
-                  id: "7a14d1ba-917b-4dbb-b346-ccfb9d2d9f56",
-                  name: "Life Drain +close range",
-                  description: `Life Drain attack with \`#1-harm\` \`#intimate\` \`close\` \`#life-drain\``,
-                  perks: {
-                    attacks: [{
-                      name: "Life Drain", description: "Monstrous Natural Attack with a Life Drain",
-                      harm: 1, ranges: [ RangeEnum.Intimate, RangeEnum.Close ], tags: [ "life-drain" ],
-                    }]
-                  }
-                }
-              ]
-            }]
-          },
-        ]
-      }
-    ],
-  },
-  {
-    id: "56ad962b-c655-43f7-b241-c0546efb0566",
-    playbook: "a5f796af-dd20-4ee0-8920-18b80e20ec24", // The Monstrous
-    startingFeat: false,
-    multiclassable: true,
-
-    name: "Immortal",
-    description: `You do not age or sicken, and whenever you suffer **Harm**, you suffer 1 less **Harm**.`,
+    description: `You do not age or sicken, and whenever you suffer \`harm\`, you suffer 1 less \`harm\`.`,
 
     perks: {
       protections: [{
         description: `You do not age or sicken.`
       }],
-      armorModifiers: [{
+      modArmor: [{
         name: `Immortal`,
-        description: `Whenever you suffer **Harm**, you suffer 1 less **Harm**.`,
         offset: 1,
       }],
     }
   },
   {
-    id: "bd27946f-1430-4cca-9715-1cd349374aea",
-    playbook: "a5f796af-dd20-4ee0-8920-18b80e20ec24", // The Monstrous
-    startingFeat: false,
-    multiclassable: true,
+    name: `Unnatural Appeal`,
+    id: `bd27946f-1430-4cca-9715-1cd349374aea`,
+    playbooks: [`a5f796af-dd20-4ee0-8920-18b80e20ec24`], // The Monstrous
+    featType: FeatTypeEnum.Move,
 
-    name: "Unnatural Appeal",
     description: `Roll **+Weird** instead of **+Charm** when you \`manipulate someone\`.`,
 
     perks: {
-      // TODO: We don't need a description for this. Maybe its time to split those types.
-      manipulateSomeone: [{ description: `Roll **+Weird** instead of **+Charm** when you \`manipulate someone\`.`, alternateStat: StatEnum.Weird }]
+      manipulateSomeone: [{
+        description: `Roll **+Weird** instead of **+Charm** when you \`manipulate someone\`.`,
+        alternateStat: StatEnum.Weird
+      }]
     }
   },
   {
-    id: "9a3bddb6-d4a7-43b5-b213-745666aaf772",
-    playbook: "a5f796af-dd20-4ee0-8920-18b80e20ec24", // The Monstrous
-    startingFeat: false,
-    multiclassable: true,
+    name: `Unholy Strength`,
+    id: `9a3bddb6-d4a7-43b5-b213-745666aaf772`,
+    playbooks: [`a5f796af-dd20-4ee0-8920-18b80e20ec24`], // The Monstrous
+    featType: FeatTypeEnum.Move,
 
-    name: "Unholy Strength",
     description: `When you \`kick some ass\`, roll **+Weird** instead of **+Tough**.`,
     
     perks: {
@@ -2376,104 +1690,108 @@ Then pick one Alignment:
     }
   },
   {
-    id: "801dd250-a87b-458a-a0db-ed767bca546b",
-    playbook: "a5f796af-dd20-4ee0-8920-18b80e20ec24", // The Monstrous
-    startingFeat: false,
-    multiclassable: true,
+    name: `Incorporeal`,
+    id: `801dd250-a87b-458a-a0db-ed767bca546b`,
+    playbooks: [`a5f796af-dd20-4ee0-8920-18b80e20ec24`], // The Monstrous
+    featType: FeatTypeEnum.Move,
 
-    name: "Incorporeal",
     description: `You may move freely through solid objects (but not people.)`,
 
     perks: {
       autoActions: [{
-        name: "Incorporeal",
+        name: `Incorporeal`,
+        id: `8311d2af-4863-46c1-932f-fd13e735b9af`,
         description: `You may move freely through solid objects (but not people.)`,
       }]
     }
   },
   {
-    id: "dbd58c57-657e-4895-8242-4880e32ee321",
-    playbook: "a5f796af-dd20-4ee0-8920-18b80e20ec24", // The Monstrous
-    startingFeat: false,
-    multiclassable: true,
+    name: `Preternatural Speed`,
+    id: `dbd58c57-657e-4895-8242-4880e32ee321`,
+    playbooks: [`a5f796af-dd20-4ee0-8920-18b80e20ec24`], // The Monstrous
+    featType: FeatTypeEnum.Move,
 
-    name: "Preternatural Speed",
     description: `You go much faster than normal people. When you chase, flee, or run, take +1 \`ongoing\``,
     
     perks: {
-      allMoves: [{
-        description: `When you chase, flee, or run, take +1 \`ongoing\`. You go much faster than normal people.`,
+      modMoves: [{
+        name: `Preternatural Speed`,
         offset: 1,
+        condition: `Apply while you chase, flee, or run.`,
       }]
     }
   },
   {
-    id: "2a1580ad-5567-4c5c-8617-1922243bdfc9",
-    playbook: "a5f796af-dd20-4ee0-8920-18b80e20ec24", // The Monstrous
-    startingFeat: false,
-    multiclassable: true,
+    name: `Claws of the Beast`,
+    id: `2a1580ad-5567-4c5c-8617-1922243bdfc9`,
+    playbooks: [`a5f796af-dd20-4ee0-8920-18b80e20ec24`], // The Monstrous
+    featType: FeatTypeEnum.Move,
 
-    name: "Claws of the Beast",
-    description: `All your natural attacks get +1 **Harm**`,
+    description: `All your natural attacks get +1 \`harm\``,
     
     perks: {
-      attackModifiers: [{
+      modAttack: [{
         name: `Claws of the Beast`,
-        description: `All your natural attacks get +1 **Harm**`,
         offset: 1,
-        apply: false
+        applyToItem: [ // Natural Attacks
+          `c4abb750-2e86-458b-9cd1-eb7069d4736a`, // Teeth
+          `780dbbb3-9dd1-40b2-9e18-cc8b053a77b9`, // Claws
+          `e777c55b-b424-44d8-8f3c-7728186916ca`, // Magical Force
+          `7a14d1ba-917b-4dbb-b346-ccfb9d2d9f56`, // Life Drain
+        ]
       }]
     }
   },
   {
-    id: "f1076b20-3125-486f-a2d8-d091f552b267",
-    playbook: "a5f796af-dd20-4ee0-8920-18b80e20ec24", // The Monstrous
-    startingFeat: false,
-    multiclassable: true,
+    name: `Mental Domination`,
+    id: `f1076b20-3125-486f-a2d8-d091f552b267`,
+    playbooks: [`a5f796af-dd20-4ee0-8920-18b80e20ec24`], // The Monstrous
+    featType: FeatTypeEnum.Move,
 
-    name: "Mental Domination",
-    description: `Charm Move: When you gaze into a normal human's eyes and exert your will over them.`,
+    description: `When you gaze into a normal human's eyes and exert your will over them.`,
 
     perks: {
       actions: [{
-        name: "Mental Domination",
-        description: `When you gaze into a normal human's eyes and exert your will over them, giving them orders to obey.`,
+        name: `Mental Domination`,
+        id: `2c3a9514-4494-406f-9158-89748ea36fc8`,
         coreStat: StatEnum.Charm,
+        description: `When you gaze into a normal human's eyes and exert your will over them, giving them orders to obey.`,
+
         miss: `\`The Keeper\` can make a hard move against you. You likely failed to gain any control over them.`,
-        mixedSuccess: `**Hold** 1`,
-        solidSuccess: `**Hold** 3`,
-        successFooter: `You may spend your **Hold** to give the target an order. Regular people will follow your order, whatever it is.
-\`Hunters\` can choose whether they do it or not. If they do, they mark **Experience**.`
+        mixedSuccess: `\`Hold\` 1`,
+        solidSuccess: `\`Hold\` 3`,
+        successFooter: `You may spend your \`hold\` to give the target an order. Regular people will follow your order, whatever it is.
+\`Hunters\` can choose whether they do it or not. If they do, they mark \`experience\`.`
       }]
     }
   },
   {
-    id: "1ff4e38a-867f-4564-baa9-6e676c6d75ed",
-    playbook: "a5f796af-dd20-4ee0-8920-18b80e20ec24", // The Monstrous
-    startingFeat: false,
-    multiclassable: true,
+    name: `Unquenchable vitality`,
+    id: `1ff4e38a-867f-4564-baa9-6e676c6d75ed`,
+    playbooks: [`a5f796af-dd20-4ee0-8920-18b80e20ec24`], // The Monstrous
+    featType: FeatTypeEnum.Move,
 
-    name: "Unquenchable vitality",
-    description: `Cool Move: When you have taken **Harm**, you can heal yourself.`,
+    description: `When you have taken \`harm\`, you can heal yourself.`,
 
     perks: {
       actions: [{
-        name: "Unquenchable vitality",
-        description: `Cool Move: When you have taken **Harm**, you can heal yourself.`,
+        name: `Unquenchable vitality`,
+        id: `f0958b0a-d816-471c-b119-6b710203990c`,
         coreStat: StatEnum.Cool,
+        description: `When you have taken \`harm\`, you can heal yourself.`,
+        
         miss: `Your injuries worsen.`,
-        mixedSuccess: `Heal 1 **Harm** and stabilise your injuries.`,
-        solidSuccess: `Heal 2 **Harm** and stabilise your injuries.`,
+        mixedSuccess: `Heal 1 \`harm\` and stabilise your injuries.`,
+        solidSuccess: `Heal 2 \`harm\` and stabilise your injuries.`,
       }]
     }
   },
   {
-    id: "6a9dc239-37d1-468f-82b4-97c62a9f9404",
-    playbook: "a5f796af-dd20-4ee0-8920-18b80e20ec24", // The Monstrous
-    startingFeat: false,
-    multiclassable: true,
+    name: `Dark Negotiator`,
+    id: `6a9dc239-37d1-468f-82b4-97c62a9f9404`,
+    playbooks: [`a5f796af-dd20-4ee0-8920-18b80e20ec24`], // The Monstrous
+    featType: FeatTypeEnum.Move,
 
-    name: "Dark Negotiator",
     description: `You can use the \`manipulate someone\` move on monsters as well as people, if they can reason and talk`,
 
     perks: {
@@ -2483,67 +1801,74 @@ Then pick one Alignment:
     }
   },
   {
-    id: "26130600-3c03-4b42-8b7b-e99c071fa454",
-    playbook: "a5f796af-dd20-4ee0-8920-18b80e20ec24", // The Monstrous
-    startingFeat: false,
-    multiclassable: true,
+    name: `Flight`,
+    id: `26130600-3c03-4b42-8b7b-e99c071fa454`,
+    playbooks: [`a5f796af-dd20-4ee0-8920-18b80e20ec24`], // The Monstrous
+    featType: FeatTypeEnum.Move,
 
-    name: "Flight",
     description: `You can fly`,
 
     perks: {
       autoActions: [{
-        name: "Flight",
+        name: `Flight`,
+        id: `92fc4107-c604-4b8a-9dd4-754b3705c39d`,
         description: `You can fly`,
       }]
     }
   },
   {
-    id: "3fa06789-e37f-4d34-9816-e4d373bfbe51",
-    playbook: "a5f796af-dd20-4ee0-8920-18b80e20ec24", // The Monstrous
-    startingFeat: false,
-    multiclassable: true,
+    name: `Shapeshifter`,
+    id: `3fa06789-e37f-4d34-9816-e4d373bfbe51`,
+    playbooks: [`a5f796af-dd20-4ee0-8920-18b80e20ec24`], // The Monstrous
+    featType: FeatTypeEnum.Move,
 
-    name: "Shapeshifter",
     description: `You may change your form (usually into an animal) for a bonus to \`investigate a mystery\`.`,
     longDescription: `You may change your form (usually into an animal.) Decide if you have on alternate form or several, and detail them.
 You gain +1 to \`investigate a mystery\` when using an alternate form's superior senses (e.g. smell of a wolf, sight of an eagle, etc.)`,
     
-    inputs: [
-      { type: InputTypes.Text, id: "shapes", label: "Shape(s)", placeholder: "wolf, eagle, etc." },
-    ],
+    inputs: [{
+      label: `Shape(s)`, key: `4711de96-36b5-427f-8e8d-c4f67e57ef3d`, // Displayed in Actions
+      inputType: InputTypes.Text,
+      placeholder: `wolf, eagle, etc.`,
+    }],
 
     perks: {
       autoActions: [{
-        name: "Shapeshift",
+        name: `Shapeshift`,
+        id: `8b4d864f-a956-4ffb-a9f2-ea5054b733d9`,
         description: `Change into one of your alternate forms.`,
-        showInputs: [ "shapes" ],
+        showInputs: [ `4711de96-36b5-427f-8e8d-c4f67e57ef3d` ], // Shapes
       }],
-      investigateAMystery: [{
-        description: `While in one of your alternate form's superior senses, you gain +1 to \`investigate a mystery\`.`,
+      modMoves: [{
+        name: `Shapeshifted`,
+        applyToMoves: [`1b0ccc41-de6e-45dc-9f9f-bb1d7d33a447`], // Investigate a Mystery
         offset: 1,
-        showInputs: [ "shapes" ],
+        condition: `Apply while using one of your alternate form's superior senses.`,
+        showInputs: [ `4711de96-36b5-427f-8e8d-c4f67e57ef3d` ], // Shapes
       }]
     },
   },
   {
-    id: "6e9cd55e-50ff-4bb8-b03c-8e1fa9f72632",
-    playbook: "a5f796af-dd20-4ee0-8920-18b80e20ec24", // The Monstrous
-    startingFeat: false,
-    multiclassable: true,
+    name: `Something Borrowed`,
+    id: `6e9cd55e-50ff-4bb8-b03c-8e1fa9f72632`,
+    playbooks: [`a5f796af-dd20-4ee0-8920-18b80e20ec24`], // The Monstrous
+    featType: FeatTypeEnum.Move,
 
-    name: "Something Borrowed",
     description: `Take a move from another \`Hunter\` \`Playbook\` that is not currently in play.`,
 
-    borrowMove: 1,
+    inputs: [{
+      label: `Move`,
+      inputType: InputTypes.TypedFeatChoice,
+      choose: 1,
+      featType: FeatTypeEnum.Move,
+    }],
   },
   {
-    id: "2b55c1b5-c8a2-4941-ba72-b320ebf69ff8",
-    playbook: "b03c7fb1-9ce4-4cba-a527-6c1380ac5de0", // The Mundane
-    startingFeat: false,
-    multiclassable: true,
+    name: `Always the Victim`,
+    id: `2b55c1b5-c8a2-4941-ba72-b320ebf69ff8`,
+    playbooks: [`b03c7fb1-9ce4-4cba-a527-6c1380ac5de0`], // The Mundane
+    featType: FeatTypeEnum.Move,
 
-    name: "Always the Victim",
     description: `When a \`Hunter\` protects you, they mark **Experience**. When you get captured, you mark \`Experience\`.`,
     longDescription: `When another \`Hunter\` uses \`protect someone\` to protect you, they mark \`Experience\`.
 Whenever a monster captures you, you mark **Experience**.`,
@@ -2554,19 +1879,19 @@ Whenever a monster captures you, you mark **Experience**.`,
     }
   },
   {
-    id: "bc97a6b5-e697-416e-8d29-c635dab08fe0",
-    playbook: "b03c7fb1-9ce4-4cba-a527-6c1380ac5de0", // The Mundane
-    startingFeat: false,
-    multiclassable: true,
+    name: `Oops!`,
+    id: `bc97a6b5-e697-416e-8d29-c635dab08fe0`,
+    playbooks: [`b03c7fb1-9ce4-4cba-a527-6c1380ac5de0`], // The Mundane
+    featType: FeatTypeEnum.Move,
 
-    name: "Oops!",
     description: `Stumble across something important or useful.`,
     longDescription: `If you want to stumble across something important, tell \`The Keeper\`.
 You will find something important and useful, although not necessarily related to your immediate problems.`,
 
     perks: {
       autoActions: [{
-        name: "Oops!",
+        name: `Oops!`,
+        id: `6a590111-0f45-4e4a-9368-9cd11c37c063`,
         description: `Stumble across something important or useful.`,
         longDescription: `If you want to stumble across something important, tell \`The Keeper\`.
 You will find something important and useful, although not necessarily related to your immediate problems.`,
@@ -2574,12 +1899,11 @@ You will find something important and useful, although not necessarily related t
     }
   },
   {
-    id: "b58eb47e-4bf7-40f8-b6c5-64274b47a99a",
-    playbook: "b03c7fb1-9ce4-4cba-a527-6c1380ac5de0", // The Mundane
-    startingFeat: false,
-    multiclassable: true,
+    name: `Let's Get Out Of Here!`,
+    id: `b58eb47e-4bf7-40f8-b6c5-64274b47a99a`,
+    playbooks: [`b03c7fb1-9ce4-4cba-a527-6c1380ac5de0`], // The Mundane
+    featType: FeatTypeEnum.Move,
 
-    name: "Let's Get Out Of Here!",
     description: `If you can \`protect someone\` by telling them what to do, or by leading them out, roll +Charm instead of +Tough.`,
     
     perks: {
@@ -2590,19 +1914,20 @@ You will find something important and useful, although not necessarily related t
     }
   },
   {
-    id: "541a73ef-cdea-4244-b9ba-d705d260cfed",
-    playbook: "b03c7fb1-9ce4-4cba-a527-6c1380ac5de0", // The Mundane
-    startingFeat: false,
-    multiclassable: true,
+    name: `Panic Button`,
+    id: `541a73ef-cdea-4244-b9ba-d705d260cfed`,
+    playbooks: [`b03c7fb1-9ce4-4cba-a527-6c1380ac5de0`], // The Mundane
+    featType: FeatTypeEnum.Move,
 
-    name: "Panic Button",
-    description: `Sharp Move: When you need to escape, name the route you'll try.`,
+    description: `When you need to escape, name the route you'll try.`,
 
     perks: {
       actions: [{
-        name: "Panic Button",
-        description: `Sharp Move: When you need to escape, name the route you'll try.`,
+        name: `Panic Button`,
+        id: `b9cb058c-f74a-46b7-98ca-ad955d52266d`,
         coreStat: StatEnum.Sharp,
+        description: `When you need to escape, name the route you'll try.`,
+
         miss: `You are caught halfway out`,
         mixedSuccess: `You can go or stay, but if you go, it's going to cost you
 (you leave something behind or something comes with you.)`,
@@ -2611,36 +1936,38 @@ You will find something important and useful, although not necessarily related t
     }
   },
   {
-    id: "318f4157-277f-4056-8d54-50bfac3c7349",
-    playbook: "b03c7fb1-9ce4-4cba-a527-6c1380ac5de0", // The Mundane
-    startingFeat: false,
-    multiclassable: true,
+    name: `The Power of Heart`,
+    id: `318f4157-277f-4056-8d54-50bfac3c7349`,
+    playbooks: [`b03c7fb1-9ce4-4cba-a527-6c1380ac5de0`], // The Mundane
+    featType: FeatTypeEnum.Move,
 
-    name: "The Power of Heart",
     description: `When fighting a monster, if you \`help out\`, you can automatically succeed.`,
     longDescription: `When fighting a monster, if you \`help out\`, you can skip rolling **+Cool** to automatically help as though you rolled a 10.`,
 
     perks: {
-      helpOut: [{
-        description: `When fighting a monster, you can skip rolling to automatically help as if you rolled a 10.`,
-        canAutoRoll: 10,
+      modMoves: [{
+        name: `The Power of Heart`,
+        applyToMoves: [`2c7dd11e-b12b-4a02-b109-41e7daf65549`], // Help Out
+        autoRoll: 10,
+        condition: `Can apply while fighting a monster.`,
       }]
     },
   },
   {
-    id: "01dee0d8-76fd-42bb-b9ac-058a40b5fb3a",
-    playbook: "b03c7fb1-9ce4-4cba-a527-6c1380ac5de0", // The Mundane
-    startingFeat: false,
-    multiclassable: true,
+    name: `Trust Me`,
+    id: `01dee0d8-76fd-42bb-b9ac-058a40b5fb3a`,
+    playbooks: [`b03c7fb1-9ce4-4cba-a527-6c1380ac5de0`], // The Mundane
+    featType: FeatTypeEnum.Move,
 
-    name: "Trust Me",
-    description: `Charm Move: When you try to protect someone from danger by telling them the truth and what to do.`,
+    description: `When you try to protect someone from danger by telling them the truth and what to do.`,
 
     perks: {
       actions: [{
-        name: "Trust Me",
-        description: `When you try to protect someone from danger by telling them the truth and what to do.`,
+        name: `Trust Me`,
+        id: `02f7901c-f56b-49af-8c5b-5f8ef9b71114`,
         coreStat: StatEnum.Charm,
+        description: `When you try to protect someone from danger by telling them the truth and what to do.`,
+        
         miss: `They think you're crazy or maybe dangerous too.`,
         mixedSuccess: `They will do what you say they should, but \`The Keeper\` chooses one from:
 * They ask you a hard question first.
@@ -2651,49 +1978,54 @@ You will find something important and useful, although not necessarily related t
     }
   },
   {
-    id: "8e961dc1-d6b7-429e-8898-389c415b43f3",
-    playbook: "b03c7fb1-9ce4-4cba-a527-6c1380ac5de0", // The Mundane
-    startingFeat: false,
-    multiclassable: true,
+    name: `What Could Go Wrong?`,
+    id: `8e961dc1-d6b7-429e-8898-389c415b43f3`,
+    playbooks: [`b03c7fb1-9ce4-4cba-a527-6c1380ac5de0`], // The Mundane
+    featType: FeatTypeEnum.Move,
 
-    name: "What Could Go Wrong?",
     description: `Whenever you charge into immediate danger without hedging your bets, **Hold 2**.`,
     
-    inputs: [ { type: InputTypes.Checks, id: "hold", label: "WCGW? Holds", max: 2 } ],
+    inputs: [{
+      label: `Holds`, key: `84d045a8-2829-49f6-9a4d-603af5ca7d21`, // Displayed in Action and modifiers
+      inputType: InputTypes.Checks,
+      max: 2,
+    }],
 
     perks: {
       autoActions: [{
-        name: "What Could Go Wrong?",
-        description: `Whenever you **charge into immediate danger** without hedging your bets, **Hold** 2.`,
-        longDescription: `Whenever you charge into immediate danger without hedging your bets, **Hold** 2.
-
-You may spend your **Hold** to:
-* Inflict +1 **Harm**.
-* Reduce someone's **Harm** suffered by 1.
-* Take +2 \`forward\` on an \`act under pressure\` roll.`,
-        showInputs: [ 'hold' ]
-      }],
-      attackModifiers: [{
         name: `What Could Go Wrong?`,
-        description: `Spend 1 **Hold** to inflict +1 **Harm**.`,
-        offset: 1,
-        apply: false,
-        showInputs: [ "hold" ]
+        id: `b1604fb9-c1c7-4992-b0e2-0742218e80ee`,
+        description: `Whenever you **charge into immediate danger** without hedging your bets, \`hold\` 2.`,
+        longDescription: `Whenever you charge into immediate danger without hedging your bets, \`hold\` 2.
+
+You may spend your \`hold\` to:
+* Inflict +1 \`harm\`.
+* Reduce someone's \`harm\` suffered by 1.
+* Take +2 \`forward\` on an \`act under pressure\` roll.`,
+        showInputs: [ `84d045a8-2829-49f6-9a4d-603af5ca7d21` ] // Holds
       }],
-      actUnderPressure: [{
-        description: `Spend 1 **Hold** to gain +2.`,
-        offset: +2,
-        showInputs: [ "hold" ]
+      modAttack: [{
+        name: `What Could Go Wrong?`,
+        // description: `Spend 1 \`Hold\` to inflict +1 \`harm\`.`,
+        offset: 1,
+        condition: `Can apply by spending 1 \`hold\`.`,
+        showInputs: [ `84d045a8-2829-49f6-9a4d-603af5ca7d21` ] // Holds
+      }],
+      modMoves: [{
+        name: `What Could Go Wrong?`,
+        applyToMoves: [`bfdfd9b3-d5fa-4517-8d5e-20013364d7b0`], // Act Under Pressure
+        offset: 2,
+        condition: `Can apply by spending 1 \`hold\`.`,
+        showInputs: [ `84d045a8-2829-49f6-9a4d-603af5ca7d21` ] // Holds
       }],
     }
   },
   {
-    id: "349e9759-969b-48cc-8445-4cd66b28895f",
-    playbook: "b03c7fb1-9ce4-4cba-a527-6c1380ac5de0", // The Mundane
-    startingFeat: false,
-    multiclassable: true,
+    name: `Don't Worry, I'll Check It Out`,
+    id: `349e9759-969b-48cc-8445-4cd66b28895f`,
+    playbooks: [`b03c7fb1-9ce4-4cba-a527-6c1380ac5de0`], // The Mundane
+    featType: FeatTypeEnum.Move,
 
-    name: "Don't Worry, I'll Check It Out",
     description: `Whenever you **go off by yourself**, to check out somewhere (or something) scary, mark **Experience**.`,
 
     perks: {
@@ -2702,139 +2034,119 @@ You may spend your **Hold** to:
       }]
     },
   },
-//   {
-//     id: "bb4e925c-35f6-40a9-9734-033baa4e8c40",
-//     playbook: "b33ce99a-73e9-4f15-8314-ac80bf0819d1", // The Pararomantic
-//     startingFeat: false,
-//     multiclassable: true,
-//
-//     name: "Supernatural Guide",
-//     description: `You have a (most likely intimate) connection to a being who is your **Guide**.`,
-//     longDescription: `You have a (most likely intimate) connection to some supernatural being who is your **Guide** into
-// the world beyond. Choose if your relationship is secret or not.
-//
-// Determine what kind of creature your **Guide** is and how your relationship works. Say what kind of power they possess.
-// \`The Keeper\` will decide how it works and define your **Guide** as a **Threat**.
-//
-// If your **Guide** is another \`Hunter\`, determine together how your relationship works.
-//
-// Whenever you would roll **+Weird** you can roll **+Charm** instead, by channeling the power of your bond.
-// When you do so and miss, in addition to the usual consequences, you and your **Guide** suffer. \`The Keeper\` chooses two of the following:
-// * Mark off a box of your **Relationship Status**.
-// * You become **Bond Blocked**. You may not channel the power of your bond for the rest of the **Mystery**.
-// * You gain the unwelcome attention of others of your **Guide**'s kind.
-// * Someone who shouldn't know finds a clue about your relationship with your **Guide**.`,
-//    
-//     inputs: {
-//       relationship: { type: InputTypes.Checks, label: "Relationship Status", max: 7 },
-//       bondBlocked: { type: InputTypes.Checks, label: "Bond Blocked", max: 1, resetPerMystery: true },
-//       guideName: { type: InputTypes.Text, label: "Guide Name", placeholder: "The Forgotten" },
-//       guideDetails: { type: InputTypes.TextArea, label: "Guide Details", placeholder: "Being type and powers and such." }
-//     },
-//    
-//     perks: {
-//       allWeirdMoves: [{
-//         description: `Channel your **Guide** through the power of your **Bond**.`,
-//         alternateStat: StatEnum.Charm,
-//         showInputs: [ "bondLocked" ],
-//         miss2: `If you channeled your **Guide** to roll **Charm** instead of **Weird**, you and your **Guide** also suffer. \`The Keeper\` chooses two of the following:
-// * Mark off a box of your **Relationship Status**.
-// * You become **Bond Blocked**. You may not channel the power of your bond for the rest of the **Mystery**.
-// * You gain the unwelcome attention of others of your **Guide**'s kind.
-// * Someone who shouldn't know finds a clue about your relationship with your **Guide**.`,
-//       }]
-//     },
-//   },
   {
-    id: "2a436e16-6633-4b05-a133-9b971d007bee",
-    playbook: "58924c0d-c015-4fcd-8fd9-ca75f12fd019", // The Professional
-    startingFeat: true,
-    multiclassable: true,
+    id: `2a436e16-6633-4b05-a133-9b971d007bee`,
+    playbooks: [`58924c0d-c015-4fcd-8fd9-ca75f12fd019`], // The Professional
+    featType: FeatTypeEnum.Move,
+    prerequisites: [`2584ae8c-8a2b-46e2-a408-e9a9dbac0da6`], // The Agency
 
-    name: "Deal With The Agency",
-    description: `Sharp Move: When you deal with the Agency, requesting help or gear, or making excuses for a failure.`,
+    name: `Deal With The Agency`,
+    description: `When you deal with the Agency, requesting help or gear, or making excuses for a failure.`,
     longDescription: `When you deal with the Agency, requesting help or gear, or making excuses for a failure, roll +Sharp.
 You may bet help or forgiveness, or they may put you in the proverbial doghouse.`,
 
     perks: {
       actions: [{
-        name: "Deal With The Agency",
-        description: `When you deal with the Agency, requesting help or gear, or making excuses for a failure.`,
+        name: `Deal With The Agency`,
+        id: `9f45209a-803f-41a9-bc17-4cfb2b1c28ed`,
         coreStat: StatEnum.Sharp,
+        description: `When you deal with the Agency, requesting help or gear, or making excuses for a failure.`,
+        
         miss: `You screwed up: You might be suspended or under investigation, or just in the doghouse. You certainly aren't getting any help until you sort it all out.`,
         mixedSuccess: `Things aren't so great. You might get chewed out by your superiors and there'll be fallout, but you get what you need for the job.`,
         solidSuccess: `You're good--your request for gear or personnel is okayed, or your slip-up goes unnoticed.`,
+        showInputs: [`cda1ce37-f4f2-48e7-8fdd-e104f27bf38d`, `4833c3b1-8fed-461f-85f1-36a915190cd6`], // Agency resources and red tape
       }],
     }
   },
   {
-    id: "a014068d-fb29-4d4d-a221-ef9804aceb32",
-    playbook: "58924c0d-c015-4fcd-8fd9-ca75f12fd019", // The Professional
-    startingFeat: false,
-    multiclassable: true,
+    name: `Bottle It Up`,
+    id: `a014068d-fb29-4d4d-a221-ef9804aceb32`,
+    playbooks: [`58924c0d-c015-4fcd-8fd9-ca75f12fd019`], // The Professional
+    featType: FeatTypeEnum.Move,
 
-    name: "Bottle It Up",
     description: `You can take a bonus to \`act under pressure\` that will come back later.`,
     longDescription: `If you want, you can take up to a +3 bonus when you \`act under pressure\`.
-For each +1 you use, \`The Keeper\` **Holds** 1. That **Hold** can be spent later--one to one--to give you
+For each +1 you use, \`The Keeper\` \`holds\` 1. That \`hold\` can be spent later--one to one--to give you
 -1 on any move __except__ "\`act under pressure\`".`,
 
-    inputs: [ { type: InputTypes.Checks, id: "keeperHolds", label: "Keeper's Holds", max: 3 } ],
+    inputs: [{
+      label: `Keeper's Holds`, key: `3de748b3-2a4f-41cc-899f-24b0fcc76dd2`, // Displayed in mods
+      inputType: InputTypes.Checks,
+      max: 3
+    }],
     
     perks: {
-      actUnderPressure: [
-        { description: `You can take +1. \`The Keeper\` gets 1 **Hold**.`, offset: 1 },
-        { description: `You can take +2. \`The Keeper\` gets 2 **Hold**.`, offset: 2 },
-        { description: `You can take +3. \`The Keeper\` gets 3 **Hold**.`, offset: 3, showInputs: [ "keeperHolds" ] }
+      modMoves: [
+        {
+          name: `Bottle It Up 1`,
+          applyToMoves: [`bfdfd9b3-d5fa-4517-8d5e-20013364d7b0`], // Act Under Pressure
+          offset: 1,
+          condition: `Can apply by giving \`The Keeper\` 1 \`hold\`.`,
+        },
+        {
+          name: `Bottle It Up 2`,
+          applyToMoves: [`bfdfd9b3-d5fa-4517-8d5e-20013364d7b0`], // Act Under Pressure
+          offset: 2,
+          condition: `Can apply by giving \`The Keeper\` 2 \`holds\`.`,
+        },
+        {
+          name: `Bottle It Up 3`,
+          applyToMoves: [`bfdfd9b3-d5fa-4517-8d5e-20013364d7b0`], // Act Under Pressure
+          offset: 3,
+          condition: `Can apply by giving \`The Keeper\` 3 \`holds\`.`,
+          showInputs: [ `3de748b3-2a4f-41cc-899f-24b0fcc76dd2` ] // Keeper Holds
+        }
       ],
-      allMoves: [{ description: `\`The Keeper\` may spend 1 **Hold** to impose a -1 to any move except "\`act under pressure\`"`, showInputs: [ "keeperHolds" ] }],
+      allMoves: [{
+        description: `\`The Keeper\` may spend 1 \`hold\` to impose a -1 to any move except "\`act under pressure\`"`,
+        showInputs: [ `3de748b3-2a4f-41cc-899f-24b0fcc76dd2` ] // Keeper Holds
+      }],
     }
   },
   {
-    id: "027a8b33-7347-4f44-9d67-b5aa5d2d28c6",
-    playbook: "58924c0d-c015-4fcd-8fd9-ca75f12fd019", // The Professional
-    startingFeat: false,
-    multiclassable: true,
+    name: `Unfazeable`,
+    id: `027a8b33-7347-4f44-9d67-b5aa5d2d28c6`,
+    playbooks: [`58924c0d-c015-4fcd-8fd9-ca75f12fd019`], // The Professional
+    featType: FeatTypeEnum.Move,
 
-    name: "Unfazeable",
     description: `Take +1 Cool (max +3)`,
 
     perks: { cool: { bonus: 1, max: 3 } },
   },
   {
-    id: "b161d4ff-c1e7-4af0-852a-51f17e6f69e3",
-    playbook: "58924c0d-c015-4fcd-8fd9-ca75f12fd019", // The Professional
-    startingFeat: false,
-    multiclassable: true,
+    name: `Battlefield Awareness`,
+    id: `b161d4ff-c1e7-4af0-852a-51f17e6f69e3`,
+    playbooks: [`58924c0d-c015-4fcd-8fd9-ca75f12fd019`], // The Professional
+    featType: FeatTypeEnum.Move,
 
-    name: "Battlefield Awareness",
     description: `Your awareness gives you +1 Armor (max 2-armor) on top of whatever you get from your gear.`,
     longDescription: `You always know what's happening around you, and what to watch out for.
 Take +1 Armor (max 2 armor) on top of whatever you get from your gear.`,
     
     perks: {
-      armorModifiers: [{
+      modArmor: [{
         name: `Battlefield Awareness`,
-        description: `Your awareness gives you +1 Armor on top of whatever you get from your gear (max 2-armor.)`,
         offset: 1,
         max: 2,
       }],
     },
   },
   {
-    id: "3f5f986c-8fca-42b8-87ef-607c9d23a7d8",
-    playbook: "58924c0d-c015-4fcd-8fd9-ca75f12fd019", // The Professional
-    startingFeat: false,
-    multiclassable: true,
+    name: `Leave No One Behind`,
+    id: `3f5f986c-8fca-42b8-87ef-607c9d23a7d8`,
+    playbooks: [`58924c0d-c015-4fcd-8fd9-ca75f12fd019`], // The Professional
+    featType: FeatTypeEnum.Move,
 
-    name: "Leave No One Behind",
-    description: `Sharp Move: In combat, you can **help someone escape**.`,
+    description: `In combat, you can **help someone escape**.`,
 
     perks: {
       actions: [{
-        name: "Leave No One Behind",
-        description: `In combat, you can **help someone escape**.`,
+        name: `Leave No One Behind`,
+        id: `179411c1-da3a-46bc-b261-bd0a491fee24`,
         coreStat: StatEnum.Sharp,
+        description: `In combat, you can **help someone escape**.`,
+
         miss: `You fail to get them out and you've attracted hostile attention.`,
         mixedSuccess: `You can either get them out or suffer no harm, you choose.`,
         solidSuccess: `You get them out clean.`,
@@ -2842,12 +2154,11 @@ Take +1 Armor (max 2 armor) on top of whatever you get from your gear.`,
     }
   },
   {
-    id: "b146eabd-6312-4b77-b30a-e07a7a1a94db",
-    playbook: "58924c0d-c015-4fcd-8fd9-ca75f12fd019", // The Professional
-    startingFeat: false,
-    multiclassable: true,
+    name: `Tactical Genius`,
+    id: `b146eabd-6312-4b77-b30a-e07a7a1a94db`,
+    playbooks: [`58924c0d-c015-4fcd-8fd9-ca75f12fd019`], // The Professional
+    featType: FeatTypeEnum.Move,
 
-    name: "Tactical Genius",
     description: `When you \`read a bad situation\`, you can roll **+Cool** instead of **+Sharp**.`,
 
     perks: {
@@ -2858,19 +2169,20 @@ Take +1 Armor (max 2 armor) on top of whatever you get from your gear.`,
     }
   },
   {
-    id: "b559c100-ab23-46bf-9bd7-2f620fc2bf01",
-    playbook: "58924c0d-c015-4fcd-8fd9-ca75f12fd019", // The Professional
-    startingFeat: false,
-    multiclassable: true,
+    name: `Medic`,
+    id: `b559c100-ab23-46bf-9bd7-2f620fc2bf01`,
+    playbooks: [`58924c0d-c015-4fcd-8fd9-ca75f12fd019`], // The Professional
+    featType: FeatTypeEnum.Move,
 
-    name: "Medic",
-    description: `Cool Move: You have a full first aid kit, and the training to heal people.`,
+    description: `You have a full first aid kit, and the training to heal people.`,
 
     perks: {
       actions: [{
-        name: "Medic",
-        description: `You have a full first aid kit, and the training to heal people.`,
+        name: `Medic`,
+        id: `af5b26e4-a9c5-4900-9f84-3639f992d140`,
         coreStat: StatEnum.Cool,
+        description: `You have a full first aid kit, and the training to heal people.`,
+
         miss: `You cause an extra 1 \`harm\`.`,
         mixedSuccess: `Choose one: heal 2 \`harm\` --OR-- \`stabilize\` the patient.`,
         solidSuccess: `The patient is \`stabilized\` and healed of 2 \`harm\`.`,
@@ -2878,27 +2190,24 @@ Take +1 Armor (max 2 armor) on top of whatever you get from your gear.`,
     }
   },
   {
-    id: "820c1ce2-8bd4-4b6c-a5c1-982841d5ea0a",
-    playbook: "58924c0d-c015-4fcd-8fd9-ca75f12fd019", // The Professional
-    startingFeat: false,
-    multiclassable: true,
+    name: `Mobility`,
+    id: `820c1ce2-8bd4-4b6c-a5c1-982841d5ea0a`,
+    playbooks: [`58924c0d-c015-4fcd-8fd9-ca75f12fd019`], // The Professional
+    featType: FeatTypeEnum.Move,
 
-    name: "Mobility",
     description: `You have a vehicle built for monster hunting.`,
     longDescription: `You have a truck, van, or car built for monster hunting.
 Choose two good things and one bad thing about it (two good tags and one bad tag.)`,
     
-    vehicles: [{ description: `A truck, van, or car built for monster hunting.` }]
+    items: [itemLookup.Professional],
   },
   {
-    id: "38c1e7f2-ecf9-4b57-8138-4acbbbaf0a16",
-    playbook: "f7b73a9a-6447-42f8-b373-b71341bdad99", // The Searcher
-    startingFeat: true,
-    multiclassable: true,
+    name: `First Encounter`,
+    id: `38c1e7f2-ecf9-4b57-8138-4acbbbaf0a16`,
+    playbooks: [`f7b73a9a-6447-42f8-b373-b71341bdad99`], // The Searcher
+    featType: FeatTypeEnum.Move,
 
-    name: "First Encounter",
     description: `You experienced one strange event that started your journey and unlocked a new capability for you.`,
-    showInputs: ["encounter"],
     longDescription: `One strange event started you down this path, sparking your need to discover the truth behind
 the unexplained. Decide what that event was: pick a category and take the associated move.
 Then tell everyone what happened to you (or someone close to you.)
@@ -2913,19 +2222,19 @@ Encounter Options:
 * Cosmic Insight: You have encompassed the soul of the universe. You never need to act under pressure due to feelings of fear, despair, or isolation.`,
     
     inputs: [{
-      type: InputTypes.Augment,
-      id: "encounter",
-      label: "Encounter",
+      label: `Encounter`, key: `5a23e324-2336-46cf-be84-f44a8771497d`, // Add 1 through improvement
+      inputType: InputTypes.FeatChoice,
       choose: 1,
       options: [
         {
-          id: "f79e8746-f32d-46b5-8ff1-a99736816b14",
-          name: "Cryptid Sighting",
+          name: `Cryptid Sighting`,
+          id: `f79e8746-f32d-46b5-8ff1-a99736816b14`,
           description: `You take note of any reports of strange creatures.
 Whenever you first see a new type of creature, you may immediately ask one of the investigate a mystery questions.`,
           perks: {
             autoActions: [{
-              name: "Cryptid Sighting",
+              name: `Cryptid Sighting`,
+              id: `4dd637fd-d4a0-4dae-80e4-0401365b0163`,
               description: `Whenever you first see a new type of creature, ask an "\`investigate a mystery\`" questions.`,
               longDescription: `You take note of any reports of strange creatures.
 Whenever you first see a new type of creature, you may immediately ask one of the investigate a mystery questions.
@@ -2935,65 +2244,67 @@ Whenever you first see a new type of creature, you may immediately ask one of th
           }
         },
         {
-          id: "31b74c1e-c52a-4795-a847-f59fcb4b8d55",
-          name: "Zone of Strangeness",
+          name: `Zone of Strangeness`,
+          id: `31b74c1e-c52a-4795-a847-f59fcb4b8d55`,
           description: `Things are not fixed. You never need \`act under pressure\` when supernatural forces alter the environment around you, and you get 2 \`armor\` against \`harm\` from sudden changes to the laws of physics.`,
+          items: [{
+            id: `31b74c1e-c52a-4795-a847-f59fcb4b8d55`,
+            name: `Zone of Strangeness`,
+            description: `You get 2 \`armor\` against \`harm\` from sudden changes to the laws of physics.`,
+            itemType: ItemType.InnateArmor,
+            armor: 2, tags: [],
+            armorCondition: `Apply when reality is altered around you, like sudden changes to the laws of physics.`,
+          }],
           perks: {
-            armors: [{
-              name: `Zone of Strangeness`,
-              description: `You get 2 \`armor\` against \`harm\` from sudden changes to the laws of physics.`,
-              armor: 2,
-              conditional: true,
-            }],
             actUnderPressure: [{
               description: `You never need \`act under pressure\` when supernatural forces alter the environment around you.`
             }]
           }
         },
         {
-          id: "4a394360-d04a-4d8a-a1e2-9ecd43ef60dc",
-          name: "Psychic Event",
+          name: `Psychic Event`,
+          id: `4a394360-d04a-4d8a-a1e2-9ecd43ef60dc`,
           description: `You gain the \`Sensitive\` alternative basic weird move. If you already have it, you gain the \`Empath\` alternative basic weird move`,
           inputs: [{
-            type: InputTypes.GainWeirdMove,
-            id: "psychicMove",
-            label: "Psychic Move",
+            label: `Psychic Move`,
+            inputType: InputTypes.WeirdMoveChoice,
             choose: 1,
-            options: [ "Sensitive", "Empath" ],
+            options: [ `Sensitive`, `Empath` ],
           }]
         },
         {
-          id: "1a94a926-c626-46c5-803e-cf9707c1aed9",
-          name: "Higher Power",
-          description: `Something looks out for you. You start with an extra **Luck**.`,
-          perks: {luck: [{description: `Something looks out for you. You start with an extra **Luck**.`, bonus: 1}]}
+          name: `Higher Power`,
+          id: `1a94a926-c626-46c5-803e-cf9707c1aed9`,
+          description: `Something looks out for you. You start with an extra \`luck\`.`,
+          perks: {luck: [{description: `Something looks out for you. You start with an extra \`luck\`.`, bonus: 1}]}
         },
         {
-          id: "fa699597-2e03-43d0-a310-40bb689a4148",
-          name: "Strange Dangers",
+          name: `Strange Dangers`,
+          id: `fa699597-2e03-43d0-a310-40bb689a4148`,
           description: `You are always watching for hazards. When you have no \`armor\`, you still count as having 1 \`armor\`.`,
-          perks: {
-            armors: [{
-              name: `Strange Dangers`,
-              description: `You are always watching for hazards. When you have no \`armor\`, you still count as having 1 \`armor\`.`,
-              armor: 1,
-            }]
-          },
+          items: [{
+            name: `Strange Dangers`,
+            id: `fa699597-2e03-43d0-a310-40bb689a4148`,
+            description: `You are always watching for hazards. When you have no \`armor\`, you still count as having 1 \`armor\`.`,
+            itemType: ItemType.InnateArmor,
+            armor: 1,
+          }]
         },
         {
-          id: "730f23b1-70f9-4ca5-8e61-e7e9d9f10736",
-          name: "Abduction",
+          name: `Abduction`,
+          id: `730f23b1-70f9-4ca5-8e61-e7e9d9f10736`,
           description: `They taught you hidden knowledge. Gain +1 to any move when you research strange or ancient secrets to do it.`,
           perks: {
-            allMoves: [{
-              description: `They taught you hidden knowledge. Gain +1 to any move when you research strange or ancient secrets to do it.`,
-              offset: 1
+            modMoves: [{
+              name: `Abduction`,
+              offset: 1,
+              condition: `Apply once after you researched the current action using strange or ancient secrets.`,
             }]
           }
         },
         {
-          id: "b21e1f0c-c15d-4503-b482-feeac57abfaa",
-          name: "Cosmic Insight",
+          name: `Cosmic Insight`,
+          id: `b21e1f0c-c15d-4503-b482-feeac57abfaa`,
           description: `You have encompassed the soul of the universe. You never need to \`act under pressure\` due to feelings of fear, despair, or isolation.`,
           perks: {actUnderPressure: [{description: `You have encompassed the soul of the universe. You never need to act under pressure due to feelings of fear, despair, or isolation.`}]}
         }
@@ -3001,80 +2312,86 @@ Whenever you first see a new type of creature, you may immediately ask one of th
     }]
   },
   {
-    id: "9f347cc2-a96a-4a17-b12d-4ab6bfa427ba",
-    playbook: "f7b73a9a-6447-42f8-b373-b71341bdad99", // The Searcher
-    startingFeat: false,
-    multiclassable: true,
+    name: `Prepared to Defend`,
+    id: `9f347cc2-a96a-4a17-b12d-4ab6bfa427ba`,
+    playbooks: [`f7b73a9a-6447-42f8-b373-b71341bdad99`], // The Searcher
+    featType: FeatTypeEnum.Move,
 
-    name: "Prepared to Defend",
-    description: `Whenever you suffer harm when you \`kick some ass\` or \`protect someone\`, you suffer 1 less **Harm**.`,
+    description: `Whenever you suffer harm when you \`kick some ass\` or \`protect someone\`, you suffer 1 less \`harm\`.`,
     longDescription: `Even truth seekers need tto fight sometimes.`,
 
     perks: {
       kickSomeAss: [{
-        description: `When you suffer **Harm** as a result of this move, take 1 less **Harm**.`
+        description: `When you suffer \`harm\` as a result of this move, take 1 less \`harm\`.`
       }],
       protectSomeone: [{
-        description: `When you suffer **Harm** as a result of this move, take 1 less **Harm**.`
+        description: `When you suffer \`harm\` as a result of this move, take 1 less \`harm\`.`
       }],
-      armorModifiers: [{
+      modArmor: [{
         name: `Prepared to Defend`,
-        description: `When you suffer harm from \`kick some ass\` or \`protect someone\`, you suffer 1 less **Harm**.`,
+        // description: `When you suffer harm from \`kick some ass\` or \`protect someone\`, you suffer 1 less \`harm\`.`,
         offset: 1,
-        conditional: true,
+        condition: `Apply when you suffer \`harm\` from \`kick some ass\` or \`protect someone\``,
       }]
     }
   },
   {
-    id: "b7cf9c20-3037-4355-887d-a3b14a344e31",
-    playbook: "f7b73a9a-6447-42f8-b373-b71341bdad99", // The Searcher
-    startingFeat: false,
-    multiclassable: true,
+    name: `Fellow Believer`,
+    id: `b7cf9c20-3037-4355-887d-a3b14a344e31`,
+    playbooks: [`f7b73a9a-6447-42f8-b373-b71341bdad99`], // The Searcher
+    featType: FeatTypeEnum.Move,
 
-    name: "Fellow Believer",
     description: `Bystanders will talk to you about weird things they would not trust others to believe.`,
     longDescription: `People understand you've also known strangeness. Bystanders will talk to you about weird things they would not trust another \`Hunter\` (or a mundane official) to believe.`,
 
     perks: { social: [{ description: `Bystanders will talk to you about weird things they would not trust others to believe.` }] }
   },
   {
-    id: "114109b5-9026-451c-9545-0e5f7f3c64ec",
-    playbook: "f7b73a9a-6447-42f8-b373-b71341bdad99", // The Searcher
-    startingFeat: false,
-    multiclassable: true,
+    name: `Guardian`,
+    id: `114109b5-9026-451c-9545-0e5f7f3c64ec`,
+    playbooks: [`f7b73a9a-6447-42f8-b373-b71341bdad99`], // The Searcher
+    featType: FeatTypeEnum.Move,
 
-    name: "Guardian",
     description: `You have a mystical ally that helps defend you`,
     longDescription: `You have a mystical ally (perhaps a spirit, alien, or cryptid) who helps and defends you.
 Define them, and their powers, with \`The Keeper\`'s agreement. Their look is one of: invisible, an intangible spirit thing,
 a weird creature, disguised as an animal, or disguised as a person.`,
 
-    inputs: [
-      { type: InputTypes.Text, id: "guardianName", label: "Guardian Name", placeholder: "The Lonely One" },
-      {
-        type: InputTypes.MultipleChoice,
-        id: "guardianLook",
-        label: "Guardian Look",
-        options: [
-          "an invisible guardian", "an intangible spirit thing", "a weird creature",
-          "a guardian disguised as an animal", "a guardian disguised as a person."
-        ],
-        allowCustom: true,
-      },
-      { type: InputTypes.TextArea, id: "guardianDescription", label: "Guardian Description", placeholder: "Summary, powers, etc." },
-    ],
+    inputs: [{
+      label: `Guardian`, key: `d2f7bdf5-6bb1-451f-af95-3ca8651d2f90`, // Displayed in Social
+      inputType: InputTypes.Ally,
+      startingAllyType: AllyType.Bodyguard,
+      inputs: [
+        {
+          label: `Guardian Look`,
+          inputType: InputTypes.TextChoice,
+          allowCustom: true,
+          choose: 1,
+          options: [
+            `an invisible guardian`, `an intangible spirit thing`, `a weird creature`,
+            `a guardian disguised as an animal`, `a guardian disguised as a person.`
+          ],
+        },
+        {
+          label: `Guardian Powers`,
+          inputType: InputTypes.Text,
+        },
+      ]
+    }],
 
     perks: {
-      social: [{ description: `You have a guardian who helps and defends you.`, showInputs: [ "guardianName", "guardianLook", "guardianDescription" ] }]
+      social: [{
+        description: `You have a guardian who helps and defends you.`,
+        showInputs: [ `d2f7bdf5-6bb1-451f-af95-3ca8651d2f90` ] // Guardian
+      }]
     }
   },
   {
-    id: "be6cc8db-59e1-405e-a98d-fa394a67b51e",
-    playbook: "f7b73a9a-6447-42f8-b373-b71341bdad99", // The Searcher
-    startingFeat: false,
-    multiclassable: true,
+    name: `Just Another Day`,
+    id: `be6cc8db-59e1-405e-a98d-fa394a67b51e`,
+    playbooks: [`f7b73a9a-6447-42f8-b373-b71341bdad99`], // The Searcher
+    featType: FeatTypeEnum.Move,
 
-    name: "Just Another Day",
     description: `When you have to \`act under pressure\` due to a monster, phenomenon, or mystical effect, you may roll +Weird instead of +Cool.`,
 
     perks: {
@@ -3085,33 +2402,38 @@ a weird creature, disguised as an animal, or disguised as a person.`,
     },
   },
   {
-    id: "98a39976-9940-4502-a601-61323c39bffd",
-    playbook: "f7b73a9a-6447-42f8-b373-b71341bdad99", // The Searcher
-    startingFeat: false,
-    multiclassable: true,
+    name: `Network`,
+    id: `98a39976-9940-4502-a601-61323c39bffd`,
+    playbooks: [`f7b73a9a-6447-42f8-b373-b71341bdad99`], // The Searcher
+    featType: FeatTypeEnum.Move,
 
-    name: "Network",
     description: `You have an \`ally\` group of others who had experiences similar to your first encounter.`,
     longDescription: `You may gain an \`ally\` group of others who had experiences similar to your first encounter—perhaps
 they're a support group or hobbyist club. Detail up to five members with useful skills related to what happened to
 them (none are up for fighting monsters).`,
     
-    inputs: [{ type: InputTypes.Ally, id: "network", label: "Network", crewMax: 5 }],
+    inputs: [{
+      label: `Network`, key: `2a9e1b97-5d29-4738-abf9-392016f098bf`, // Displayed in social
+      subLabel: `Your network of others with similar experiences. They are not up for fighting, but will help in other ways.`,
+      inputType: InputTypes.Ally,
+      crewMin: 2,
+      crewMax: 5,
+      inputs: [{ label: `Skills`, inputType: InputTypes.Text }]
+    }],
 
     perks: {
       social: [{
         description: `This group had similar experiences to your first encounter. They are not up for fighting monsters.`,
-        showInputs: [ "supportGroup" ]
+        showInputs: [ `2a9e1b97-5d29-4738-abf9-392016f098bf` ] // Network
       }]
     }
   },
   {
-    id: "c2217d7e-9d95-4541-9be2-b0d604ad7760",
-    playbook: "f7b73a9a-6447-42f8-b373-b71341bdad99", // The Searcher
-    startingFeat: false,
-    multiclassable: true,
+    name: `Ockham's Broadsword`,
+    id: `c2217d7e-9d95-4541-9be2-b0d604ad7760`,
+    playbooks: [`f7b73a9a-6447-42f8-b373-b71341bdad99`], // The Searcher
+    featType: FeatTypeEnum.Move,
 
-    name: "Ockham's Broadsword",
     description: `When you first encounter something strange, learn its classification and gain +1 \`forward\`.`,
     longDescription: `When you first encounter something strange, you may ask \`The Keeper\` what sort of thing it is.
 They will tell you if it (or the cause) is: natural, an unnatural creature, a weird phenomenon, or a person.
@@ -3120,24 +2442,25 @@ You gain +1 \`forward\` dealing with it.`,
     
     perks: {
       autoActions: [{
-        name: "Ockham's Broadsword",
+        name: `Ockham's Broadsword`,
+        id: `74c8cee8-fc01-4581-a6ba-acc073e91570`,
         description: `When you first encounter something strange, learn its classification and gain +1 \`forward\`.`,
         longDescription: `When you first encounter something strange, you may ask \`The Keeper\` what sort of thing it is.
 They will tell you if it (or the cause) is: natural, an unnatural creature, a weird phenomenon, or a person.`,
       }],
-      allMoves: [{
-        description: `After using **'Ockham's Broadsword'** gain +1 \`forward\` when dealing with the strange new thing.`,
+      modMoves: [{
+        name: `Ockham's Broadsword`,
         offset: 1,
+        condition: `Can apply once when having a **first-encounter** if you use **'Ockham's Broadsword'** first.`,
       }]
     }
   },
   {
-    id: "99acd02c-9b9e-4090-9779-a740bea840fa",
-    playbook: "f7b73a9a-6447-42f8-b373-b71341bdad99", // The Searcher
-    startingFeat: false,
-    multiclassable: true,
+    name: `The Things I've Seen`,
+    id: `99acd02c-9b9e-4090-9779-a740bea840fa`,
+    playbooks: [`f7b73a9a-6447-42f8-b373-b71341bdad99`], // The Searcher
+    featType: FeatTypeEnum.Move,
 
-    name: "The Things I've Seen",
     description: `You can have encountered a creature or phenomenon before, giving you some knowledge in advance.`,
     longDescription: `When you encounter a creature or phenomenon, you may declare that you have seen it before.
 \`The Keeper\` may ask you some questions about that encounter, and will then tell you one useful fact you learned and one
@@ -3145,7 +2468,8 @@ danger you need to watch out for (maybe right now).`,
 
     perks: {
       autoActions: [{
-        name: "The Things I've Seen",
+        name: `The Things I've Seen`,
+        id: `e82ef156-0881-477b-bc9d-402c3a0ccb5f`,
         description: `You can have encountered a creature or phenomenon before, giving you some knowledge in advance.`,
         longDescription: `When you encounter a creature or phenomenon, you may declare that you have seen it before.
 \`The Keeper\` may ask you some questions about that encounter, and will then tell you one useful fact you learned and one
@@ -3154,12 +2478,11 @@ danger you need to watch out for (maybe right now).`,
     }
   },
   {
-    id: "709641ca-a4d0-4bd4-9160-29c19e77a5a3",
-    playbook: "cfecc496-d1c1-4b30-af48-0f3f41cd02c0", // The Snoop
-    startingFeat: false,
-    multiclassable: true,
+    name: `What Does That Feel Like?`,
+    id: `709641ca-a4d0-4bd4-9160-29c19e77a5a3`,
+    playbooks: [`cfecc496-d1c1-4b30-af48-0f3f41cd02c0`], // The Snoop
+    featType: FeatTypeEnum.Move,
 
-    name: "What Does That Feel Like?",
     description: `Using your camera or microphone, you can force someone to deal with just you for a moment.`,
     longDescription: `When you put your camera or microphone right in a person's face, they break off whatever they
 are doing. They might go right back to it after they deal with you, but you'll create enough time for the other
@@ -3167,60 +2490,61 @@ are doing. They might go right back to it after they deal with you, but you'll c
 
     perks: {
       autoActions: [{
-        name: "What Does That Feel Like?",
+        name: `What Does That Feel Like?`,
+        id: `db599113-d17f-4590-a034-c2e3ba780273`,
         description: `Using your camera or microphone, you can force someone to deal with just you for a moment.`,
         longDescription: `When you put your camera or microphone right in a person's face, they break off whatever they
 are doing. They might go right back to it after they deal with you, but you'll create enough time for the other
-\`Hunters\` to act in the meantime.`,
+\`hunters\` to act in the meantime.`,
       }]
     }
   },
   {
-    id: "ef35c8fe-3663-4464-a36f-3484b90b42b7",
-    playbook: "cfecc496-d1c1-4b30-af48-0f3f41cd02c0", // The Snoop
-    startingFeat: false,
-    multiclassable: true,
+    name: `Minor Celebrity`,
+    id: `ef35c8fe-3663-4464-a36f-3484b90b42b7`,
+    playbooks: [`cfecc496-d1c1-4b30-af48-0f3f41cd02c0`], // The Snoop
+    featType: FeatTypeEnum.Move,
 
-    name: "Minor Celebrity",
-    description: `Weird Move: Have a chance during each **Mystery** to impose that people have seen and like some of your work.`,
-    longDescription: `At the beginning of each mystery, roll +Weird. On a 10+ hold 2 and on a 7-9 hold 1.
-Spend your hold during the mystery to have someone you meet know of you in a positive light
+    description: `Have a chance during each \`mystery\` to impose that people have seen and like some of your work.`,
+    longDescription: `Roll at the beginning of each mystery to gain \`holds\`.
+
+Spend a \`hold\` during the mystery to have someone you meet know of you in a positive light
 (maybe they read your blog, listen to your podcast, or watch your Internet/TV show, etc). You may end
 up getting asked for autographs or given “hot” leads, etc.`,
     
-    inputs: [{ type: InputTypes.Checks, id: "holds", label: "Holds", max: 2, resetPerMystery: true }],
+    showInputs: [`7d06339d-bab4-4ab4-acfd-ee3c699673ca`], // Holds
+    
+    inputs: [{
+      label: `Holds`, key: `7d06339d-bab4-4ab4-acfd-ee3c699673ca`, // Displayed in Actions 
+      inputType: InputTypes.Checks,
+      max: 2,
+      resetPerMystery: true
+    }],
 
     perks: {
       actions: [{
-        name: "Minor Celebrity",
-        description: `At the start of a mystery, roll to gain **Holds**. They can later be used to be recognized`,
+        name: `Minor Celebrity`,
+        id: `2f6c749b-2065-464f-a6ae-a6ad5c5fbde0`,
         coreStat: StatEnum.Weird,
+        description: `At the start of a mystery, roll to gain **Holds**. They can later be used to be recognized`,
+        
         miss: `No one recognizes you during this mystery.`,
-        mixedSuccess: `Gain 1 **Hold**`,
-        solidSuccess: `Gain 2 **Hold**`,
-        successFooter: `Spend your hold during the mystery to have someone you meet know of you in a positive light
+        mixedSuccess: `Gain 1 \`hold\``,
+        solidSuccess: `Gain 2 \`hold\``,
+        successFooter: `Spend your \`hold\` during the mystery to have someone you meet know of you in a positive light
 (maybe they read your blog, listen to your podcast, or watch your Internet/TV show, etc). You may end
 up getting asked for autographs or given "hot" leads, etc.`,
         startOfMystery: true,
-        showInputs: ["holds"],
+        showInputs: [`7d06339d-bab4-4ab4-acfd-ee3c699673ca`], // Holds
       }],
-      autoActions: [{
-        name: "Minor Celebrity - Spend Hold",
-        description: `Spend **Holds** to have someone you meet know of you in a positive light.`,
-        longDescription: `Spend your hold during the mystery to have someone you meet know of you in a positive light
-(maybe they read your blog, listen to your podcast, or watch your Internet/TV show, etc). You may end
-up getting asked for autographs or given "hot" leads, etc.`,
-        showInputs: ["holds"]
-      }]
     }
   },
   {
-    id: "a2e8d269-fbce-4eb3-af07-09680b6f6a4a",
-    playbook: "cfecc496-d1c1-4b30-af48-0f3f41cd02c0", // The Snoop
-    startingFeat: false,
-    multiclassable: true,
+    name: `We'll Fix It In Post`,
+    id: `a2e8d269-fbce-4eb3-af07-09680b6f6a4a`,
+    playbooks: [`cfecc496-d1c1-4b30-af48-0f3f41cd02c0`], // The Snoop
+    featType: FeatTypeEnum.Move,
 
-    name: "We'll Fix It In Post",
     description: `You can \`investigate a mystery\` on past interviews, attack sites, and so on.`,
     longDescription: `You can use anything you could conceivably have recorded as evidence for \`investigate a mystery\`,
 allowing you to check previous interviews, attack sites, and so on from the comfort of your laptop.`,
@@ -3233,12 +2557,11 @@ attack sites, and so on from the comfort of your laptop.`,
     }
   },
   {
-    id: "78d2b34a-8022-4a96-ad2b-2d7a5a485f5e",
-    playbook: "cfecc496-d1c1-4b30-af48-0f3f41cd02c0", // The Snoop
-    startingFeat: false,
-    multiclassable: true,
+    name: `Press Accreditation`,
+    id: `78d2b34a-8022-4a96-ad2b-2d7a5a485f5e`,
+    playbooks: [`cfecc496-d1c1-4b30-af48-0f3f41cd02c0`], // The Snoop
+    featType: FeatTypeEnum.Move,
 
-    name: "Press Accreditation",
     description: `When you \`investigate a mystery\` using interpersonal skills, roll +Charm instead of +Sharp.`,
     longDescription: `When you investigate a mystery by talking to witnesses, interviewing locals, or anything else requiring interpersonal skills, roll +Charm instead of +Sharp.`,
 
@@ -3250,19 +2573,19 @@ attack sites, and so on from the comfort of your laptop.`,
     }
   },
   {
-    id: "74063c4f-9a1c-417f-8520-9b3f3cd621ca",
-    playbook: "cfecc496-d1c1-4b30-af48-0f3f41cd02c0", // The Snoop
-    startingFeat: false,
-    multiclassable: true,
+    name: `Truthiness`,
+    id: `74063c4f-9a1c-417f-8520-9b3f3cd621ca`,
+    playbooks: [`cfecc496-d1c1-4b30-af48-0f3f41cd02c0`], // The Snoop
+    featType: FeatTypeEnum.Move,
 
-    name: "Truthiness",
     description: `Whatever you tell a normal person, they'll accept that __you__ think it's true.`,
     longDescription: `Whatever you tell a normal person, they'll accept that you think it's true.
 If it's far out, they might think you're deluded, but they won't think you're lying.`,
 
     perks: {
       autoActions: [{
-        name: "Truthiness",
+        name: `Truthiness`,
+        id: `31010559-42ba-44bb-9d7b-786581bbe4f5`,
         description: `Whatever you tell a normal person, they'll accept that __you__ think it's true.`,
         longDescription: `Whatever you tell a normal person, they'll accept that you think it's true.
 If it's far out, they might think you're deluded, but they won't think you're lying.`,
@@ -3270,28 +2593,27 @@ If it's far out, they might think you're deluded, but they won't think you're ly
     }
   },
   {
-    id: "1db684c3-5bac-4b66-8110-898ee755d6e6",
-    playbook: "cfecc496-d1c1-4b30-af48-0f3f41cd02c0", // The Snoop
-    startingFeat: false,
-    multiclassable: true,
+    name: `The Mojo Wire`,
+    id: `1db684c3-5bac-4b66-8110-898ee755d6e6`,
+    playbooks: [`cfecc496-d1c1-4b30-af48-0f3f41cd02c0`], // The Snoop
+    featType: FeatTypeEnum.Move,
 
-    name: "The Mojo Wire",
     description: `When you spend a while reading all the latest news feeds looking for the weird stuff, take +1 \`forward\`.`,
     
     perks: {
-      allMoves: [{
-        description: `When you spend a while reading all the latest news feeds looking for the weird stuff, take +1 \`forward\`.`,
+      modMoves: [{
+        name: `The Mojo Wire`,
         offset: 1,
+        condition: `Apply once after you spend a while reading all the latest news feeds looking for the weird stuff.`,
       }]
     }
   },
   {
-    id: "a53e108a-d580-43c3-aeca-fc4c05fa1833",
-    playbook: "cfecc496-d1c1-4b30-af48-0f3f41cd02c0", // The Snoop
-    startingFeat: false,
-    multiclassable: true,
+    name: `Relaxed Producer`,
+    id: `a53e108a-d580-43c3-aeca-fc4c05fa1833`,
+    playbooks: [`cfecc496-d1c1-4b30-af48-0f3f41cd02c0`], // The Snoop
+    featType: FeatTypeEnum.Move,
 
-    name: "Relaxed Producer",
     description: `You're employed, with a pay check and little or no oversight. You may occasionally be tasked with a story.`,
     longDescription: `You're employed, with a regular pay check and little or no oversight. As long as you send in a
 story every few days, no matter how bizarre, you're set.
@@ -3307,48 +2629,108 @@ Unless they need human interest, in which case it will be a kitten show or agric
       ],
     }
   },
-//   { hmmmmm. Could be under Combat Magic entirely? 
-//     id: "ad31fd43-9c0a-48b1-819f-23b66d89d11e",
-//     playbook: "3f493473-f122-4255-8b19-3635908b2664", // The Spell Slinger
-//     startingFeat: true,
-//     multiclassable: false, //? Was just a move, but can you really multiclass without the base piece?
-//
-//     name: "Tools and Techniques",
-//     description: `To use your combat magic effectively, you rely on a collection of tools and techniques.`,
-//     longDescription: `To use your combat magic effectively, you rely on a collection of tools and techniques.
-//
-// Choose all but 1 requirement for your combat magic:
-// * Consumables: You need certain supplies (powders, oils, etc) on hand, some will be used up each cast. If you don't have them, take 1-harm ignore-armor when you cast.
-// * Foci: You need wands, staves, and other obvious props to focus. If you don't have what you need, your combat magic does 1 less harm.
-// * Gestures: You need to wave your hands around to use combat magic. If you're restrained, take -1 \`ongoing\` for combat magic.
-// * Incantations: You must speak in an arcane language to control your magic. If you use combat magic without speaking, act under pressure to avoid scrambling your thoughts.`,
-//     choose: 3,
-//     choices: [
-//       {
-//         id: "959c6b17-66ef-4080-bf2b-9398823997e3",
-//         name: "Consumables",
-//         perks: {
-//           kickSomeAss
-//         },
-//       },
-//     ],
-//   },
-//   { // Once you decide on what to do with Combat magic, come back to this one.
-//     id: "c478b9d1-ea43-4bea-afad-c822ac2019d1",
-//     playbook: "3f493473-f122-4255-8b19-3635908b2664", // The Spell Slinger
-//     startingFeat: false,
-//     multiclassable: false, //? Just a regular move, but you kinda need tools and techniques with kinda needs combat magic
-//
-//     name: "Advanced Arcane Training",
-//     description: `If you have two of your three **Tools and Techniques** at the ready, you may ignore the third one.`,
-//   },
   {
-    id: "77ceff75-547b-433e-b1f9-fc1b6f1cec57",
-    playbook: "3f493473-f122-4255-8b19-3635908b2664", // The Spell Slinger
-    startingFeat: false,
-    multiclassable: true,
+    id: `ad31fd43-9c0a-48b1-819f-23b66d89d11e`,
+    playbooks: [`3f493473-f122-4255-8b19-3635908b2664`], // The Spell-Slinger
+    featType: FeatTypeEnum.Move,
+    prerequisites: [`158aae53-3323-4ece-adc6-7a79d3c10e59`], // Combat Magic
 
-    name: "Arcane Reputation",
+    name: `Tools and Techniques`,
+    description: `To use your combat magic effectively, you rely on a collection of tools and techniques.`,
+    longDescription: `To use your combat magic effectively, you rely on a collection of tools and techniques.
+
+Choose all but 1 requirement for your combat magic:
+* Consumables: You need certain supplies (powders, oils, etc.) on hand, some will be used up each cast. If you don't have them, take 1-harm ignore-armor when you cast.
+* Foci: You need wands, staves, and other obvious props to focus. If you don't have what you need, your combat magic does 1 less harm.
+* Gestures: You need to wave your hands around to use combat magic. If you're restrained, take -1 \`ongoing\` for combat magic.
+* Incantations: You must speak in an arcane language to control your magic. If you use combat magic without speaking, act under pressure to avoid scrambling your thoughts.`,
+    
+    inputs: [{
+      label: `Tools & Techniques`,
+      inputType: InputTypes.FeatChoice,
+      choose: 3,
+      options: [
+        {
+          name: `Consumables`,
+          id: `959c6b17-66ef-4080-bf2b-9398823997e3`,
+          description: `To use **Combat Magic**, you need certain supplies (powders, oils, etc) on hand.
+Some supplies will be used up with each cast.
+
+If you don't have your supplies when using **Combat Magic**, you take 1 \`harm\` \`#ignore-armour\`.`,
+          perks: {
+            kickSomeAss: [{ description: `If you don't have your supplies when using **Combat Magic**, you take 1 \`harm\` \`#ignore-armour\`` }],
+          },
+        },
+        {
+          name: `Foci`,
+          id: `c5dedb02-f653-4099-a571-8583bbcf3e1f`,
+          description: `You need wands, staves, and other \`#obvious\` props to focus.
+
+If you don't have what you need, your Combat Magic does 1 less \`harm\`.`,
+          perks: {
+            modAttack: [{
+              name: `Combat Magic Focus`,
+              offset: -1,
+              condition: `Apply while you do not have your Combat Magic Focus.`,
+              applyToItem: [
+                `f52a735e-4a66-4314-92ee-5dd11c28d286`,`534dea92-b8df-46df-9eba-452bb08d7109`,`518089e6-f4be-4212-9997-484c7fe792dc`,`7959bdf9-b18f-49a9-8609-faa8d2051c38`, // Fire
+                `87aee2cd-bbf5-4c98-bf61-8d298172d870`,`17b2bd0a-8726-40c7-a29c-70c65f797b02`,`9ae87a5e-b658-4bdf-b47f-ab8767b78dfe`,`a8cce3ac-c585-49f7-9c8e-97155cb88e38`, // Force/Wind
+                `2581b956-5397-4bf8-b169-025cd1dc71a5`,`40b02a1f-2a41-4080-9bae-5ee7ef1413d0`,`d2b90123-b972-4051-84f4-e08fd7bcfd1e`,`f8858f18-341b-4aad-85d4-85b5e4cee41b`, // Lightning/Entropy
+                `5236fbb3-4556-4397-ba96-dbd8f3b6313e`,`4d456e43-ce6e-4b43-8ca0-a556a22d0767`,`8e8eb850-7f0f-456e-98d1-3bb4453ef37d`,`0b1897c9-d1ce-476f-b63d-35ff29ad121d`, // Frost/Ice
+                `f74c6f05-4f1c-4052-9ca0-5e8c3a480176`,`4d668eee-5d8b-4863-ac17-1aafefb519aa`,`9a65506a-f59a-4412-b43d-f37aea959953`,`029e8b9d-58d2-4f1c-b2fb-b03ec368451e`, // Earth
+                `61a9e39e-ceaa-40ea-8898-dcaf4f9d26ba`,`976750a3-2361-474f-860f-81f47f71ccf0`,`11688b11-8e79-4d98-828c-b2773617f73e`,`3839a799-5864-42b0-93c5-80104ff01660`, // Necromantic
+              ],
+            }]
+          }
+        },
+        {
+          name: `Gestures`,
+          id: `d79e3620-089e-4691-bed8-2c40dbf3963d`,
+          description: `You need to wave your hands around to use **Combat Magic**. If you're restrained, take -1 \`ongoing\` for combat magic.`,
+          perks: {
+            modMoves: [{
+              name: `Combat Magic Gestures`,
+              applyToMoves: [`6d3f9e16-a230-4478-9481-853c90ff4cec`], // Kick Some Ass
+              offset: -1,
+              condition: `Apply while you are restrained and attempting **Combat Magic**.`,
+            }],
+          },
+        },
+        {
+          name: `Incantations`,
+          id: `487f9d6d-b81b-4a3f-bb24-8c1b393a06b6`,
+          description: `You must speak in an arcane language to control your magic.
+
+If you use **Combat Magic** without speaking, \`act under pressure\` to avoid scrambling your thoughts.`,
+          perks: {
+            kickSomeAss: [{
+              description: `If you use **Combat Magic** without speaking, \`act under pressure\` to avoid scrambling your thoughts.`,
+            }],
+          },
+        }
+      ],
+    }],
+  },
+  {
+    name: `Advanced Arcane Training`,
+    id: `c478b9d1-ea43-4bea-afad-c822ac2019d1`,
+    playbooks: [`3f493473-f122-4255-8b19-3635908b2664`], // The Spell-Slinger
+    featType: FeatTypeEnum.Move,
+    prerequisites: [`ad31fd43-9c0a-48b1-819f-23b66d89d11e`], // Tools and Techniques
+
+    description: `If you have two of your three **Tools and Techniques** at the ready, you may ignore the third one.`,
+    perks: {
+      kickSomeAss: [{
+        description: `When using **Combat Magic**, one of your three **Tools and Techniques** requirements can be ignored.`,
+      }],
+    },
+  },
+  {
+    name: `Arcane Reputation`,
+    id: `77ceff75-547b-433e-b1f9-fc1b6f1cec57`,
+    playbooks: [`3f493473-f122-4255-8b19-3635908b2664`], // The Spell-Slinger
+    featType: FeatTypeEnum.Move,
+
     description: `Three big organizations or groups have heard of you and respect your power.`,
     longDescription: `Pick three big organizations or groups in the supernatural community, which can include some
 of the more sociable types of monsters. They've heard of you and respect your power.
@@ -3357,24 +2739,32 @@ With affected humans, take +1 \`forward\` when you manipulate them.
 
 You may manipulate affected monsters as if they were human, with no bonus.`,
     
-    inputs: [
-      { type: InputTypes.Text, id: "groups", label: "Familiar Groups", placeholder: "Illuminati, Vampires, Werewolves" }
-    ],
+    inputs: [{
+      label: `Familiar Groups`, key: `aa4c4efd-23ff-417d-b220-ba6c29908ba0`, // Displayed in mods
+      inputType: InputTypes.Text,
+      placeholder: `Illuminati, Vampires, Werewolves`,
+    }],
     
     perks: {
-      manipulateSomeone: [
-        { description: `Take +1 \`forward\` against Humans in the selected groups/organizations. They've heard of you.`, offset: 1, showInputs: [ "groups" ] },
-        { description: `You can manipulate Monsters in the selected groups/organizations. They've heard of you.`, showInputs: [ "groups" ] },
-      ]
+      modMoves: [{
+        name: `Arcane Reputation`,
+        applyToMoves: [`d245fc16-53f7-40bd-bdbb-45cde437adab`,`1d8097c8-90bc-485e-90a0-0eb9e94d0959`], // Manipulate Someone/A Hunter 
+        offset: 1,
+        condition: `Apply to your first roll against Humans in the selected groups/organizations.`,
+        showInputs: [`aa4c4efd-23ff-417d-b220-ba6c29908ba0`], // Familiar Groups
+      }],
+      manipulateSomeone: [{
+        description: `You can manipulate Monsters in the selected groups/organizations. They've heard of you.`,
+        showInputs: [`aa4c4efd-23ff-417d-b220-ba6c29908ba0`], // Familiar Groups
+      }]
     }
   },
   {
-    id: "4189519d-3a37-44cb-beb0-bcdc9cf47065",
-    playbook: "3f493473-f122-4255-8b19-3635908b2664", // The Spell Slinger
-    startingFeat: false,
-    multiclassable: true,
+    name: `Could've Been Worse`,
+    id: `4189519d-3a37-44cb-beb0-bcdc9cf47065`,
+    playbooks: [`3f493473-f122-4255-8b19-3635908b2664`], // The Spell-Slinger
+    featType: FeatTypeEnum.Move,
 
-    name: "Could've Been Worse",
     description: `When you miss a use magic roll, you can choose to fizzle or push through the spell instead of the default.`,
     longDescription: `When you miss a use magic roll you can choose one of the following options instead of losing control of the magic:
 * Fizzle: The preparations and materials for the spell are ruined. You'll have to start over from scratch with the prep time doubled.
@@ -3383,85 +2773,104 @@ You may manipulate affected monsters as if they were human, with no bonus.`,
     perks: {
       useMagic: [{
         description: `When you miss a use magic roll, you can choose to fizzle or push through the spell instead of the default.`,
-        miss2: `Through **'Could've Been Worse'**, you can choose one of the following instead of the above:
+        amendResults: {
+          miss: `Through **'Could've Been Worse'**, you can choose one of the following instead of the above:
 * Fizzle: The preparations and materials for the spell are ruined. You'll have to start over from scratch with the prep time doubled.
-* This Is Gonna Suck: The effect happens, but you trigger all of the listed glitches but one. You pick the one you avoid.`
+* This Is Gonna Suck: The effect happens, but you trigger all of the listed glitches but one. You pick the one you avoid.`,
+        }
       }]
     }
   },
   {
-    id: "90c723b2-4123-497e-bf36-3e555f0efb4a",
-    playbook: "3f493473-f122-4255-8b19-3635908b2664", // The Spell Slinger
-    startingFeat: false,
-    multiclassable: true,
+    name: `Enchanted Clothing`,
+    id: `90c723b2-4123-497e-bf36-3e555f0efb4a`,
+    playbooks: [`3f493473-f122-4255-8b19-3635908b2664`], // The Spell-Slinger
+    featType: FeatTypeEnum.Move,
 
-    name: "Enchanted Clothing",
     description: `Enchant an article of clothing that can reduce harm by 1.`,
     longDescription: `Pick an article of every-day clothing. The item is enchanted without any change in appearance.
 Take -1 harm from any source that tries to get at you through the garment.`,
     
-    inputs: [{ type: InputTypes.Text, id: "item", label: "Enchanted Garment", placeholder: "Jacket, pants, etc." }],
+    inputs: [{
+      label: `Enchanted Garment`, key: `1a21234b-fed4-4155-80d8-5603f4ca65f8`, // Displayed in armor mods
+      inputType: InputTypes.Text,
+      placeholder: `Jacket, pants, etc.`,
+    }],
     
     perks: {
-      armorModifiers: [{
+      modArmor: [{
         name: `Enchanted Clothing`,
-        description: `Take -1 harm from any source that tries to get at you through the enchanted garment.`,
+        // description: `Take -1 harm from any source that tries to get at you through the enchanted garment.`,
         offset: 1,
-        conditional: true,
-        showInputs: [ "item" ],
+        condition: `Apply to sources passing through your enchanted garment.`,
+        showInputs: [ `1a21234b-fed4-4155-80d8-5603f4ca65f8` ], // Enchanted Garment
       }]
     }
   },
   {
-    id: "6ff0ed76-70df-430d-bbaa-f8a427530eee",
-    playbook: "3f493473-f122-4255-8b19-3635908b2664", // The Spell Slinger
-    startingFeat: false,
-    multiclassable: true,
+    name: `Forensic Divination`,
+    id: `6ff0ed76-70df-430d-bbaa-f8a427530eee`,
+    playbooks: [`3f493473-f122-4255-8b19-3635908b2664`], // The Spell-Slinger
+    featType: FeatTypeEnum.Move,
 
-    name: "Forensic Divination",
     description: `When you successfully \`investigate a mystery\`, you may ask “What magic was done here?” as a free extra question.`,
     
     perks: {
       investigateAMystery: [{
         description: `On a success, you may ask “What magic was done here?” as a free extra question.`,
-        successFooter2: `Forensic Divination: You may also ask “What magic was done here?” as a free extra question.`
+        amendResults: {
+          successFooter: `Forensic Divination: You may also ask “What magic was done here?” as a free extra question.`,
+        }
       }]
     }
   },
   {
-    id: "dd82affe-c980-4258-af00-77afbfe6fc6a",
-    playbook: "3f493473-f122-4255-8b19-3635908b2664", // The Spell Slinger
-    startingFeat: false,
-    multiclassable: true,
+    name: `Go Big or Go Home`,
+    id: `dd82affe-c980-4258-af00-77afbfe6fc6a`,
+    playbooks: [`3f493473-f122-4255-8b19-3635908b2664`], // The Spell-Slinger
+    prerequisiteMoves: [`9dc87b99-85d0-4436-89aa-5e6cb65f7e86`], // Use Magic
+    featType: FeatTypeEnum.Move,
 
-    name: "Go Big or Go Home",
     description: `When you must \`use magic\` as a requirement for **'Big Magic'**, take +1 \`ongoing\` to those \`use magic\` rolls.`,
     
     perks: {
-      useMagic: [{ description: `When performed as a requirement for **'Big Magic'**.`, offset: 1 }]
+      modMoves: [{
+        name: `Go Big or Go Home`,
+        applyToMoves: [`9dc87b99-85d0-4436-89aa-5e6cb65f7e86`], // Use Magic
+        offset: 1,
+        condition: `Apply when casting a \`use magic\` requirement for \`big magic\`.`,
+      }]
     }
   },
   {
-    id: "72cf7947-7241-4800-9c13-2f31cc321219",
-    playbook: "3f493473-f122-4255-8b19-3635908b2664", // The Spell Slinger
-    startingFeat: false,
-    multiclassable: true,
+    name: `Not My Fault`,
+    id: `72cf7947-7241-4800-9c13-2f31cc321219`,
+    playbooks: [`3f493473-f122-4255-8b19-3635908b2664`], // The Spell-Slinger
+    featType: FeatTypeEnum.Move,
 
-    name: "Not My Fault",
     description: `+1 to \`act under pressure\` when you are dealing with the consequences of your own spell-casting.`,
     
     perks: {
-      actUnderPressure: [{ description: `When you are dealing with the consequences of your own spell-casting.`, offset: 1 }]
+      modMoves: [{
+        name: `Not My Fault`,
+        applyToMoves: [`bfdfd9b3-d5fa-4517-8d5e-20013364d7b0`], // Act Under Pressure
+        offset: 1,
+        condition: `Apply while you are dealing with the consequences of your own spell-casting.`,
+      }]
     }
   },
   {
-    id: "90fad060-0401-4cb6-8b14-3f6a152054bb",
-    playbook: "3f493473-f122-4255-8b19-3635908b2664", // The Spell Slinger
-    startingFeat: false,
-    multiclassable: true,
+    name: `Practitioner`,
+    id: `90fad060-0401-4cb6-8b14-3f6a152054bb`,
+    playbooks: [`3f493473-f122-4255-8b19-3635908b2664`], // The Spell-Slinger
+    featType: FeatTypeEnum.Move,
+    prerequisiteMoves: [`9dc87b99-85d0-4436-89aa-5e6cb65f7e86`], // Use Magic
+
+    description: `Choose two effects available to you under use magic. Take +1 to \`use magic\` whenever you choose one of those effects.`,
     
     inputs: [{
-      type: InputTypes.MultipleChoice, id: "effects", label: "Effects",
+      label: `Effects`, key: `958d22c0-42df-4c3f-bd36-18b24363f981`, // Displayed in Use Magic
+      inputType: InputTypes.TextChoice,
       options: [
         `Inflict harm`, `Enchant a weapon`, `Do one thing that is beyond human limitations.`,
         `Bar a place or portal to a specific person or a type of creature.`,
@@ -3473,43 +2882,47 @@ Take -1 harm from any source that tries to get at you through the garment.`,
       allowCustom: false,
       choose: 2,
     }],
-
-    name: "Practitioner",
-    description: `Choose two effects available to you under use magic. Take +1 to \`use magic\` whenever you choose one of those effects.`,
     
     perks: {
-      useMagic: [{ description: `When you choose to cast one of the chosen effects.`, offset: 1, showInputs: [ 'effects' ] }]
-    }
-  },
-  {
-    id: "dcec4be5-53eb-4569-a18e-e6c89e034cee",
-    playbook: "3f493473-f122-4255-8b19-3635908b2664", // The Spell Slinger
-    startingFeat: false,
-    multiclassable: true,
-
-    name: "Shield Spell",
-    description: `When you \`protect someone\`, gain 2-armor against any \`Harm\` that is transferred to you. This doesn't stack with your other armor, if any.`,
-
-    perks: {
-      armors: [{
-        name: `Shield Spell`,
-        description: `When you \`protect someone\`, gain 2-armor against any \`Harm\` that is transferred to you. This doesn't stack with your other armor, if any.`,
-        armor: 2,
-        conditional: true,
-      }],
-      protectSomeone: [{
-        description: `Gain 2-armor against any \`Harm\` that is transferred to you. This doesn't stack with other armor.`,
-        resultFooter2: `Gain 2-armor against any \`Harm\` that is transferred to you. This doesn't stack with other armor.`
+      modMoves: [{
+        name: `Practitioner`,
+        applyToMoves: [`9dc87b99-85d0-4436-89aa-5e6cb65f7e86`], // Use Magic
+        offset: 1,
+        condition: `Apply when you choose to cast one of the chosen practitioner effects.`,
+        showInputs: [ `958d22c0-42df-4c3f-bd36-18b24363f981` ] // Effects
       }]
     }
   },
   {
-    id: "a2f6b29f-a2ec-486f-97b6-d4f7dcdd6a60",
-    playbook: "3f493473-f122-4255-8b19-3635908b2664", // The Spell Slinger
-    startingFeat: false,
-    multiclassable: true,
+    name: `Shield Spell`,
+    id: `dcec4be5-53eb-4569-a18e-e6c89e034cee`,
+    playbooks: [`3f493473-f122-4255-8b19-3635908b2664`], // The Spell-Slinger
+    featType: FeatTypeEnum.Move,
 
-    name: "Third Eye",
+    description: `When you \`protect someone\`, gain 2-armor against any \`Harm\` that is transferred to you. This doesn't stack with your other armor, if any.`,
+
+    perks: {
+      modArmor: [{
+        name: `Shield Spell`,
+        // description: `When you \`protect someone\`, gain 2-armor against any \`Harm\` that is transferred to you. This doesn't stack with your other armor, if any.`,
+        offset: 2,
+        max: 2,
+        condition: `Can apply to harm transferred to you when you \`protect someone\`. Does not stack with other armor.`,
+      }],
+      protectSomeone: [{
+        description: `Gain 2-armor against any \`harm\` that is transferred to you. This doesn't stack with other armor.`,
+        amendResults: {
+          resultFooter: `Gain Spell Shield \`#2-armor\` against any \`harm\` that is transferred to you. This doesn't stack with other armor.`
+        }
+      }]
+    }
+  },
+  {
+    name: `Third Eye`,
+    id: `a2f6b29f-a2ec-486f-97b6-d4f7dcdd6a60`,
+    playbooks: [`3f493473-f122-4255-8b19-3635908b2664`], // The Spell-Slinger
+    featType: FeatTypeEnum.Move,
+
     description: `Optionally, you can **open your third eye** to take in extra, supernatural information.`,
     longDescription: `When you \`read a bad situation\`, you can open up your third eye for a moment to take in extra information.
 Take +1 **hold** on any result of 7 or more, plus you can see invisible things.
@@ -3519,148 +2932,37 @@ Unfiltered hidden reality is rough on the mind!`,
     perks: {
       readABadSituation: [{
         description: `Optionally, you can **open your third eye** to take in extra, supernatural information.`,
-        miss2: `If you opened your third eye, you are exposed to supernatural danger, but you can ask one question:
+        amendResults: {
+          miss: `If you **opened your third eye**, you are exposed to supernatural danger, but you can ask one question:
 * What's my best way in?
 * What's my best way out?
 * Are there any dangers we haven't noticed?
 * What's the biggest threat?
 * What's most vulnerable to me?
 * What's the best way to protect the victims?`,
-        successFooter2: `If you opened your third eye, you can see invisible things and you can **ask one additional question**.`
+          successFooter: `If you opened your third eye, you can see invisible things and you can **ask one additional question**.`
+        }
       }]
     }
   },
   {
-    id: "0c2ab958-24d2-4710-84e4-2f5d51f69cc9",
-    playbook: "7db7e333-5084-4c61-970b-a3013c55ad7a", // The Spooktacular
-    startingFeat: true,
-    multiclassable: false,
+    name: `Put On A Show`,
+    id: `53c09225-5014-40bd-a125-0ce2487e92ff`,
+    playbooks: [`7db7e333-5084-4c61-970b-a3013c55ad7a`], // The Spooktacular
+    featType: FeatTypeEnum.Move,
 
-    name: "The Show",
-    description: `You spent a long time with a traveling show and get an ability based on its style.`,
-    longDescription: `You spent a long time with a traveling show and get an ability based on its style.
-Are you still with them? If so, how do you balance work and monster hunting? If you left, why was that?`,
-
-    inputs: [{
-      type: InputTypes.Augment,
-      id: "show",
-      label: "Specialty",
-      choose: 1,
-      options: [
-        {
-          id: "2da58e00-1566-4085-a88c-9e2d529f984e",
-          name: "An Infernal Power",
-          description: `A Big Bad operated the Show for evil purposes.
-You signed the contract granting you three infernal favors. Spend these as if they were Luck points.
-The Big Bad may restore these points when they wish, but first you must do something unforgivably terrible.
-What sin have you already committed?`,
-          inputs: [
-            {
-              id: "sin", type: InputTypes.TextArea,
-              label: "What sin have you commited?",
-              placeholder: ""
-            },
-            {
-              id: "infernalFavor", type: InputTypes.Checks,
-              label: "Infernal Favor",
-              max: 3,
-            }
-          ],
-          perks: {
-            luck: [{ description: "You can spend your **Infernal Favor** as \`Luck\` points", showInputs: [ "infernalFavor" ] }]
-          }
-        },
-        {
-          id: "2a5deb28-4743-426e-a7c9-9f81abe9ed63",
-          name: "Magic & Illusions",
-          description: `Weird Move: You can use illusions to lead astray or escape`,
-          perks: {
-            actions: [{
-              name: "Conjure Illusion",
-              description: `Cast confounding spells by weaving illusions. Lead them astray or escape.`,
-              coreStat: StatEnum.Weird,
-              miss: `\`The Keeper\` can take a hard move. It has gone badly, as magic always does.`,
-              mixedSuccess: `It doesn't quite work.
-
-Choose one:
-* They are led in a direction of your choice.
-* You and those you choose escape undetected
-
-BUT \`The Keeper\` also chooses one:
-* Someone isn't fooled.
-* You gain unwelcome attention.`,
-              solidSuccess: `It worked!
-
-Choose One:
-* They are led in a direction of your choice.
-* You and those you choose escape undetected.`,
-            }]
-          }
-        },
-        {
-          id: "45c8ca65-9446-445c-b073-30c7c4e570f5",
-          name: "Making Money",
-          description: `Charm Move: Mess with someone to bamboozle or distract them.`,
-          perks: {
-            actions: [{
-              name: "Bamboozle",
-              description: `Mess with someone to bamboozle or distract them.`,
-              coreStat: StatEnum.Charm,
-              miss: `They are not fooled nor amused. You better run.`,
-              mixedSuccess: `They overlook something of your choice, but they're more angry than baffled afterward.`,
-              solidSuccess: `They don't know what's going on and overlook something of your choice.`,
-            }]
-          }
-        },
-        {
-          id: "4539ef13-fd24-444d-b28d-1459492b3cc6",
-          name: "Problem Solvers",
-          description: `The Show rolls into town, people visit and reveal their difficulties.
-The crew arrange to make things better, leaving each town a little happier than when you arrived.
-Well, when things go smoothly anyhow. When you chat to someone, or observe them for a few minutes, the Keeper will
-tell you what their biggest problem is right now.`,
-          perks: {
-            autoActions: [{
-              name: "Problem Solver",
-              description: `When you chat to someone, or observe them for a few minutes, \`The Keeper\` will tell you
-what their biggest problem is right now.`,
-            }]
-          }
-        },
-        {
-          id: "ad5f87d1-8067-45c4-a313-bd1425769b87",
-          name: "Supernatural Creatures",
-          description: `You're not entirely human yourself. Pick a single supernatural move from any hunter playbook
-(the Monstrous is a good place to start). How does your inhuman nature show?`,
-          inputs: [{
-            type: InputTypes.Multiclass,
-            id: "supernaturalMove",
-            label: "Supernatural Move",
-            choose: 1,
-            optionsType: MulticlassTypes.Move,
-          }]
-        },
-      ]
-    }],
-  },
-  {
-    id: "53c09225-5014-40bd-a125-0ce2487e92ff",
-    playbook: "7db7e333-5084-4c61-970b-a3013c55ad7a", // The Spooktacular
-    startingFeat: false,
-    multiclassable: true,
-
-    name: "Put On A Show",
-    description: `Charm or Weird Move: You can entertain people so they feel joy and forget their troubles.`,
+    description: `You can entertain people so they feel joy and forget their troubles.`,
     longDescription: `You can entertain people so they feel joy and forget their troubles.
 Say what you do and roll +Charm if it's pure performance or +Weird if you add a pinch of magic.`,
     perks: {
       actions: [{
-        name: "Put On A Show",
+        name: `Put On A Show`,
+        id: `7c8f6e44-6ebf-4772-9e8d-19ff67c3c345`,
+        coreStat: StatEnum.Charm,
+        alternateStat: StatEnum.Weird,
         description: `You can entertain people so they feel joy and forget their troubles.`,
         longDescription: `You can entertain people so they feel joy and forget their troubles.
 Say what you do and roll +Charm if it's pure performance or +Weird if you add a pinch of magic.`,
-        coreStat: StatEnum.Charm,
-        alternateStat: StatEnum.Weird,
 
         miss: `\`The Keeper\` can take a hard move against you. You likely failed to distract the crowd from their woes.`,
         successHeader: `The audience is transported and happy. Troubles and trauma are eased in their minds, for a good while.`,
@@ -3670,38 +2972,39 @@ Say what you do and roll +Charm if it's pure performance or +Weird if you add a 
     }
   },
   {
-    id: "4e526985-0c62-455a-9ea8-b9ae8ff56fae",
-    playbook: "7db7e333-5084-4c61-970b-a3013c55ad7a", // The Spooktacular
-    startingFeat: false,
-    multiclassable: true,
+    name: `A Negotiable Price`,
+    id: `4e526985-0c62-455a-9ea8-b9ae8ff56fae`,
+    playbooks: [`7db7e333-5084-4c61-970b-a3013c55ad7a`], // The Spooktacular
+    featType: FeatTypeEnum.Move,
 
-    name: "A Negotiable Price",
-    description: "You can make a magical deal to fulfill a desire for someone else in exchange for secrets.",
+    description: `You can make a magical deal to fulfill a desire for someone else in exchange for secrets.`,
     longDescription: `You can make a magical deal to fulfill a desire for someone else. The price is that they
 reveal to you a secret, the world then arranges itself to fulfill their desire, fitting the scale of the secret.`,
     perks: {
       autoActions: [{
-        name: "A Negotiable Price",
-        description: "You can make a magical deal to fulfill a desire for someone else in exchange for secrets.",
+        name: `A Negotiable Price`,
+        id: `56da8106-58d9-4d60-9aa6-ff4f50a0698a`,
+        description: `You can make a magical deal to fulfill a desire for someone else in exchange for secrets.`,
         longDescription: `You can make a magical deal to fulfill a desire for someone else. The price is that they
 reveal to you a secret, the world then arranges itself to fulfill their desire, fitting the scale of the secret.`,
       }]
     }
   },
   {
-    id: "c2481f0f-4669-4198-91c4-6e8e3e9eb03e",
-    playbook: "7db7e333-5084-4c61-970b-a3013c55ad7a", // The Spooktacular
-    startingFeat: false,
-    multiclassable: true,
+    name: `Easygoin'`,
+    id: `c2481f0f-4669-4198-91c4-6e8e3e9eb03e`,
+    playbooks: [`7db7e333-5084-4c61-970b-a3013c55ad7a`], // The Spooktacular
+    featType: FeatTypeEnum.Move,
 
-    name: "Easygoin'",
-    description: `Charm Move: `,
+    description: `Attempt to make a good impression on someone you just met.`,
     longDescription: `You have the gift of being friendly and easy to chat to. Attempt to make a good impression on someone you just met.`,
     perks: {
       actions: [{
-        name: "Easygoin'",
-        description: `Chat someone up and attempt to make a good impression on someone you just met.`,
+        name: `Easygoin'`,
+        id: `f780058a-0bbd-4fab-9584-3e38fd85dc10`,
         coreStat: StatEnum.Charm,
+        description: `Chat someone up and attempt to make a good impression on someone you just met.`,
+        
         miss: `They think you're playing them, and they'll not trust you or your companions.`,
         mixedSuccess: `They open up more than usual but still regard you as a stranger.`,
         solidSuccess: `They treat you asa trustworthy and friendly acquaintance.`,
@@ -3709,67 +3012,60 @@ reveal to you a secret, the world then arranges itself to fulfill their desire, 
     }
   },
   {
-    id: "6e069f07-3c7a-4675-a17b-a3951f7a555e",
-    playbook: "7db7e333-5084-4c61-970b-a3013c55ad7a", // The Spooktacular
-    startingFeat: false,
-    multiclassable: true,
+    name: `Pay It Backward`,
+    id: `6e069f07-3c7a-4675-a17b-a3951f7a555e`,
+    playbooks: [`7db7e333-5084-4c61-970b-a3013c55ad7a`], // The Spooktacular
+    featType: FeatTypeEnum.Move,
 
-    name: "Pay It Backward",
     description: `Give yourself or someone else advantage... but it'll come back to haunt you later.`,
     longDescription: `Give yourself or someone else an advantage on any roll: roll 3 dice and select the best
 2 for your result. Whenever you do this, the Keeper gains 1 hold. That hold may be spent to give any hunter
 (but usually you) a disadvantage: roll 3 dice and select the worst 2 instead.`,
     
     inputs: [{
-      id: "keeperHolds", type: InputTypes.Checks,
-      label: "Keeper Holds",
+      label: `Keeper Holds`, key: `f66bd228-56c2-40f0-97ff-39e80d4046f9`, // Displayed in Action
+      inputType: InputTypes.Checks,
       max: 3,
     }],
 
     perks: {
       autoActions: [{
-        name: "Pay It Backward",
+        name: `Pay It Backward`,
+        id: `e640aa7e-ccc7-4312-9fe1-c4fad82bdcfe`,
         description: `Give yourself or someone else advantage... but it'll come back to haunt you later.`,
         longDescription: `Give yourself or someone else an advantage on any roll: roll 3 dice and select the best
 2 for your result. Whenever you do this, the Keeper gains 1 hold. That hold may be spent to give any hunter
 (but usually you) a disadvantage: roll 3 dice and select the worst 2 instead.`,
-        showInputs: ["keeperHolds"],
+        showInputs: [`f66bd228-56c2-40f0-97ff-39e80d4046f9`], // Keeper Holds
       }]
     }
   },
   {
-    id: "dfca294d-2b75-4fcc-a487-47cee7fc1168",
-    playbook: "7db7e333-5084-4c61-970b-a3013c55ad7a", // The Spooktacular
-    startingFeat: false,
-    multiclassable: true,
+    name: `The Old Crew`,
+    id: `dfca294d-2b75-4fcc-a487-47cee7fc1168`,
+    playbooks: [`7db7e333-5084-4c61-970b-a3013c55ad7a`], // The Spooktacular
+    featType: FeatTypeEnum.Move,
 
-    name: "The Old Crew",
-    description: ``,
+    description: `Your old team is great at setting up a scene, creating a distraction, or even intimidating folks.`,
     longDescription: `You have an \`ally team\` of Show folks you worked with. They are great at setting up a scene,
 creating a distraction, or even intimidating folks.`,
     
     inputs: [{
-      id: "crew", type: InputTypes.Ally,
-      label: "Crew",
+      label: `Crew`,
+      inputType: InputTypes.Ally,
+      crewMin: 2,
       crewMax: 5,
     }],
-    
-    perks: {
-      social: [{
-        description: `Your crew is great at setting up a scene, creating a distraction, or even intimidating folks.`,
-        showInputs: [ "crew" ]
-      }]
-    }
   },
   {
-    id: "21f0e94e-c385-4453-abae-3af0a135e3cd",
-    playbook: "7db7e333-5084-4c61-970b-a3013c55ad7a", // The Spooktacular
-    startingFeat: false,
-    multiclassable: true,
+    name: `The Game is Fixed`,
+    id: `21f0e94e-c385-4453-abae-3af0a135e3cd`,
+    playbooks: [`7db7e333-5084-4c61-970b-a3013c55ad7a`], // The Spooktacular
+    featType: FeatTypeEnum.Move,
+    prerequisiteMoves: [`9dc87b99-85d0-4436-89aa-5e6cb65f7e86`], // Use Magic
 
-    name: "The Game is Fixed",
-    description: ``,
-    longDescription: `When you use magic in a crowded and chaotic place (like a fairground), take +1 \`forward\`.
+    description: `When you \`use magic\` in a crowded and chaotic place, you get +1 \`forward\` and extra effect options.`,
+    longDescription: `When you \`use magic\` in a crowded and chaotic place (like a fairground), take +1 \`forward\`.
 
 You may also choose the following effects whenever you \`use magic\`:
 * Someone fails a skilled task.
@@ -3778,27 +3074,33 @@ You may also choose the following effects whenever you \`use magic\`:
 * Track someone.
 * Get a bunch of cash.`,
     perks: {
-      useMagic: [{
-        description: `In a crowded or chaotic place (like a fairground) take +1 \`forward\`.`,
+      modMoves: [{
+        name: `The Game is Fixed`,
+        applyToMoves: [`9dc87b99-85d0-4436-89aa-5e6cb65f7e86`], // Use Magic
         offset: 1,
-        successHeader2: `
+        condition: `Apply to your first roll in a crowded or chaotic place (like a fairground.)`,
+      }],
+      useMagic: [{
+        description: `Gain new \`use magic\` effects: Foil someone, fade into a crowd, instant packing, tracking people, and getting cash.`,
+        amendResults: {
+          successHeader: `
 Using **'The Game is Fixed'**, you may also choose the following effects:
 * Someone fails a skilled task.
 * You disappear unnoticed and untraceable in a crowded and chaotic scene.
 * Instantly set up or pack away a carnival stall or camp site.
 * Track someone.
 * Get a bunch of cash.`
+        }
       }]
     }
   },
   {
-    id: "adb84981-fcf0-4dc4-9287-684776c63a96",
-    playbook: "1dccf639-8ee6-457e-a2b4-ea2ae9a0bd1a", // The Spooky
-    startingFeat: false,
-    multiclassable: true,
+    name: `Telepathy`,
+    id: `adb84981-fcf0-4dc4-9287-684776c63a96`,
+    playbooks: [`1dccf639-8ee6-457e-a2b4-ea2ae9a0bd1a`], // The Spooky
+    featType: FeatTypeEnum.Move,
 
-    name: "Telepathy",
-    description: ``,
+    description: `You can read people's thoughts and put words in their mind.`,
     longDescription: `You can read people's thoughts and put words in their mind.
 This can allow you to \`investigate a mystery\` or \`read a bad situation\` without needing to actually talk.
 You can also \`manipulate someone\` without speaking.
@@ -3821,12 +3123,11 @@ People will not expect the weirdness of your mental communication.`,
     }
   },
   {
-    id: "fdd4e42b-4238-49ba-9adb-193a68dd7306",
-    playbook: "1dccf639-8ee6-457e-a2b4-ea2ae9a0bd1a", // The Spooky
-    startingFeat: false,
-    multiclassable: true,
+    name: `Hex`,
+    id: `fdd4e42b-4238-49ba-9adb-193a68dd7306`,
+    playbooks: [`1dccf639-8ee6-457e-a2b4-ea2ae9a0bd1a`], // The Spooky
+    featType: FeatTypeEnum.Move,
 
-    name: "Hex",
     description: `Gain new \`use magic\` effects: Disease, harm, and breaking things.`,
     longDescription: `When you cast a spell with \`use magic\`, as well as the normal effects, you may pick from the following:
 * The target contracts a disease.
@@ -3836,21 +3137,22 @@ People will not expect the weirdness of your mental communication.`,
     perks: {
       useMagic: [{
         description: `Gain new \`use magic\` effects: Disease, harm, and breaking things.`,
-        successHeader2: `
+        amendResults: {
+          successHeader: `
 Using **'Hex'** you may also pick from the following:
 * The target contracts a disease.
 * The target immediately suffers harm (\`#2-harm\` \`magic\` \`#ignore-armor\`.)
-* The target breaks something precious or important.`, 
+* The target breaks something precious or important.`,
+        } 
       }]
     }
   },
   {
-    id: "c071c318-a4cb-4e72-aef3-81177118064d",
-    playbook: "1dccf639-8ee6-457e-a2b4-ea2ae9a0bd1a", // The Spooky
-    startingFeat: false,
-    multiclassable: true,
+    name: `The Sight`,
+    id: `c071c318-a4cb-4e72-aef3-81177118064d`,
+    playbooks: [`1dccf639-8ee6-457e-a2b4-ea2ae9a0bd1a`], // The Spooky
+    featType: FeatTypeEnum.Move,
 
-    name: "The Sight",
     description: `You can see the invisible, including spirits and magical influences. You can communicate with spirits.`,
     longDescription: `You can see the invisible, especially spirits and magical influences.
 You may communicate with (maybe even make deals with) the spirits you see, and they give you more opportunities to spot
@@ -3863,48 +3165,60 @@ Communicating with spirits may give you more opportunities to spot clues when yo
     }
   },
   {
-    id: "15631a05-960d-4862-9d29-8b7abdbe3fca",
-    playbook: "1dccf639-8ee6-457e-a2b4-ea2ae9a0bd1a", // The Spooky
-    startingFeat: false,
-    multiclassable: true,
+    name: `Premonitions`,
+    id: `15631a05-960d-4862-9d29-8b7abdbe3fca`,
+    playbooks: [`1dccf639-8ee6-457e-a2b4-ea2ae9a0bd1a`], // The Spooky
+    featType: FeatTypeEnum.Move,
 
-    name: "Premonitions",
     description: `At the start of each \`mystery\`, gain a premonition of things to come.`,
     
     inputs: [
-      { id: "keeperHolds", type: InputTypes.Checks, label: "Keeper Holds", max: 3, resetPerMystery: true },
-      { id: "premonition", type: InputTypes.Text, label: "Premonition", placeholder: "" },
+      {
+        label: `Keeper Holds`, key: `bd761bc6-e52d-46a9-b4b6-c03b7eb80e5b`, // Displayed in action
+        inputType: InputTypes.Checks,
+        max: 3,
+        resetPerMystery: true
+      },
+      {
+        label: `Premonition`, key: `532b76d0-53c5-4a36-b331-71faf7e57337`, // Displayed in action and experience
+        inputType: InputTypes.Text,
+      },
     ],
 
     perks: {
       actions: [{
-        name: "Premonitions",
-        description: `At the start of each \`mystery\`, gain a premonition of things to come.`,
+        name: `Premonitions`,
+        id: `d980724d-447d-4a2b-bd7d-5d1f0c12e46c`,
         coreStat: StatEnum.Weird,
+        description: `At the start of each \`mystery\`, gain a premonition of things to come.`,
+        
         startOfMystery: true,
-        miss: `You get a vision of something bad happening to you and \`The Keeper\` holds 3, to be spent one-for-one as penalties to rolls you make.`,
+        miss: `You get a vision of something bad happening to you and \`The Keeper\` \`holds\` 3, to be spent one-for-one as penalties to rolls you make.`,
         mixedSuccess: `You get clouded images of something bad that is yet to happen: mark \`experience\` if you stop it.`,
         solidSuccess: `You get a detailed vision of something bad that is yet to happen. You take +1 \`forward\` to prevent it coming true, and mark \`experience\` if you stop it.`,
-        showInputs: ["keeperHolds", "premonition"]
+        showInputs: [`532b76d0-53c5-4a36-b331-71faf7e57337`, `bd761bc6-e52d-46a9-b4b6-c03b7eb80e5b`]
       }],
-      experience: [{ description: `If you had a successful premonition and stopped it from happening, gain 1 \`experience\``, showInputs: [ "premonition" ] }],
+      experience: [{
+        description: `If you had a successful premonition and stopped it from happening, gain 1 \`experience\``,
+        showInputs: [`532b76d0-53c5-4a36-b331-71faf7e57337`],
+      }],
     }
   },
   {
-    id: "85cf4934-1713-46ba-9be3-7c65eab20356",
-    playbook: "1dccf639-8ee6-457e-a2b4-ea2ae9a0bd1a", // The Spooky
-    startingFeat: false,
-    multiclassable: true,
+    name: `Hunches`,
+    id: `85cf4934-1713-46ba-9be3-7c65eab20356`,
+    playbooks: [`1dccf639-8ee6-457e-a2b4-ea2ae9a0bd1a`], // The Spooky
+    featType: FeatTypeEnum.Move,
 
-    name: "Hunches",
-    description: `Sharp Move: `,
-    longDescription: `When something bad is happening (or just about to happen) somewhere that you aren't, have a hunch that gets you there.`,
+    description: `When something bad is happening (or just about to happen) somewhere that you aren't, have a hunch that gets you there.`,
 
     perks: {
       actions: [{
-        name: "Hunches",
-        description: `When something bad is happening (or just about to happen) somewhere that you aren't, have a hunch that gets you there.`,
+        name: `Hunches`,
+        id: `b00ce276-628e-402a-bb37-8739f216c9f6`,
         coreStat: StatEnum.Sharp,
+        description: `When something bad is happening (or just about to happen) somewhere that you aren't, have a hunch that gets you there.`,
+        
         miss: `You get there just in time to be in trouble yourself.`,
         mixedSuccess: `You get there late. You have time to intervene, but not to prevent it altogether.`,
         solidSuccess: `You knew where you needed to go, just in time to get there.`,
@@ -3912,22 +3226,23 @@ Communicating with spirits may give you more opportunities to spot clues when yo
     }
   },
   {
-    id: "619f3e51-8f08-4f30-85f3-343aa90c6f92",
-    playbook: "1dccf639-8ee6-457e-a2b4-ea2ae9a0bd1a", // The Spooky
-    startingFeat: false,
-    multiclassable: true,
+    name: `Tune In`,
+    id: `619f3e51-8f08-4f30-85f3-343aa90c6f92`,
+    playbooks: [`1dccf639-8ee6-457e-a2b4-ea2ae9a0bd1a`], // The Spooky
+    featType: FeatTypeEnum.Move,
 
-    name: "Tune In",
-    description: `Weird Move: You can attune your mind to a monster or minion in order to gain information about it or its plans.`,
+    description: `You can attune your mind to a monster or minion in order to gain information about it or its plans.`,
     longDescription: `You can attune your mind to a monster or minion.
 Roll +Weird.
 
 Spend one hold to ask the Keeper one of the following questions, and gain +1 ongoing while acting on the answers:`,
     perks: {
       actions: [{
-        name: "Tune In",
-        description: `You can attune your mind to a monster or minion in order to gain information about it or its plans.`,
+        name: `Tune In`,
+        id: `2dc2c1ee-2a42-4f5e-9918-156517c0eca7`,
         coreStat: StatEnum.Weird,
+        description: `You can attune your mind to a monster or minion in order to gain information about it or its plans.`,
+        
         miss: `The monster has becomes aware of you.`,
         mixedSuccess: `\`Hold\` 1.`,
         solidSuccess: `\`Hold\` 3.`,
@@ -3938,126 +3253,117 @@ Spend one hold to ask the Keeper one of the following questions, and gain +1 ong
 * Who does it regard as the biggest threat?
 * How can I attract its attention?`,
       }],
-      allMoves: [{
-        description: `After successfully using **'Tune In'** to connect to the mind of a monster, gain +1 \`ongoing\` while acting on the answers you got.`,
+      modMoves: [{
+        name: `Tune In`,
         offset: 1,
+        condition: `Apply while you are acting on the answers you got from a successful **'Tune In'** to the mind of a monster.`,
       }]
     }
   },
   {
-    id: "6e2c22df-af87-4379-9119-2e74898ea4e5",
-    playbook: "1dccf639-8ee6-457e-a2b4-ea2ae9a0bd1a", // The Spooky
-    startingFeat: false,
-    multiclassable: true,
+    name: `The Big Whammy`,
+    id: `6e2c22df-af87-4379-9119-2e74898ea4e5`,
+    playbooks: [`1dccf639-8ee6-457e-a2b4-ea2ae9a0bd1a`], // The Spooky
+    featType: FeatTypeEnum.Move,
 
-    name: "The Big Whammy",
     description: `You can use your powers to \`kick some ass\`, rolling +Weird instead of +Tough.`,
     longDescription: `You can use your powers to \`kick some ass\`, rolling +Weird instead of +Tough.
 The attack has \`#2-harm\` \`#close\` \`#obvious\` \`#ignore-armor\`. On a miss, you'll get a magical backlash.`,
     
-    perks: {
-      attacks: [{
-        name: "Big Whammy", description: `Use your powers to \`kick some ass\`.`,
-        harm: 2, ranges: [ RangeEnum.Close ], tags: [ "obvious", "ignore-armor" ],
-        overrideStat: StatEnum.Weird,
-        miss2: `If you used your powers to perform a **'Big Whammy'**, you now also get a magical backlash.`,
-      }],
-    }
+    items: [{
+      id: `6e2c22df-af87-4379-9119-2e74898ea4e5`,
+      name: `Big Whammy`,
+      description: `Use your powers to \`kick some ass\`.`,
+      itemType: ItemType.InnateWeapon,
+      harm: 2,
+      tags: [ ItemTag.close, ItemTag.obvious, ItemTag.ignoreArmor ],
+      overrideStat: StatEnum.Weird,
+      amendResults: {
+        miss: `If you performed a **'Big Whammy'**, you now also get a magical backlash.`,
+      }
+    }],
   },
   {
-    id: "c0fecb86-a274-4891-b5e6-3ab5a82d3f4d",
-    playbook: "1dccf639-8ee6-457e-a2b4-ea2ae9a0bd1a", // The Spooky
-    startingFeat: false,
-    multiclassable: true,
+    name: `Jinx`,
+    id: `c0fecb86-a274-4891-b5e6-3ab5a82d3f4d`,
+    playbooks: [`1dccf639-8ee6-457e-a2b4-ea2ae9a0bd1a`], // The Spooky
+    featType: FeatTypeEnum.Move,
 
-    name: "Jinx",
     description: `Jinx a target to encourage coincidences to occur the way you want.`,
     
     inputs: [
-      { id: "holds", type: InputTypes.Checks, label: "Holds", max: 2 },
-      { id: "keeperHolds", type: InputTypes.Checks, label: "Keeper Holds", max: 2 },
+      {
+        label: `Holds`, key: `75f71391-2fcf-4fd9-a47c-e7ce8c085aaa`, // Displayed in Action
+        inputType: InputTypes.Checks,
+        max: 2,
+      },
+      {
+        label: `Keeper Holds`, key: `014d89ce-277f-4c86-866d-f5692101350c`, // Displayed in Action
+        inputType: InputTypes.Checks,
+        max: 2,
+      },
     ],
 
     perks: {
       actions: [{
-        name: "Jinx",
-        description: `Jinx a target to encourage coincidences to occur the way you want.`,
+        name: `Jinx`,
+        id: `7088311a-0f12-4752-84ab-37b51c71edf7`,
         coreStat: StatEnum.Weird,
-        miss: `\`The Keeper\` gets to \`Hold\` 2 over you.`,
-        mixedSuccess: `\`Hold\` 1`,
-        solidSuccess: `\`Hold\` 2`,
-        resultFooter: `One of these \`Holds\` can be spent to:
-* Interfere with a \`Hunter\`, giving them -1 \`forward\`.
+        description: `Jinx a target to encourage coincidences to occur the way you want.`,
+        longDescription: `Roll to gain \`holds\`. On a fail, \`The Keeper\` gets 2 \`holds\`.
+
+One \`hold\` can be spent by you or \`The Keeper\` to:
+* Interfere with a \`hunter\`, giving them -1 \`forward\`.
 * Help a \`hunter\`, giving them +1 \`forward\`, by interfering with their enemy.
 * Interfere with what a \`monster\`, \`minion\`, or \`bystander\` is trying to do.
 * Inflict 1 \`harm\` on the target due to an accident.
 * The target finds something you left for them.
 * The target loses something that you will soon find.`,
-        showInputs: ["holds", "keeperHolds"]
+        
+        miss: `\`The Keeper\` gets to \`hold\` 2 over you.`,
+        mixedSuccess: `\`Hold\` 1`,
+        solidSuccess: `\`Hold\` 2`,
+        resultFooter: `One \`hold\` can be spent by you or \`The Keeper\` to:
+* Interfere with a \`hunter\`, giving them -1 \`forward\`.
+* Help a \`hunter\`, giving them +1 \`forward\`, by interfering with their enemy.
+* Interfere with what a \`monster\`, \`minion\`, or \`bystander\` is trying to do.
+* Inflict 1 \`harm\` on the target due to an accident.
+* The target finds something you left for them.
+* The target loses something that you will soon find.`,
+        showInputs: [`75f71391-2fcf-4fd9-a47c-e7ce8c085aaa`, `014d89ce-277f-4c86-866d-f5692101350c`] // Holds and Keeper Holds
       }],
     }
   },
   {
-    id: "dab9c9ab-3b98-4537-b561-0cdc392ebbbd",
-    playbook: "36e0df53-1690-46cf-a59e-56ef397d108d", // The Wronged
-    startingFeat: true,
-    multiclassable: false,
+    name: `I Know My Prey`,
+    id: `c61b697b-7ee0-4d46-8af0-200172ae97d2`,
+    playbooks: [`36e0df53-1690-46cf-a59e-56ef397d108d`], // The Wronged
+    featType: FeatTypeEnum.Move,
 
-    name: "Loss",
     description: `You lost someone important to you at the hands of a monster.`,
-
+    
     inputs: [
       {
-        id: "whoLabel", type: InputTypes.Label,
-        label: "Who you lost", subLabel: "Who did you lose? Pick one or more:"
+        label: `My Prey`, key: `b1628560-6666-4b6f-904a-aa72b165e6a2`, // Displayed in mods
+        subLabel: `What did the deed? (With the Keeper's agreement, pick the monster breed.)`,
+        inputType: InputTypes.Text,
+        placeholder: `Vampires, Werewolves, or Robots etc.`
       },
-      {
-        id: "association", type: InputTypes.MultipleChoice,
-        label: "Association",
-        choose: -1,
-        options: [ "Parent(s)", "Sibling(s)", "Spouse/Partner", "Child(ren)", "Best Friend(s)" ],
-        allowCustom: true,
-      },
-      { id: "personLost", type: InputTypes.Text, label: "Name(s)", placeholder: "" },
-      {
-        id: "whatLabel", type: InputTypes.Label,
-        label: "What did it", subLabel: "With the Keeper’s agreement, pick the monster breed."
-      },
-      {
-        id: "prey", type: InputTypes.Text, label: "My Prey", placeholder: "Vampires, Werewolves, or Robots etc."
-      },
-      {
-        id: "howLabel", type: InputTypes.Label,
-        label: "How it happened", subLabel: "Why couldn't you save them?"
-      },
-      {
-        id: "weakness", type: InputTypes.MultipleChoice,
-        label: "Weakness",
-        choose: -1,
-        options: [ "I was at fault", "I was selfish", "I was injured", "I was weak", "I was slow", "I was scared", "I was in denial", "I was complicit" ],
-        allowCustom: true,
-      },
-      {
-        id: "notes", type: InputTypes.TextArea,
-        label: "Notes",
-        placeholder: "",
-      }
     ],
-    
+
     perks: {
       allMoves: [{
         description: `I Know My Prey: You get +1 \`ongoing\` when knowingly investigating, pursuing or fighting the breed of monster that caused your loss.`,
-        showInputs: [ "prey" ]
-      }]
+        showInputs: [ `b1628560-6666-4b6f-904a-aa72b165e6a2` ] // Prey
+      }],
     }
   },
   {
-    id: "c0836425-0d62-46f1-9cd0-88b4c8c99a0e",
-    playbook: "36e0df53-1690-46cf-a59e-56ef397d108d", // The Wronged
-    startingFeat: false,
-    multiclassable: true,
+    name: `Berserk`,
+    id: `c0836425-0d62-46f1-9cd0-88b4c8c99a0e`,
+    playbooks: [`36e0df53-1690-46cf-a59e-56ef397d108d`], // The Wronged
+    featType: FeatTypeEnum.Move,
 
-    name: "Berserk",
     description: `No matter how much harm you take, you can always keep going until the current fight is over.`,
     longDescription: `No matter how much harm you take, you can always keep going until the current fight is over.
 During a fight, \`The Keeper\` may not use harm moves on you and you cannot die. When the fight ends, all
@@ -4070,14 +3376,13 @@ takes effect as normal.` }]
     }
   },
   {
-    id: "b60157bc-c9c8-4511-a97e-4262b827fc06",
-    playbook: "36e0df53-1690-46cf-a59e-56ef397d108d", // The Wronged
-    startingFeat: false,
-    multiclassable: true,
+    name: `Never Again`,
+    id: `b60157bc-c9c8-4511-a97e-4262b827fc06`,
+    playbooks: [`36e0df53-1690-46cf-a59e-56ef397d108d`], // The Wronged
+    featType: FeatTypeEnum.Move,
 
-    name: "Never Again",
-    description: `In combat, you may \`protect someone\` without rolling, as if you had rolled a 10+, but you may not choose to “suffer little harm."`,
-    longDescription: `In combat, you may \`protect someone\` without rolling, as if you had rolled a 10+, but you may not choose to “suffer little harm."
+    description: `In combat, you may \`protect someone\` without rolling, as if you had rolled a 10+, but you may not choose to "suffer little harm."`,
+    longDescription: `In combat, you may \`protect someone\` without rolling, as if you had rolled a 10+, but you may not choose to "suffer little harm."
 
 When you prevent harm to another character you protect them okay, but you'll suffer some or all of the harm they were going to get.
 Choose an extra:
@@ -4086,103 +3391,101 @@ Choose an extra:
 • You hold the enemy back`,
     
     perks: {
-      protectSomeone: [{
-        description: `In combat, you may can automatically succeed with a 10, but you may not choose to “suffer little harm".`,
-        canAutoRoll: 10,
-        successFooter2: `If you used **'Never Again'** to take an automatic 10, you cannot choose "suffer little harm".`,
+      modMoves: [{
+        name: `Never Again`,
+        applyToMoves: [`48664b18-63e2-47fb-8363-ddcbefabe02e`], // Protect Someone
+        autoRoll: 10,
+        condition: `Can apply while in combat, though you may __not__ choose to "suffer little harm" if you do.`,
+        amendResults: { successFooter: `If you used **'Never Again'** to take an automatic 10, you cannot choose "suffer little harm".` }
       }]
     }
   },
   {
-    id: "dcb22925-e5d5-46ca-aeb0-001640084f0f",
-    playbook: "36e0df53-1690-46cf-a59e-56ef397d108d", // The Wronged
-    startingFeat: false,
-    multiclassable: true,
+    name: `What Does Not Kill Me...`,
+    id: `dcb22925-e5d5-46ca-aeb0-001640084f0f`,
+    playbooks: [`36e0df53-1690-46cf-a59e-56ef397d108d`], // The Wronged
+    featType: FeatTypeEnum.Move,
 
-    name: "What Does Not Kill Me...",
     description: `If you have suffered \`harm\` in a fight, you gain +1 \`ongoing\` until the fight is over.`,
     
     perks: {
-      allMoves: [{ description: `If you have suffered harm in a fight, you gain +1 ongoing until the fight is over.`, offset: 1 }]
+      modMoves: [{
+        name: `What Does Not Kill Me`,
+        offset: 1,
+        condition: `Apply during a fight in which you have suffered harm.`,
+      }]
     }
   },
   {
-    id: "486000a8-2345-451b-b65d-339a5374aad3",
-    playbook: "36e0df53-1690-46cf-a59e-56ef397d108d", // The Wronged
-    startingFeat: false,
-    multiclassable: true,
+    name: `Fervor`,
+    id: `486000a8-2345-451b-b65d-339a5374aad3`,
+    playbooks: [`36e0df53-1690-46cf-a59e-56ef397d108d`], // The Wronged
+    featType: FeatTypeEnum.Move,
 
-    name: "Fervor",
     description: `When you \`manipulate someone\`, roll +Tough instead of +Charm.`,
     
     perks: { manipulateSomeone: [{ description: `You can roll +Tough instead of +Charm.`, alternateStat: StatEnum.Tough }] }
   },
   {
-    id: "fc1b8038-803a-4a4e-8296-fad4d1d65b04",
-    playbook: "36e0df53-1690-46cf-a59e-56ef397d108d", // The Wronged
-    startingFeat: false,
-    multiclassable: true,
+    name: `Safety First`,
+    id: `fc1b8038-803a-4a4e-8296-fad4d1d65b04`,
+    playbooks: [`36e0df53-1690-46cf-a59e-56ef397d108d`], // The Wronged
+    featType: FeatTypeEnum.Move,
 
-    name: "Safety First",
     description: `You have jury-rigged extra protection into your gear, giving you +1 armor (maximum 2-armor).`,
     
     perks: {
-      armorModifiers: [{
+      modArmor: [{
         name: `Safety First`,
-        description: `You have jury-rigged extra protection into your gear, giving you +1 armor (maximum 2-armor).`,
         offset: 1,
         max: 2,
       }]
     }
   },
   {
-    id: "47603ea7-3061-4ad9-8463-6498ccc602e5",
-    playbook: "36e0df53-1690-46cf-a59e-56ef397d108d", // The Wronged
-    startingFeat: false,
-    multiclassable: true,
+    name: `DIY Surgery`,
+    id: `47603ea7-3061-4ad9-8463-6498ccc602e5`,
+    playbooks: [`36e0df53-1690-46cf-a59e-56ef397d108d`], // The Wronged
+    featType: FeatTypeEnum.Move,
 
-    name: "DIY Surgery",
     description: `You do quick and dirty first aid on someone (including yourself).`,
     longDescription: ``,
     perks: {
       actions: [{
-        name: "DIY Surgery",
-        description: `You do quick and dirty first aid on someone (including yourself).`,
+        name: `DIY Surgery`,
+        id: `d2611b9c-ee3d-4d0e-8207-97af6a014524`,
         coreStat: StatEnum.Cool,
+        description: `You do quick and dirty first aid on someone (including yourself).`,
+        
         miss: `\`The Keeper\` can take a hard move against you. You likely failed to apply healing, but \`The Keeper\` may allow you to apply the normal \`First Aid\` effects.`,
         mixedSuccess: `Choose one of the following outcomes:
 * Heal 1 \`harm\` and \`stabilize\` the patient, but they take -1 \`forward\`.
 * Heal 2 \`harm\` and \`stabilize\` the patient, but it'll return as 2 \`harm\` and become \`unstable\` again later.
-* Heal 2 \`harm\` and \`stabilize\` the patient, but they take -1 \`ongoing\` until it’s fixed properly.`,
-        solidSuccess: `It’s all good. Heal 2 \`harm\` and \`stabilize\` your patient.`,
+* Heal 2 \`harm\` and \`stabilize\` the patient, but they take -1 \`ongoing\` until it's fixed properly.`,
+        solidSuccess: `It's all good. Heal 2 \`harm\` and \`stabilize\` your patient.`,
       }]
     }
   },
   {
-    id: "5a573905-b41e-4f50-9b94-d710de9f5445",
-    playbook: "36e0df53-1690-46cf-a59e-56ef397d108d", // The Wronged
-    startingFeat: false,
-    multiclassable: true,
+    name: `Tools Matter`,
+    id: `5a573905-b41e-4f50-9b94-d710de9f5445`,
+    playbooks: [`36e0df53-1690-46cf-a59e-56ef397d108d`], // The Wronged
+    featType: FeatTypeEnum.Move,
 
-    name: "Tools Matter",
     description: `With your **Signature Weapon**, you get +1 to \`kick some ass\`.`,
     
     perks: {
-      kickSomeAss: [{
-        description: `When using your **Signature Weapon**`,
+      modMoves: [{
+        name: `Tools Matter`,
+        applyToMoves: [`6d3f9e16-a230-4478-9481-853c90ff4cec`], // Kick Some Ass
         offset: 1,
-        showInputs: [ "signatureWeapon" ]
+        condition: `Apply while using your **Signature Weapon**.`,
+        applyToItem: [ // Signature Weapons
+          `ccb6bdad-cb1c-4fae-8a4b-7fc303e22894`,`ae4064c4-9f06-4dbe-81ca-33c972946fe6`,`976104b5-fc6f-4de6-8623-c9bb0fab9e42`,
+          `deda4843-fcb5-4be9-a37e-2fa8148e8762`,`e2b8ec97-4496-418b-bbe2-d567f038f7fe`,`8a1ab660-5111-41e0-9fb2-54ef882bf0c4`,
+          `8a31b45a-7582-4fe3-ae75-9eff008cc627`,`e0f82978-e7f7-4dc6-8cc1-4e1ba4b0f565`,
+        ]
       }]
     }
-  },
-  {
-    id: "",
-    playbook: "",
-    startingFeat: false,
-    multiclassable: true,
-
-    name: "",
-    description: ``,
-    longDescription: ``,
   },
 ];
