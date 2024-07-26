@@ -1,15 +1,9 @@
-import {type Item, type Feat, FeatTypeEnum} from "./CompendiumTypes";
-import type {ItemTag} from "./Tags";
+import {type Feat, FeatType} from "./CompendiumTypes";
 
 export enum InputTypes {
-  Text = "Text", TextArea = "Textarea", Checks = "Checks",
-  TextChoice = "TextChoice",
-  FeatChoice = "FeatChoice", TypedFeatChoice = "TypedFeatChoice", ItemChoice = "ItemChoice",
-  WeirdMoveChoice = "WeirdMoveChoice",
+  Text = "Text", TextArea = "Textarea", TextChoice = "TextChoice", Checks = "Checks",
+  FeatChoice = "FeatChoice", FeatChoiceByType = "FeatChoiceByType", FeatChoiceById = "FeatChoiceById",
   Hunter = "Hunter", Ally = "Ally", Bystander = "Bystander", Minion = "Minion", Monster = "Monster",
-}
-export enum SubInputTypes {
-  Text = "Text", TextArea = "Textarea", Checks = "Checks", TextChoice = "TextChoice",
 }
 
 export enum AllyType {
@@ -102,37 +96,32 @@ export interface TextArea extends BaseInput {
 export interface Checks extends BaseInput {
   inputType: InputTypes.Checks;
   max: number;
-  starting?: number; // defaults 0;
+  reset?: number; // defaults 0;
   resetPerMystery?: boolean; // defaults false;
 }
 
 interface BaseChoiceInput extends BaseInput {
-  choose: number, // For some, if negative, they must choose at least that many or more.
-  chooseMax?: number, // If set to 0, there is no max. Defaults: same as ^choose above.
+  choose: number; // For some, if negative, they must choose at least that many or more.
+  chooseMax?: number; // If set to 0, there is no max. Defaults: same as ^choose above.
+  allowCustom?: boolean; // Default: false. For 'Feat' choices, this will probably only allow custom items (until later.)
+  defaults?: Array<string>; // Allows you to pick a default option for them, then they can change it if they want.
 }
 export interface TextChoice extends BaseChoiceInput {
-  inputType: InputTypes.TextChoice,
-  allowCustom: boolean, // Default: false.
-  options: Array<string>,//TODO: Did we remove this: |Array<[string,Array<string>]>,
-}
-interface TypedFeatChoice extends BaseChoiceInput {
-  inputType: InputTypes.TypedFeatChoice;
-  featType: FeatTypeEnum;
-  playbookOnly?: boolean; // Default: false
+  inputType: InputTypes.TextChoice;
+  options: Array<string>;
 }
 interface FeatChoice extends BaseChoiceInput {
   inputType: InputTypes.FeatChoice;
-  defaults?: Array<string>,
-  options: Array<Feat>,
+  options: Array<Feat>;
 }
-interface ItemChoice extends BaseChoiceInput {
-  inputType: InputTypes.ItemChoice;
-  allowCustom?: boolean, // Default: false.
-  options: Array<Item>,
+interface FeatChoiceByType extends BaseChoiceInput {
+  inputType: InputTypes.FeatChoiceByType;
+  featType: FeatType;
+  playbookOnly?: boolean; // Default: false
 }
-interface WeirdMoveChoice extends BaseChoiceInput {
-  inputType: InputTypes.WeirdMoveChoice;
-  options: Array<string>,
+interface FeatChoiceById extends BaseChoiceInput {
+  inputType: InputTypes.FeatChoiceById;
+  options: Array<string>;
 }
 type CharacterInput = Text|TextArea|Checks|TextChoice;
 export interface BaseCharacter extends BaseInput {
@@ -162,6 +151,6 @@ export interface Monster extends BaseCharacter {
 }
 
 export type UserInput =
-  Text|TextArea|Checks|
-  TextChoice|TypedFeatChoice|FeatChoice|ItemChoice|WeirdMoveChoice|
+  Text|TextArea|TextChoice|Checks|
+  FeatChoice|FeatChoiceByType|FeatChoiceById|
   Hunter|Ally|Bystander;

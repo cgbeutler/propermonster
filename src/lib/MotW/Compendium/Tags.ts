@@ -14,6 +14,7 @@ export enum ItemTag {
   // [a material]	This weapon is made from the named material, and is thus useful against monsters with that weakness.
   bone = "bone", coldIron = "cold-iron", obsidian = "obsidian", silver = "silver", steel = "steel", stone = "stone", wood = "wood",
   monsterWeakness = "monster-weakness", // Catch-all for divine smite
+  spellGrist = "spell-grist", spellFocus = "spell-focus",
   // Good vehicle tags
   anonymous = "anonymous", armored = "armored", classic = "classic", concealedWeapons = "concealed-weapons",
   fast = "fast", intimidating = "intimidating", medKit = "medical-kit", monsterCage = "monster-cage",
@@ -22,7 +23,7 @@ export enum ItemTag {
   // Bad vehicle tags
   beatenUp = "beaten-up", gasGuzzler = "gas-guzzler", old = "old", sluggish = "sluggish",
   temperamental = "temperamental", uncomfortable = "uncomfortable",
-  // loud and obvious also work for vehicles 
+  // loud and obvious also work for vehicles
 }
 
 export const GoodNormalVehicleTags: Array<ItemTag> = [
@@ -123,6 +124,8 @@ export const ItemTagDescriptions: { [key in keyof ItemTagsExpanded]: string } = 
   "wood": "Made of wood.",
   "monster-weakness": "Always counts as a weakness for monsters.",
   // [a material]	This weapon is made from the named material, and is thus useful against monsters with that weakness.
+  "spell-grist": "Material components needed by a spell that are used up by that spell.",
+  "spell-focus": "A focus for magical energy that needs to be held while casting a spell.",
   
   // __ Vehicle Tags __
   "anonymous": "Has no discernible markings.",

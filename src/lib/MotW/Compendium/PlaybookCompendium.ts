@@ -1,5 +1,7 @@
 import { StatEnum, type Stats } from "../Character/CharacterEnums";
 import type { CompendiumDescription } from "./Shared";
+import {ImprovementFeats} from "./FeatsImprovements";
+import {AdvImprovementFeats} from "./FeatsAdvImprovements";
 
 export interface Rating {
   action: number;
@@ -54,19 +56,26 @@ If you fail, all will be destroyed. It all rests on you. Only you.`,
       `9b5d9bbc-7c9f-4c5f-aef0-c63cf848081e`, // Dutiful
     ],
     improvements: [
-      `24877faf-3b06-4430-853e-40b3f25383c0`, // +1 Charm max 3
-      `89515c72-76fa-4a08-9f19-1fb9c0e503ba`, // +1 Cool  max 3
-      `37308a67-a11c-48eb-b31f-cf5d603709ee`, // +1 Sharp max 3 
-      `db5547d1-f8cf-4596-9891-a8b3954247ce`, // +1 Tough max 3
-      `ea2d3eb3-96c7-44ad-95b0-70d1524d8055`, // +1 Weird max 3
-      `8b14b13e-c08b-4875-ab7b-637d6bcaa465`, // Take another move 1
-      `201b4763-4aef-4cd4-b701-dccf59ae32b4`, // Take another move 2
-      `27bb38b4-0acd-4fa2-afea-77adbb5a67d9`, // Gain an Ally
-      `a41a0217-c16c-478b-b96d-2ac780f55546`, // Take a move from another playbook 1
-      `3fb2564b-aaee-4dc4-b59a-d21dd8cc35da`, // Take a move from another playbook 2
+      ImprovementFeats.CharmMax3.id,
+      ImprovementFeats.CoolMax3.id,
+      ImprovementFeats.SharpMax3.id,
+      ImprovementFeats.ToughMax3.id,
+      ImprovementFeats.WeirdMax3.id,
+      ImprovementFeats.Move.id,
+      ImprovementFeats.Move2.id,
+      ImprovementFeats.Ally.id,
+      ImprovementFeats.AnyMove.id,
+      ImprovementFeats.AnyMove2.id,
     ],
     advImprovements: [
-      // { stat: undefined, max: 3 },
+      AdvImprovementFeats.StatUp.id,
+      AdvImprovementFeats.Luck.id,
+      AdvImprovementFeats.AdvMoves.id,
+      AdvImprovementFeats.AdvMoves2.id,
+      
+      AdvImprovementFeats.SecondHunter.id,
+      AdvImprovementFeats.ChangeType.id,
+      AdvImprovementFeats.Retire.id,
     ],
 
     looks: [
@@ -102,18 +111,25 @@ It was easy to find an angle, just like before.”`,
 
     ],
     improvements: [
-      `37308a67-a11c-48eb-b31f-cf5d603709ee`, // +1 Sharp max 3
-      `52482560-6000-41df-a86d-013d0b9fd8fc`, // +1 Charm max 2
-      `b2ddb91e-1e9a-4235-8637-abf3d63cbf7a`, // +1 Cool  max 2
-      `9b9ac374-fc18-48da-98e9-f7a2507d646a`, // +1 Tough max 2
-      `8b14b13e-c08b-4875-ab7b-637d6bcaa465`, // Take another move 1
-      `201b4763-4aef-4cd4-b701-dccf59ae32b4`, // Take another move 2
-      `6efbc846-2312-4223-8f2e-f569140016c7`, // Gain an Ally (old crew)
-      `05293495-d7f7-4a50-8a15-e7b02a8f81c8`, // Recover a stash
-      `a41a0217-c16c-478b-b96d-2ac780f55546`, // Take a move from another playbook 1
-      `3fb2564b-aaee-4dc4-b59a-d21dd8cc35da`, // Take a move from another playbook 2
+      ImprovementFeats.SharpMax3.id,
+      ImprovementFeats.CharmMax2.id,
+      ImprovementFeats.CoolMax2.id,
+      ImprovementFeats.ToughMax2.id,
+      ImprovementFeats.Move.id,
+      ImprovementFeats.Move2.id,
+      ImprovementFeats.CrookedAlly.id,
+      ImprovementFeats.StashOfMoney.id,
+      ImprovementFeats.AnyMove.id,
+      ImprovementFeats.AnyMove2.id,
     ],
-    advImprovements: [
+    advImprovements: [// TODO: No uniques? Make our own?
+      AdvImprovementFeats.StatUp.id,
+      AdvImprovementFeats.Luck.id,
+      AdvImprovementFeats.AdvMoves.id,
+      AdvImprovementFeats.AdvMoves2.id,
+      AdvImprovementFeats.SecondHunter.id,
+      AdvImprovementFeats.ChangeType.id,
+      AdvImprovementFeats.Retire.id,
     ],
     
     looks: [
@@ -150,18 +166,26 @@ All Evil fears me, for I am its end.`,
 
     ],
     improvements: [
-      `db5547d1-f8cf-4596-9891-a8b3954247ce`, // +1 Tough max 3
-      `52482560-6000-41df-a86d-013d0b9fd8fc`, // +1 Charm max 2
-      `b2ddb91e-1e9a-4235-8637-abf3d63cbf7a`, // +1 Cool  max 2
-      `fc105e78-bc4c-421d-a4c6-1433f74ef005`, // +1 Sharp max 2
-      `e3076999-7980-436b-b192-d5f4ac18b05a`, // +1 Weird max 2
-      `8b14b13e-c08b-4875-ab7b-637d6bcaa465`, // Take another move 1
-      `201b4763-4aef-4cd4-b701-dccf59ae32b4`, // Take another move 2
-      `c5d5a1d4-f661-47f3-9466-4027c8deeda9`, // Gain an Ally (divine)
-      `a41a0217-c16c-478b-b96d-2ac780f55546`, // Take a move from another playbook 1
-      `3fb2564b-aaee-4dc4-b59a-d21dd8cc35da`, // Take a move from another playbook 2
+      ImprovementFeats.ToughMax3.id,
+      ImprovementFeats.CharmMax2.id,
+      ImprovementFeats.CoolMax2.id,
+      ImprovementFeats.SharpMax2.id,
+      ImprovementFeats.WeirdMax2.id,
+      ImprovementFeats.Move.id,
+      ImprovementFeats.Move2.id,
+      ImprovementFeats.DivineAlly.id,
+      ImprovementFeats.AnyMove.id,
+      ImprovementFeats.AnyMove2.id,
     ],
     advImprovements: [
+      AdvImprovementFeats.StatUp.id,
+      AdvImprovementFeats.Luck.id,
+      AdvImprovementFeats.AdvMoves.id,
+      AdvImprovementFeats.AdvMoves2.id,
+
+      AdvImprovementFeats.SecondHunter.id,
+      AdvImprovementFeats.ChangeType.id,
+      AdvImprovementFeats.Retire.id,
     ],
     
     looks: [
@@ -198,18 +222,25 @@ I may not be youngest or strongest, but my knowledge makes me the biggest threat
 
     ],
     improvements: [
-      `37308a67-a11c-48eb-b31f-cf5d603709ee`, // +1 Sharp max 3
-      `52482560-6000-41df-a86d-013d0b9fd8fc`, // +1 Charm max 2
-      `b2ddb91e-1e9a-4235-8637-abf3d63cbf7a`, // +1 Cool  max 2
-      `e3076999-7980-436b-b192-d5f4ac18b05a`, // +1 Weird max 2
-      `8b14b13e-c08b-4875-ab7b-637d6bcaa465`, // Take another move 1
-      `201b4763-4aef-4cd4-b701-dccf59ae32b4`, // Take another move 2
-      `9cd3c9b2-9579-41be-a2ac-9aa56b41970d`, // Take a haven option 1
-      `081d971e-72ba-4a20-930b-60ec73f58994`, // Take a haven option 2
-      `a41a0217-c16c-478b-b96d-2ac780f55546`, // Take a move from another playbook 1
-      `3fb2564b-aaee-4dc4-b59a-d21dd8cc35da`, // Take a move from another playbook 2
+      ImprovementFeats.SharpMax3.id,
+      ImprovementFeats.CharmMax2.id,
+      ImprovementFeats.CoolMax2.id,
+      ImprovementFeats.WeirdMax2.id,
+      ImprovementFeats.Move.id,
+      ImprovementFeats.Move2.id,
+      ImprovementFeats.HavenPick.id,
+      ImprovementFeats.HavenPick2.id,
+      ImprovementFeats.AnyMove.id,
+      ImprovementFeats.AnyMove2.id,
     ],
-    advImprovements: [
+    advImprovements: [// TODO: No uniques? Make our own?
+      AdvImprovementFeats.StatUp.id,
+      AdvImprovementFeats.Luck.id,
+      AdvImprovementFeats.AdvMoves.id,
+      AdvImprovementFeats.AdvMoves2.id,
+      AdvImprovementFeats.SecondHunter.id,
+      AdvImprovementFeats.ChangeType.id,
+      AdvImprovementFeats.Retire.id,
     ],
     
     looks: [
@@ -244,18 +275,25 @@ That's how I found the monsters, and that's how I help kill them.`,
 
     ],
     improvements: [
-      `37308a67-a11c-48eb-b31f-cf5d603709ee`, // +1 Sharp max 3
-      `52482560-6000-41df-a86d-013d0b9fd8fc`, // +1 Charm max 2
-      `b2ddb91e-1e9a-4235-8637-abf3d63cbf7a`, // +1 Cool  max 2
-      `e3076999-7980-436b-b192-d5f4ac18b05a`, // +1 Weird max 2
-      `8b14b13e-c08b-4875-ab7b-637d6bcaa465`, // Take another move 1
-      `201b4763-4aef-4cd4-b701-dccf59ae32b4`, // Take another move 2
-      `8f3f9023-c1d9-4176-8507-a11b6ff8ffd5`, // Gain a haven with 2 options
-      `9cd3c9b2-9579-41be-a2ac-9aa56b41970d`, // Take a haven option 1
-      `a41a0217-c16c-478b-b96d-2ac780f55546`, // Take a move from another playbook 1
-      `3fb2564b-aaee-4dc4-b59a-d21dd8cc35da`, // Take a move from another playbook 2
+      ImprovementFeats.SharpMax3.id,
+      ImprovementFeats.CharmMax2.id,
+      ImprovementFeats.CoolMax2.id,
+      ImprovementFeats.WeirdMax2.id,
+      ImprovementFeats.Move.id,
+      ImprovementFeats.Move2.id,
+      ImprovementFeats.Haven.id,
+      ImprovementFeats.HavenPick.id,
+      ImprovementFeats.AnyMove.id,
+      ImprovementFeats.AnyMove2.id,
     ],
-    advImprovements: [
+    advImprovements: [// TODO: No uniques? Make our own?
+      AdvImprovementFeats.StatUp.id,
+      AdvImprovementFeats.Luck.id,
+      AdvImprovementFeats.AdvMoves.id,
+      AdvImprovementFeats.AdvMoves2.id,
+      AdvImprovementFeats.SecondHunter.id,
+      AdvImprovementFeats.ChangeType.id,
+      AdvImprovementFeats.Retire.id,
     ],
     
     looks: [
@@ -294,16 +332,25 @@ Yes, I'll have some bad nights, but I'll still have myself.”`,
 
     ],
     improvements: [
-      `24877faf-3b06-4430-853e-40b3f25383c0`, // +1 Charm max 3
-      `37308a67-a11c-48eb-b31f-cf5d603709ee`, // +1 Sharp max 3
-      `b2ddb91e-1e9a-4235-8637-abf3d63cbf7a`, // +1 Cool  max 2
-      `9b9ac374-fc18-48da-98e9-f7a2507d646a`, // +1 Tough max 2
-      `75073c45-01dc-45b8-9600-8866392bc00b`, // Gumshoe Haven
-      `3b53fffb-2ec0-493a-8b74-6708274cb971`, // The Bare Naked City
-      `8b14b13e-c08b-4875-ab7b-637d6bcaa465`, // Take another move 1
-      `201b4763-4aef-4cd4-b701-dccf59ae32b4`, // Take another move 2
+      ImprovementFeats.CharmMax3.id,
+      ImprovementFeats.SharpMax3.id,
+      ImprovementFeats.CoolMax2.id,
+      ImprovementFeats.ToughMax2.id,
+      ImprovementFeats.Move.id,
+      ImprovementFeats.Move2.id,
+      ImprovementFeats.DelayTheInevitable.id,
+      ImprovementFeats.GumshoeHaven.id,
+      ImprovementFeats.TheBareNakedCity.id,
     ],
     advImprovements: [
+      AdvImprovementFeats.StatUp.id,
+      AdvImprovementFeats.Luck.id,
+      AdvImprovementFeats.AdvMoves.id,
+      AdvImprovementFeats.AdvMoves2.id,
+
+      AdvImprovementFeats.SecondHunter.id,
+      AdvImprovementFeats.ChangeType.id,
+      AdvImprovementFeats.Retire.id,
     ],
     
     looks: [
@@ -341,19 +388,27 @@ I don't have the option of not taking this risk.”`,
 
     ],
     improvements: [
-      `ea2d3eb3-96c7-44ad-95b0-70d1524d8055`, // +1 Weird max 3
-      `52482560-6000-41df-a86d-013d0b9fd8fc`, // +1 Charm max 2
-      `b2ddb91e-1e9a-4235-8637-abf3d63cbf7a`, // +1 Cool  max 2
-      `fc105e78-bc4c-421d-a4c6-1433f74ef005`, // +1 Sharp max 2
-      `d1ab9d1e-e475-41e8-9954-be66137c5b53`, // Take another Rote 1
-      `65cff63f-1d3e-4fdf-8ba8-7c72daca9b88`, // Take another Rote 2
-      `8040d4f0-e4c4-477f-9763-3fceca2b14bc`, // Take another Rote 3
-      `14f2d79d-61ab-466e-8034-6b3528d95904`, // Take another Hex move or Rote 1
-      `725ccb2f-602f-4262-9cb1-a3550269da21`, // Take another Hex move or Rote 2
-      `8f3f9023-c1d9-4176-8507-a11b6ff8ffd5`, // Gain a haven with 2 options
-      `a41a0217-c16c-478b-b96d-2ac780f55546`, // Take a move from another playbook 1
+      ImprovementFeats.WeirdMax3.id,
+      ImprovementFeats.CharmMax2.id,
+      ImprovementFeats.CoolMax2.id,
+      ImprovementFeats.SharpMax2.id,
+      ImprovementFeats.Rote.id,
+      ImprovementFeats.Rote2.id,
+      ImprovementFeats.Rote3.id,
+      ImprovementFeats.HexMove.id,
+      ImprovementFeats.HexMove2.id,
+      ImprovementFeats.Haven.id,
+      ImprovementFeats.AnyMove.id,
     ],
     advImprovements: [
+      AdvImprovementFeats.StatUp.id,
+      AdvImprovementFeats.Luck.id,
+      AdvImprovementFeats.AdvMoves.id,
+      AdvImprovementFeats.AdvMoves2.id,
+
+      AdvImprovementFeats.SecondHunter.id,
+      AdvImprovementFeats.ChangeType.id,
+      AdvImprovementFeats.Retire.id,
     ],
     
     looks: [
@@ -389,18 +444,26 @@ We are the Flame that cleanses the Shadows.`,
 
     ],
     improvements: [
-      `ea2d3eb3-96c7-44ad-95b0-70d1524d8055`, // +1 Weird max 3
-      `b2ddb91e-1e9a-4235-8637-abf3d63cbf7a`, // +1 Cool  max 2
-      `fc105e78-bc4c-421d-a4c6-1433f74ef005`, // +1 Sharp max 2
-      `9b9ac374-fc18-48da-98e9-f7a2507d646a`, // +1 Tough max 2
-      `8b14b13e-c08b-4875-ab7b-637d6bcaa465`, // Take another move 1
-      `201b4763-4aef-4cd4-b701-dccf59ae32b4`, // Take another move 2
-      `5b5fc178-01cd-447a-9169-84e49f1a9f54`, // Sect Commander
-      `e7ec30c5-6657-456a-a11f-bc7cf1658ae5`, // Team Lead
-      `a41a0217-c16c-478b-b96d-2ac780f55546`, // Take a move from another playbook 1
-      `3fb2564b-aaee-4dc4-b59a-d21dd8cc35da`, // Take a move from another playbook 2
+      ImprovementFeats.WeirdMax3.id,
+      ImprovementFeats.CoolMax2.id,
+      ImprovementFeats.SharpMax2.id,
+      ImprovementFeats.ToughMax2.id,
+      ImprovementFeats.Move.id,
+      ImprovementFeats.Move2.id,
+      ImprovementFeats.SectCommander.id,
+      ImprovementFeats.InitiateTeamLead.id,
+      ImprovementFeats.AnyMove.id,
+      ImprovementFeats.AnyMove2.id,
     ],
     advImprovements: [
+      AdvImprovementFeats.StatUp.id,
+      AdvImprovementFeats.Luck.id,
+      AdvImprovementFeats.AdvMoves.id,
+      AdvImprovementFeats.AdvMoves2.id,
+
+      AdvImprovementFeats.SecondHunter.id,
+      AdvImprovementFeats.ChangeType.id,
+      AdvImprovementFeats.Retire.id,
     ],
     
     looks: [
@@ -437,18 +500,26 @@ Sometimes I can even believe it.`,
 
     ],
     improvements: [
-      `52482560-6000-41df-a86d-013d0b9fd8fc`, // +1 Charm max 2
-      `b2ddb91e-1e9a-4235-8637-abf3d63cbf7a`, // +1 Cool  max 2
-      `fc105e78-bc4c-421d-a4c6-1433f74ef005`, // +1 Sharp max 2 
-      `9b9ac374-fc18-48da-98e9-f7a2507d646a`, // +1 Tough max 2
-      `8b14b13e-c08b-4875-ab7b-637d6bcaa465`, // Take another move 1
-      `201b4763-4aef-4cd4-b701-dccf59ae32b4`, // Take another move 2
-      `8f3f9023-c1d9-4176-8507-a11b6ff8ffd5`, // Gain a haven with 2 options
-      `0c32620e-db1d-4cf6-a371-a51ca2f92bd2`, // Heightened Natural Attacks
-      `a41a0217-c16c-478b-b96d-2ac780f55546`, // Take a move from another playbook 1
-      `3fb2564b-aaee-4dc4-b59a-d21dd8cc35da`, // Take a move from another playbook 2
+      ImprovementFeats.CharmMax2.id,
+      ImprovementFeats.CoolMax2.id,
+      ImprovementFeats.SharpMax2.id,
+      ImprovementFeats.ToughMax2.id,
+      ImprovementFeats.Move.id,
+      ImprovementFeats.Move2.id,
+      ImprovementFeats.Haven.id,
+      ImprovementFeats.NaturalAttacks.id,
+      ImprovementFeats.AnyMove.id,
+      ImprovementFeats.AnyMove2.id,
     ],
     advImprovements: [
+      AdvImprovementFeats.StatUp.id,
+      AdvImprovementFeats.Luck.id,
+      AdvImprovementFeats.AdvMoves.id,
+      AdvImprovementFeats.AdvMoves2.id,
+
+      AdvImprovementFeats.SecondHunter.id,
+      AdvImprovementFeats.ChangeType.id,
+      AdvImprovementFeats.Retire.id,
     ],
     
     looks: [
@@ -483,18 +554,26 @@ Yeah, me neither. But, hell, I ended up in this monster-hunting team so I gotta 
 
     ],
     improvements: [
-      `24877faf-3b06-4430-853e-40b3f25383c0`, // +1 Charm max 3
-      `b2ddb91e-1e9a-4235-8637-abf3d63cbf7a`, // +1 Cool  max 2
-      `fc105e78-bc4c-421d-a4c6-1433f74ef005`, // +1 Sharp max 2 
-      `9b9ac374-fc18-48da-98e9-f7a2507d646a`, // +1 Tough max 2
-      `8b14b13e-c08b-4875-ab7b-637d6bcaa465`, // Take another move 1
-      `201b4763-4aef-4cd4-b701-dccf59ae32b4`, // Take another move 2
-      `31472dbe-c5ac-47c6-bce7-cb643c2dee57`, // Lucky 1
-      `9a516e07-6c4d-4bde-9ede-372678d5d1fd`, // Lucky 2
-      `a41a0217-c16c-478b-b96d-2ac780f55546`, // Take a move from another playbook 1
-      `3fb2564b-aaee-4dc4-b59a-d21dd8cc35da`, // Take a move from another playbook 2
+      ImprovementFeats.CharmMax3.id,
+      ImprovementFeats.CoolMax2.id,
+      ImprovementFeats.SharpMax2.id,
+      ImprovementFeats.ToughMax2.id,
+      ImprovementFeats.Move.id,
+      ImprovementFeats.Move2.id,
+      ImprovementFeats.Luck.id,
+      ImprovementFeats.Luck2.id,
+      ImprovementFeats.AnyMove.id,
+      ImprovementFeats.AnyMove2.id,
     ],
     advImprovements: [
+      AdvImprovementFeats.StatUp.id,
+      AdvImprovementFeats.Luck.id,
+      AdvImprovementFeats.Luck2.id,
+      AdvImprovementFeats.AdvMoves.id,
+      AdvImprovementFeats.AdvMoves2.id,
+      AdvImprovementFeats.SecondHunter.id,
+      AdvImprovementFeats.ChangeType.id,
+      AdvImprovementFeats.Retire.id,
     ],
     
     looks: [
@@ -503,27 +582,6 @@ Yeah, me neither. But, hell, I ended up in this monster-hunting team so I gotta 
       ["normal clothes", "casual clothes", "goth clothes", "sporty clothes", "work clothes", "street clothes", "nerdy clothes"],
     ],
   },
-  // {
-  //   id: "b33ce99a-73e9-4f15-8314-ac80bf0819d1",
-  //   name: "Pararomantic",
-  //   description: "You have a deep emotional bond with a monster. The relationship gives you insights into the mystical.",
-  //   rating: { action: 1, mystery: 3, fantasy: 3, storySway: 3, support: 1 },
-  //   luckEffect: "When you spend a point of **Luck**, also mark off one of your relationship status boxes. The **Keeper** will bring fate of your love into play.",
-  //   startingMoves: [],
-  //   movesToChoose: 0,
-  //   moves: [],
-  //   statPicks: [
-  //     {Charm: 2, Cool: 1, Sharp: 0, Tough:-1, Weird: 1},
-  //     {Charm: 2, Cool:-1, Sharp: 1, Tough: 1, Weird: 0},
-  //     {Charm: 2, Cool: 2, Sharp: 0, Tough: 0, Weird:-1},
-  //     {Charm: 2, Cool: 1, Sharp: 1, Tough:-1, Weird: 0},
-  //     {Charm: 2, Cool: 0, Sharp: 2, Tough:-1, Weird: 0},
-  //   ],
-  //   looks: [
-  //     ["friendly face", "alluring face", "laughing face", "trustworthy face", "average face", "serious face", "sensual face", "face"],
-  //     ["normal clothes", "casual clothes", "goth clothes", "sporty clothes", "street clothes", "nerdy clothes"],
-  //   ],
-  // },
   {
     id: `58924c0d-c015-4fcd-8fd9-ca75f12fd019`,
     name: `Professional`,
@@ -552,18 +610,26 @@ Like they say, “You don't have to be crazy to work here, but it sure helps!”
 
     ],
     improvements: [
-      `89515c72-76fa-4a08-9f19-1fb9c0e503ba`, // +1 Cool  max 3
-      `52482560-6000-41df-a86d-013d0b9fd8fc`, // +1 Charm max 2
-      `fc105e78-bc4c-421d-a4c6-1433f74ef005`, // +1 Sharp max 2 
-      `9b9ac374-fc18-48da-98e9-f7a2507d646a`, // +1 Tough max 2
-      `8b14b13e-c08b-4875-ab7b-637d6bcaa465`, // Take another move 1
-      `201b4763-4aef-4cd4-b701-dccf59ae32b4`, // Take another move 2
-      `bcd61b73-7a01-449a-9e6c-2d124e824c7b`, // A shift in the Agency
-      `5932dcf8-555f-4a59-9c24-3611c136f4b8`, // Team Lead 2
-      `a41a0217-c16c-478b-b96d-2ac780f55546`, // Take a move from another playbook 1
-      `3fb2564b-aaee-4dc4-b59a-d21dd8cc35da`, // Take a move from another playbook 2
+      ImprovementFeats.CoolMax3.id,
+      ImprovementFeats.CharmMax2.id,
+      ImprovementFeats.SharpMax2.id,
+      ImprovementFeats.ToughMax2.id,
+      ImprovementFeats.Move.id,
+      ImprovementFeats.Move2.id,
+      ImprovementFeats.AgencyShift.id,
+      ImprovementFeats.ProfessionalTeamLead.id,
+      ImprovementFeats.AnyMove.id,
+      ImprovementFeats.AnyMove2.id,
     ],
     advImprovements: [
+      AdvImprovementFeats.StatUp.id,
+      AdvImprovementFeats.Luck.id,
+      AdvImprovementFeats.AdvMoves.id,
+      AdvImprovementFeats.AdvMoves2.id,
+
+      AdvImprovementFeats.SecondHunter.id,
+      AdvImprovementFeats.ChangeType.id,
+      AdvImprovementFeats.Retire.id,
     ],
     
     looks: [
@@ -598,18 +664,27 @@ Perhaps only one event in a thousand is true weirdness—but I'll investigate th
 
     ],
     improvements: [
-      `37308a67-a11c-48eb-b31f-cf5d603709ee`, // +1 Sharp max 3
-      `ea2d3eb3-96c7-44ad-95b0-70d1524d8055`, // +1 Weird max 3
-      `52482560-6000-41df-a86d-013d0b9fd8fc`, // +1 Charm max 2
-      `b2ddb91e-1e9a-4235-8637-abf3d63cbf7a`, // +1 Cool  max 2
-      `8b14b13e-c08b-4875-ab7b-637d6bcaa465`, // Take another move 1
-      `201b4763-4aef-4cd4-b701-dccf59ae32b4`, // Take another move 2
-      `27bb38b4-0acd-4fa2-afea-77adbb5a67d9`, // Gain an Ally
-      `fff16d4b-33f0-4db7-abce-09e6e18678dc`, // Second First Encounter
-      `a41a0217-c16c-478b-b96d-2ac780f55546`, // Take a move from another playbook 1
-      `3fb2564b-aaee-4dc4-b59a-d21dd8cc35da`, // Take a move from another playbook 2
+      ImprovementFeats.SharpMax3.id,
+      ImprovementFeats.WeirdMax3.id,
+      ImprovementFeats.CharmMax2.id,
+      ImprovementFeats.CoolMax2.id,
+      ImprovementFeats.Move.id,
+      ImprovementFeats.Move2.id,
+      ImprovementFeats.Ally.id,
+      ImprovementFeats.SecondFirstEncounter.id,
+      ImprovementFeats.AnyMove.id,
+      ImprovementFeats.AnyMove2.id,
     ],
     advImprovements: [
+      AdvImprovementFeats.StatUp.id,
+      AdvImprovementFeats.Luck.id,
+      AdvImprovementFeats.Luck2.id,
+      AdvImprovementFeats.AdvMoves.id,
+      AdvImprovementFeats.AdvMoves2.id,
+
+      AdvImprovementFeats.SecondHunter.id,
+      AdvImprovementFeats.ChangeType.id,
+      AdvImprovementFeats.Retire.id,
     ],
     
     looks: [
@@ -644,18 +719,26 @@ I'm going to be a superstar one day, you mark my words! Hey... did you just feel
 
     ],
     improvements: [
-      `24877faf-3b06-4430-853e-40b3f25383c0`, // +1 Charm max 3
-      `b2ddb91e-1e9a-4235-8637-abf3d63cbf7a`, // +1 Cool  max 2
-      `fc105e78-bc4c-421d-a4c6-1433f74ef005`, // +1 Sharp max 2
-      `e3076999-7980-436b-b192-d5f4ac18b05a`, // +1 Weird max 2
-      `8b14b13e-c08b-4875-ab7b-637d6bcaa465`, // Take another move 1
-      `201b4763-4aef-4cd4-b701-dccf59ae32b4`, // Take another move 2
-      `9c534a00-9fdb-459a-aadc-b5268c7162f0`, // Trauma Bonding
-      `e142329d-537e-477d-8e2c-35015dc15255`, // Snoop Haven
-      `a41a0217-c16c-478b-b96d-2ac780f55546`, // Take a move from another playbook 1
-      `3fb2564b-aaee-4dc4-b59a-d21dd8cc35da`, // Take a move from another playbook 2
+      ImprovementFeats.CharmMax3.id,
+      ImprovementFeats.CoolMax2.id,
+      ImprovementFeats.SharpMax2.id,
+      ImprovementFeats.WeirdMax2.id,
+      ImprovementFeats.Move.id,
+      ImprovementFeats.Move2.id,
+      ImprovementFeats.TraumaBonding.id,
+      ImprovementFeats.SnoopHaven.id,
+      ImprovementFeats.AnyMove.id,
+      ImprovementFeats.AnyMove2.id,
     ],
     advImprovements: [
+      AdvImprovementFeats.StatUp.id,
+      AdvImprovementFeats.Luck.id,
+      AdvImprovementFeats.AdvMoves.id,
+      AdvImprovementFeats.AdvMoves2.id,
+
+      AdvImprovementFeats.SecondHunter.id,
+      AdvImprovementFeats.ChangeType.id,
+      AdvImprovementFeats.Retire.id,
     ],
     
     looks: [
@@ -689,17 +772,25 @@ I'm going to be a superstar one day, you mark my words! Hey... did you just feel
 
     ],
     improvements: [
-      `ea2d3eb3-96c7-44ad-95b0-70d1524d8055`, // +1 Weird max 3
-      `b2ddb91e-1e9a-4235-8637-abf3d63cbf7a`, // +1 Cool  max 2
-      `fc105e78-bc4c-421d-a4c6-1433f74ef005`, // +1 Sharp max 2 
-      `9b9ac374-fc18-48da-98e9-f7a2507d646a`, // +1 Tough max 2
-      `8b14b13e-c08b-4875-ab7b-637d6bcaa465`, // Take another move 1
-      `201b4763-4aef-4cd4-b701-dccf59ae32b4`, // Take another move 2
-      `d400a36e-7458-47ef-9f78-c67efd3dcb61`, // Combat Magic
-      `a41a0217-c16c-478b-b96d-2ac780f55546`, // Take a move from another playbook 1
-      `3fb2564b-aaee-4dc4-b59a-d21dd8cc35da`, // Take a move from another playbook 2
+      ImprovementFeats.WeirdMax3.id,
+      ImprovementFeats.CoolMax2.id,
+      ImprovementFeats.SharpMax2.id,
+      ImprovementFeats.ToughMax2.id,
+      ImprovementFeats.Move.id,
+      ImprovementFeats.Move2.id,
+      ImprovementFeats.CombatMagic.id,
+      ImprovementFeats.AnyMove.id,
+      ImprovementFeats.AnyMove2.id,
     ],
     advImprovements: [
+      AdvImprovementFeats.StatUp.id,
+      AdvImprovementFeats.Luck.id,
+      AdvImprovementFeats.AdvMoves.id,
+      AdvImprovementFeats.AdvMoves2.id,
+
+      AdvImprovementFeats.SecondHunter.id,
+      AdvImprovementFeats.ChangeType.id,
+      AdvImprovementFeats.Retire.id,
     ],
     
     looks: [
@@ -733,18 +824,26 @@ I've made people happy, and I guess annoyed a few. But everywhere you go has mon
 
     ],
     improvements: [
-      `24877faf-3b06-4430-853e-40b3f25383c0`, // +1 Charm max 3
-      `ea2d3eb3-96c7-44ad-95b0-70d1524d8055`, // +1 Weird max 3
-      `b2ddb91e-1e9a-4235-8637-abf3d63cbf7a`, // +1 Cool  max 2
-      `fc105e78-bc4c-421d-a4c6-1433f74ef005`, // +1 Sharp max 2
-      `8b14b13e-c08b-4875-ab7b-637d6bcaa465`, // Take another move 1
-      `201b4763-4aef-4cd4-b701-dccf59ae32b4`, // Take another move 2
-      `27bb38b4-0acd-4fa2-afea-77adbb5a67d9`, // Gain an Ally
-      `e82c4e1a-c57f-446b-8ed7-8b338fd0b526`, // The Show Must Go On
-      `a41a0217-c16c-478b-b96d-2ac780f55546`, // Take a move from another playbook 1
-      `3fb2564b-aaee-4dc4-b59a-d21dd8cc35da`, // Take a move from another playbook 2
+      ImprovementFeats.CharmMax3.id,
+      ImprovementFeats.WeirdMax3.id,
+      ImprovementFeats.CoolMax2.id,
+      ImprovementFeats.SharpMax2.id,
+      ImprovementFeats.Move.id,
+      ImprovementFeats.Move2.id,
+      ImprovementFeats.Ally.id,
+      ImprovementFeats.TheShow.id,
+      ImprovementFeats.AnyMove.id,
+      ImprovementFeats.AnyMove2.id,
     ],
     advImprovements: [
+      AdvImprovementFeats.StatUp.id,
+      AdvImprovementFeats.Luck.id,
+      AdvImprovementFeats.AdvMoves.id,
+      AdvImprovementFeats.AdvMoves2.id,
+
+      AdvImprovementFeats.SecondHunter.id,
+      AdvImprovementFeats.ChangeType.id,
+      AdvImprovementFeats.Retire.id,
     ],
     
     looks: [
@@ -780,18 +879,26 @@ It's best I don't tell you any more. You get too close, you'll get hurt.`,
 
     ],
     improvements: [
-      `ea2d3eb3-96c7-44ad-95b0-70d1524d8055`, // +1 Weird max 3
-      `52482560-6000-41df-a86d-013d0b9fd8fc`, // +1 Charm max 2
-      `b2ddb91e-1e9a-4235-8637-abf3d63cbf7a`, // +1 Cool  max 2
-      `fc105e78-bc4c-421d-a4c6-1433f74ef005`, // +1 Sharp max 2
-      `8b14b13e-c08b-4875-ab7b-637d6bcaa465`, // Take another move 1
-      `201b4763-4aef-4cd4-b701-dccf59ae32b4`, // Take another move 2
-      `081ac6d7-d174-41aa-93e6-db9603fe55e3`, // Dark Tides
-      `742da219-56b7-4b52-b9fb-5ed439751f06`, // Spooky Library
-      `a41a0217-c16c-478b-b96d-2ac780f55546`, // Take a move from another playbook 1
-      `3fb2564b-aaee-4dc4-b59a-d21dd8cc35da`, // Take a move from another playbook 2
+      ImprovementFeats.WeirdMax3.id,
+      ImprovementFeats.CharmMax2.id,
+      ImprovementFeats.CoolMax2.id,
+      ImprovementFeats.SharpMax2.id,
+      ImprovementFeats.Move.id,
+      ImprovementFeats.Move2.id,
+      ImprovementFeats.DarkTides.id,
+      ImprovementFeats.SpookyLibrary.id,
+      ImprovementFeats.AnyMove.id,
+      ImprovementFeats.AnyMove2.id,
     ],
     advImprovements: [
+      AdvImprovementFeats.StatUp.id,
+      AdvImprovementFeats.Luck.id,
+      AdvImprovementFeats.AdvMoves.id,
+      AdvImprovementFeats.AdvMoves2.id,
+
+      AdvImprovementFeats.SecondHunter.id,
+      AdvImprovementFeats.ChangeType.id,
+      AdvImprovementFeats.Retire.id,
     ],
     
     looks: [
@@ -828,18 +935,26 @@ I'll kill them all. That's all I have left.`,
 
     ],
     improvements: [
-      `db5547d1-f8cf-4596-9891-a8b3954247ce`, // +1 Tough max 3
-      `b2ddb91e-1e9a-4235-8637-abf3d63cbf7a`, // +1 Cool  max 2
-      `fc105e78-bc4c-421d-a4c6-1433f74ef005`, // +1 Sharp max 2
-      `e3076999-7980-436b-b192-d5f4ac18b05a`, // +1 Weird max 2
-      `8b14b13e-c08b-4875-ab7b-637d6bcaa465`, // Take another move 1
-      `201b4763-4aef-4cd4-b701-dccf59ae32b4`, // Take another move 2
-      `8f3f9023-c1d9-4176-8507-a11b6ff8ffd5`, // Gain a haven with 2 options
-      `9cd3c9b2-9579-41be-a2ac-9aa56b41970d`, // Take a haven option 1
-      `a41a0217-c16c-478b-b96d-2ac780f55546`, // Take a move from another playbook 1
-      `3fb2564b-aaee-4dc4-b59a-d21dd8cc35da`, // Take a move from another playbook 2
+      ImprovementFeats.ToughMax3.id,
+      ImprovementFeats.CoolMax2.id,
+      ImprovementFeats.SharpMax2.id,
+      ImprovementFeats.WeirdMax2.id,
+      ImprovementFeats.Move.id,
+      ImprovementFeats.Move2.id,
+      ImprovementFeats.Haven.id,
+      ImprovementFeats.HavenPick.id,
+      ImprovementFeats.AnyMove.id,
+      ImprovementFeats.AnyMove2.id,
     ],
     advImprovements: [
+      AdvImprovementFeats.StatUp.id,
+      AdvImprovementFeats.Luck.id,
+      AdvImprovementFeats.AdvMoves.id,
+      AdvImprovementFeats.AdvMoves2.id,
+
+      AdvImprovementFeats.SecondHunter.id,
+      AdvImprovementFeats.ChangeType.id,
+      AdvImprovementFeats.Retire.id,
     ],
     
     looks: [
