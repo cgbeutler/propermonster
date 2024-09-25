@@ -1,6 +1,6 @@
 <script lang="ts">
   import { fade } from 'svelte/transition';
-  import { Router, Link, link, Route } from 'svelte-routing';
+  import { Router, Route } from 'svelte-routing';
   import { Modals, closeModal, openModal } from 'svelte-modals';
   import NavModal from './lib/NavModal.svelte';
   import NavMenu from "./lib/NavMenu.svelte";
@@ -11,7 +11,9 @@
   import EyeRoller from "./routes/eyeroller/EyeRoller.svelte";
   import PoolRoller from "./routes/poolroller/PoolRoller.svelte";
   import PoweredRoller from './routes/poweredroller/PoweredRoller.svelte';
-  import { locationHref } from './lib/stores';
+  import Characters from './routes/characters/Characters.svelte';
+  import Character from './routes/characters/Character.svelte';
+  import { locationHref } from './lib/stores.svelte';
   
   let viewWidth = 0;
 
@@ -23,14 +25,14 @@
     }
   }
 
-  let navBtn = null;
+  let navBtn: HTMLButtonElement | undefined;
   function replayNavBtnAnim() {
     console.log("replay")
     if (!navBtn) return;
     // Hack to clear the animation
     navBtn.style.animation = 'none';
     navBtn.offsetHeight;
-    navBtn.style.animation = null;
+    navBtn.style.animation = null!;
   }
 
   $: console.log($locationHref + " != " + new URL("/",$locationHref).href)
@@ -39,14 +41,14 @@
 
 <svelte:window bind:innerWidth={viewWidth} />
 
-
 <Router>
   <Modals>
-    <div slot="backdrop" class="backdrop" transition:fade on:click={closeModal} on:keypress={onKeyPress} />
+    <button slot="backdrop" class="backdrop" transition:fade on:click={closeModal} on:keypress={onKeyPress} aria-label="Close modal.">
+    </button>
   </Modals>
 
   <div class="horizontal">
-    {#if $locationHref != new URL("/",$locationHref).href}
+    {#if $locationHref !== new URL("/",$locationHref).href}
       {#if viewWidth >= 1000}
         <div class="nav-embed">
           <NavMenu />
@@ -56,12 +58,14 @@
       {/if}
     {/if}
     
-    <div class:float-right={$locationHref != new URL("/",$locationHref).href && viewWidth >= 1000}>
+    <div class:float-right={$locationHref !== new URL("/",$locationHref).href && viewWidth >= 1000}>
       <Route component="{NotFound}" />
       <Route path="ageroller" component={AgeRoller} />
       <Route path="eyeroller" component={EyeRoller} />
       <Route path="poolroller" component={PoolRoller} />
       <Route path="poweredroller" component={PoweredRoller} />
+      <Route path="characters" component={Characters} />
+      <Route path="characters/:id/*" component={Character} />
     </div>
   </div>
   <Route path="/" component={Home} />
@@ -88,7 +92,11 @@
     bottom: 0;
     right: 0;
     left: 0;
-    background: rgba(0,0,0,0.50)
+    background: rgba(0,0,0,0.50);
+    border: 0;
+    border-radius: 0;
+    margin: 0;
+    padding: 0;
   }
   
   #nav-button {
@@ -101,7 +109,7 @@
     height: 100px;
     background-color: transparent;
     margin: 5px;
-    padding: 0px;
+    padding: 0;
     transform-origin: 10% 70%;
     transform: translate(6px,8px) scaleX(-1) rotate(-38deg);
     animation-name: peek;

@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { account, characterSummaries } from "../../lib/stores";
+    import { account, characterSummaries } from "../../lib/stores.svelte";
     import { navigate, link } from "svelte-routing";
     
     let charList = $characterSummaries; // read value with automatic subscription
@@ -23,7 +23,7 @@
             To store a character on our server, to be accessed from anywhere, you'll need to create an account and save the character to your account.
         </p>
         <br>
-        <a class="button" href="/character/local" use:link>
+        <a class="button" href="/characters/local" use:link>
             Try the Character Forge
         </a>
     </div>
@@ -31,7 +31,7 @@
 
 <div class="page">
     <h1>Characters:</h1>
-    {#if Object.keys(charList).length == 0}
+    {#if Object.keys(charList).length === 0}
         No characters exist yet.
     {:else}
         <div class="char-list">

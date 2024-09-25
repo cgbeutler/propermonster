@@ -1,8 +1,8 @@
 ﻿import {type Feat, FeatType, PassiveTypes} from "./CompendiumTypes";
 import {ItemTag} from "./Tags";
-import {InputTypes} from "./UserInputTypes";
+import {CharacterTypes, InputTypes} from "./UserInputs";
 
-export const itemLookup: {[key: string]: Feat} = {
+export const Gear: {[key: string]: Feat} = {
   // ____ Armors ____
 
   CombatArmor: {
@@ -59,10 +59,11 @@ export const itemLookup: {[key: string]: Feat} = {
     tags: [ItemTag.small,ItemTag.magic,ItemTag.recharge],
     
     inputs: [{
-      key: "charges", inputType: InputTypes.Checks,
-      label: "Charge", max: 1,
+      label: `Charge`, key: `2a92b145-2f1a-4d8c-9508-bef66cf3e98c`, // Shown in summary
+      inputType: InputTypes.Checks,
+      max: 1,
     }],
-    showInputs: ["charges"],
+    showInputsInSummary: [`2a92b145-2f1a-4d8c-9508-bef66cf3e98c`], // Charges
 
     modArmor: [{
       name: `Protective Amulet`,
@@ -74,17 +75,18 @@ export const itemLookup: {[key: string]: Feat} = {
   },
   LuckyCharm: {
     // rarity: 1,
-    id: "112d8342-17b3-439d-81fa-0764f2523ee8",
-    name: "Lucky Charm",
+    id: `112d8342-17b3-439d-81fa-0764f2523ee8`,
+    name: `Lucky Charm`,
     description: `Use instead of **Luck** only once.`,
     featType: FeatType.Artifact,
     tags: [ItemTag.small,ItemTag.magic],
     
     inputs: [{
-      key: "uses", inputType: InputTypes.Checks,
-      label: "Uses", max: 1,
+      label: `Uses`, key: `35ebd48c-7590-4002-bc2a-5c787361339c`, // Shown in summary
+      inputType: InputTypes.Checks,
+      max: 1,
     }],
-    showInputs: ["uses"],
+    showInputsInSummary: [`35ebd48c-7590-4002-bc2a-5c787361339c`], // Uses
 
     passives: [{
       type: PassiveTypes.Luck,
@@ -162,11 +164,12 @@ export const itemLookup: {[key: string]: Feat} = {
     tags: [ItemTag.magic],
     description: `Somehow this plush came to life. Its kinda like a regular dog/cat/pet... kinda?`,
     inputs: [{
-      label: `Plush Pal`,
+      label: `Plush Pal`, key: `216be051-7f3d-4d25-bb3d-6f4eb7c18af7`,
       subLabel: `Somehow this plush came to life. Its kinda like a regular dog/cat/pet... kinda?`,
-      inputType: InputTypes.Bystander,
+      inputType: InputTypes.Character,
+      startingType: CharacterTypes.Ally,
       inputs: [{
-        label: `Pet Type`,
+        label: `Pet Type`, key: `98049efb-8cf2-41f3-a459-036bca0a8465`,
         inputType: InputTypes.TextChoice,
         choose: 1,
         allowCustom: true,
@@ -867,7 +870,7 @@ Possible replies:
       }
     ]
   },
-  Pickup: {
+  PickupTruck: {
     name: `Pickup Truck`,
     id: `7d95f78f-e53d-4bd2-a108-5f809c7a49d4`,
     featType: FeatType.Vehicle,
@@ -1178,9 +1181,6 @@ Possible replies:
     tags: [ItemTag.close, ItemTag.loud, ItemTag.reload, ItemTag.small],
     attacks: [{ harm: 2 }],
   },
-
-  // Hunting rifle (2-harm far loud) -x5
-  // Hunting rifle (3-harm far loud reload) -Mundane
   HuntingRifle: {
     // rarity: 5,
     name: `Hunting Rifle`,
@@ -1423,15 +1423,6 @@ Possible replies:
     tags: [ItemTag.close, ItemTag.reload, ItemTag.area],
     attacks: [{ harm: 2 }],
   },
-  SubmachineGunHC: { // Professional
-    // rarity: 1,
-    name: `High Caliber Submachine Gun`,
-    id: `56d9c9ff-85f8-4eb8-ac6d-3639f273facc`,
-    description: `A higher caliber or higher-tech SMG.`, // Like an .45 Uzi or an MP-7.
-    featType: FeatType.Weapon,
-    tags: [ItemTag.close, ItemTag.reload, ItemTag.area, ItemTag.loud],
-    attacks: [{ harm: 3 }],
-  },
   Switchblade: {
     // rarity: 2,
     name: `Switchblade`,
@@ -1502,7 +1493,17 @@ Possible replies:
     attacks: [{ harm: 3 }],
   },
   // The Professional
-  ProfessionalAR: {
+  ProfessionalSmg: { // Professional
+    // rarity: 1,
+    name: `Submachine Gun`,
+    id: `56d9c9ff-85f8-4eb8-ac6d-3639f273facc`,
+    playbooks: [`58924c0d-c015-4fcd-8fd9-ca75f12fd019`], // The Professional
+    description: `A high caliber or high-tech SMG.`, // Like an .45 Uzi or an MP-7.
+    featType: FeatType.Weapon,
+    tags: [ItemTag.close, ItemTag.reload, ItemTag.area, ItemTag.loud],
+    attacks: [{ harm: 3 }],
+  },
+  ProfessionalAr: {
     name: `Assault Rifle`,
     id: `4108e5de-2d3c-4649-b1c0-6e7b96d0edaf`,
     featType: FeatType.Weapon,
@@ -1658,3 +1659,5 @@ Examples:
     attacks: [{ harm: 3 }],
   },
 } as const;
+
+export let GearLookup = Object.fromEntries(Object.values(Gear).map(f => [f.id, f]));

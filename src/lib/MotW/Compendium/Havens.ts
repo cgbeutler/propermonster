@@ -1,8 +1,8 @@
-﻿import {Abilities, type Feat, FeatType, PassiveTypes} from "./CompendiumTypes";
+﻿import {Stats, type Feat, FeatType, PassiveTypes} from "./CompendiumTypes";
 
-
-export const havenLookup: Array<Feat> = [
-  {
+// TODO: This needs to be converted to the obj style
+export const havens: {[key: string]: Feat} = {
+  LoreLibrary: {
     name: `Lore Library`,
     id: `090a7975-c38b-4650-a859-4d9c2ed4151b`,
     featType: FeatType.Haven,
@@ -20,7 +20,7 @@ export const havenLookup: Array<Feat> = [
       description: `Study the books here to take +1 \`forward\` to \`investigate the mystery\` (as long as historical or reference works are appropriate).`,
     }]
   },
-  {
+  MysticalLibrary: {
     name: `Mystical Library`,
     id: `38639a3f-c64d-459f-920e-a2ccb8ebe8e3`,
     featType: FeatType.Haven,
@@ -50,7 +50,7 @@ take +1 \`forward\` for \`use magic\` (or another **basic weird move**.)`,
       description: `If you use your library’s occult tomes and grimoires, preparing with your tomes and grimoires, take +1 \`forward\` for \`use magic\`.`,
     }]
   },
-  {
+  ProtectionSpells: {
     name: `Protection Spells`,
     id: `8f343004-d7fb-4369-a419-3b87bf584b3a`,
     featType: FeatType.Haven,
@@ -64,7 +64,7 @@ take +1 \`forward\` for \`use magic\` (or another **basic weird move**.)`,
     }]
 
   },
-  {
+  Armory: {
     name: `Armory`,
     id: `637b8472-b759-4c0b-bff2-f593384e11ec`,
     featType: FeatType.Haven,
@@ -77,7 +77,7 @@ take +1 \`forward\` for \`use magic\` (or another **basic weird move**.)`,
       description: `Search your armory's stockpile of weapons and items for what you need.`,
       longDescription: `You have a stockpile of mystical and rare monster-killing weapons and items.
 If you need a special weapon, you can search for it in your armory as a \`+Weird\` move.`,
-      ability: Abilities.Weird,
+      ability: Stats.Weird,
       miss: `You've got the wrong thing`,
       mixedSuccess: `You have it, but only the minimum amount (if that matters.)`,
       solidSuccess: `You have it (and plenty of it, if that matters.)`
@@ -88,7 +88,7 @@ If you need a special weapon, you can search for it in your armory as a \`+Weird
       description: `You have a stockpile of mystical and rare monster-killing weapons and items (see the "Search Armory" move.)`,
     }]
   },
-  {
+  Infirmary: {
     name: `Infirmary`,
     id: `e1f6077a-9861-460f-8bd9-a4edb3ef25e0`,
     featType: FeatType.Haven,
@@ -110,7 +110,7 @@ The Keeper will tell you how long any patient’s recovery is likely to take, an
       },
     ]
   },
-  {
+  Workshop: {
     name: `Workshop`,
     id: `b2ba4eab-6479-450c-b9be-50923ddf6f20`,
     featType: FeatType.Haven,
@@ -125,7 +125,7 @@ Work out with the Keeper how long any repair or construction will take, and if y
 Work out with the Keeper how long any repair or construction will take, and if you need extra supplies or help.`,
     }]
   },
-  {
+  Oubliette: {
     name: `Oubliette`,
     id: `7848b9d8-285d-489d-aa61-dc14b208fc2e`,
     featType: FeatType.Haven,
@@ -147,7 +147,7 @@ Anything you stash in there can't be found, can't do any magic, and can't get ou
       }
     ]
   },
-  {
+  PanicRoom: {
     name: `Panic Room`,
     id: `c2652b3e-a420-47d1-ba61-77699eb8f7b0`,
     featType: FeatType.Haven,
@@ -168,7 +168,7 @@ You can hide out there for a few days, safe from pretty much anything.`,
       },
     ]
   },
-  {
+  MagicalLaboratory: {
     name: `Magical Laboratory`,
     id: `131725f9-d136-4bf6-b5ff-bdfa297b71d3`,
     featType: FeatType.Haven,
@@ -187,7 +187,7 @@ You can hide out there for a few days, safe from pretty much anything.`,
 \`use magic\`, \`big magic\`, and any other magical moves.`,
     }]
   },
-  {
+  FilmLab: {
     name: `Film Lab and Editing Suite`,
     id: `3639d3ad-8ee4-46d0-8542-e1ae1e155980`,
     featType: FeatType.Haven,
@@ -199,4 +199,6 @@ You can hide out there for a few days, safe from pretty much anything.`,
       description: `You can develop film yourself here and manipulate it, such as zooming in, adding contrast, etc.`,
     }]
   },
-] as const;
+} as const;
+
+export let havensLookup = Object.fromEntries(Object.values(havens).map(f => [f.id, f]));

@@ -1,7 +1,7 @@
-import {InputTypes, type UserInput} from "./UserInputTypes";
 import {ItemTag} from "./Tags";
+import type {TagChoice, UserInput} from "./UserInputs";
 
-export enum Abilities { Charm = "Charm", Cool = "Cool", Sharp = "Sharp", Tough = "Tough", Weird = "Weird" }
+export enum Stats { Charm = "Charm", Cool = "Cool", Sharp = "Sharp", Tough = "Tough", Weird = "Weird" }
 export enum FeatType {
   SubFeat,
   Background, Gear, Move,
@@ -48,7 +48,7 @@ export interface Action extends ResultDescription, ActionEffect {
   description: string;
   longDescription?: string;
   
-  ability: Abilities;
+  ability: Stats;
 
   startOfMystery?: boolean;
   uses?: number;
@@ -70,10 +70,10 @@ export interface AutoAction extends ActionEffect {
   showInputs?: Array<string>;
 }
 
-export interface AbilityUp {
-  ability: Abilities;
-  bonus: number;
-  max: number;
+export interface StatChange {
+  ability: Stats;
+  offset: number;
+  max?: number;
 }
 
 export interface Bonus {
@@ -100,14 +100,6 @@ export interface Passive {
   type: PassiveTypes;
   description: string;
   showInputs?: Array<string>;
-}
-
-
-export interface TagChoice {
-  label: string;
-  choose?: number, // Default 1. For some, if negative, they must choose at least that many or more.
-  chooseMax?: number, // If set to 0, there is no max. Defaults: same as ^choose above.
-  options: Readonly<Array<ItemTag>>; // Can be used for bad options if bad options is not needed.
 }
 
 export interface Attack {
@@ -150,17 +142,23 @@ export interface ArmorModifier {
   applyToItem?: Array<string>;
 }
 
+export enum ChooseModType {
+  add, remove, replace
+}
 export interface ChooseModifier {
-  inputKey: string; // A GUID equal to the key for the input with a 'choose' value to modify.  
-  offset?: number;
-  max?: number;
+  inputKey: string; // A GUID equal to the key for the input with a 'choose' value to modify.
+  chooseModType: ChooseModType;
+  choose?: number, // Default 1. They must choose at least that many to add/remove/replace.
+  chooseMax?: number, // If set to 0, there is no max. Defaults: equal to ^choose above.
+  totalChosenMax?: number; // If provided when adding new values, this is the overall max, additions included (needed to prevent a few feats from overlapping.) 
+  allowCustom?: boolean;
 }
 
 export interface ActionModifier {
   applyToMoves: Array<string>; // '*' means all moves. '*harm' means all harm moves. '*armor' all armor moves. '*rote' for all rotes.
 
   // If alternateAbility is present, the rest of the modifications will only apply when using the alt ability. 
-  alternateAbility?: Abilities;
+  alternateAbility?: Stats;
   alternateAbilityCondition?: string; // Shown next to the alternate ability as an info note.
 
   footnote?: string;
@@ -178,6 +176,14 @@ export interface ActionModifier {
   resultInputs?: Array<string>;
 }
 
+export interface Vibe {
+  action?: number;
+  mystery?: number;
+  fantasy?: number;
+  storySway?: number;
+  support?: number;
+}
+
 export interface Feat {
   id: string;
   name: string;
@@ -186,31 +192,36 @@ export interface Feat {
   prerequisiteFeats?: Array<string>;
   prerequisiteMoves?: Array<string>;
   
+  vibe?: Vibe;
   description?: string;
   longDescription?: string;
-  showInputs?: Array<string>; // Displays the short name string next to the short description.
 
   tags?: Array<ItemTag>;
   tagInputs?: Array<TagChoice>;
 
-  abilityImprovement?: AbilityUp;
+  offsetStat?: StatChange;
   offsetMaxHealth?: number;
   offsetMaxLuck?: number;
   addRotes?: number;
+  addMoves?: number;
+  addAnyMoves?: number;
+  addHavens?: number;
   
   passives?: Array<Passive>;
   
   actions?: Array<Action>;
   autoActions?: Array<AutoAction>;
+  modMoves?: Array<ActionModifier>;
   
   attacks?: Array<Attack>;
-  armors?: Array<Armor>;
-  inputs?: Array<UserInput>;
-
   modAttack?: Array<AttackModifier>;
+  armors?: Array<Armor>;
   modArmor?: Array<ArmorModifier>;
+  
+  inputs?: Array<UserInput>;
+  showInputs?: Array<string>; // Borrows an input to show in the expanded view
+  showInputsInSummary?: Array<string>; // Displays the short name string next to the short description.
   modChooseInput?: Array<ChooseModifier>;
-  modMoves?: Array<ActionModifier>;
   
   subFeats?: Array<Feat>;
   subFeatsById?: Array<string>;

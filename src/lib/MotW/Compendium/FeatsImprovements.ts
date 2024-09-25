@@ -1,66 +1,66 @@
-﻿import {Abilities, type Feat, FeatType, PassiveTypes} from "./CompendiumTypes";
-import {InputTypes} from "./UserInputTypes";
+﻿import {Stats, ChooseModType, type Feat, FeatType, PassiveTypes} from "./CompendiumTypes";
+import {CharacterTypes, InputTypes} from "./UserInputs";
 
-export let ImprovementFeats: {[key: string]: Feat} = {
+export let Improvements: {[key: string]: Feat} = {
   CharmMax2: {
     name: `Get +1 Charm (max +2)`,
     id: `52482560-6000-41df-a86d-013d0b9fd8fc`, // +1 Charm max 2
     featType: FeatType.Improvement,
-    abilityImprovement: {ability: Abilities.Charm, bonus: 1, max: 2},
+    offsetStat: {ability: Stats.Charm, offset: 1, max: 2},
   },
   CharmMax3: {
     name: `Get +1 Charm (max +3)`,
     id: `24877faf-3b06-4430-853e-40b3f25383c0`, // +1 Charm max 3
     featType: FeatType.Improvement,
-    abilityImprovement: {ability: Abilities.Charm, bonus: 1, max: 3},
+    offsetStat: {ability: Stats.Charm, offset: 1, max: 3},
   },
   CoolMax2: {
     name: `Get +1 Cool (max +2)`,
     id: `b2ddb91e-1e9a-4235-8637-abf3d63cbf7a`, // +1 Cool max 2
     featType: FeatType.Improvement,
-    abilityImprovement: {ability: Abilities.Cool, bonus: 1, max: 2},
+    offsetStat: {ability: Stats.Cool, offset: 1, max: 2},
   },
   CoolMax3: {
     name: `Get +1 Cool (max +3)`,
     id: `89515c72-76fa-4a08-9f19-1fb9c0e503ba`, // +1 Cool max 3
     featType: FeatType.Improvement,
-    abilityImprovement: {ability: Abilities.Cool, bonus: 1, max: 3},
+    offsetStat: {ability: Stats.Cool, offset: 1, max: 3},
   },
   SharpMax2: {
     name: `Get +1 Sharp (max +2)`,
     id: `fc105e78-bc4c-421d-a4c6-1433f74ef005`, // +1 Sharp max 2
     featType: FeatType.Improvement,
-    abilityImprovement: {ability: Abilities.Sharp, bonus: 1, max: 2},
+    offsetStat: {ability: Stats.Sharp, offset: 1, max: 2},
   },
   SharpMax3: {
     name: `Get +1 Sharp (max +3)`,
     id: `37308a67-a11c-48eb-b31f-cf5d603709ee`, // +1 Sharp max 3
     featType: FeatType.Improvement,
-    abilityImprovement: {ability: Abilities.Sharp, bonus: 1, max: 3},
+    offsetStat: {ability: Stats.Sharp, offset: 1, max: 3},
   },
   ToughMax2: {
     name: `Get +1 Tough (max +2)`,
     id: `9b9ac374-fc18-48da-98e9-f7a2507d646a`, // +1 Tough max 2
     featType: FeatType.Improvement,
-    abilityImprovement: {ability: Abilities.Tough, bonus: 1, max: 2},
+    offsetStat: {ability: Stats.Tough, offset: 1, max: 2},
   },
   ToughMax3: {
     name: `Get +1 Tough (max +3)`,
     id: `db5547d1-f8cf-4596-9891-a8b3954247ce`, // +1 Tough max 3
     featType: FeatType.Improvement,
-    abilityImprovement: {ability: Abilities.Tough, bonus: 1, max: 3},
+    offsetStat: {ability: Stats.Tough, offset: 1, max: 3},
   },
   WeirdMax2: {
     name: `Get +1 Weird (max +2)`,
     id: `e3076999-7980-436b-b192-d5f4ac18b05a`, // +1 Weird max 2
     featType: FeatType.Improvement,
-    abilityImprovement: {ability: Abilities.Weird, bonus: 1, max: 2},
+    offsetStat: {ability: Stats.Weird, offset: 1, max: 2},
   },
   WeirdMax3: {
     name: `Get +1 Weird (max +3)`,
     id: `ea2d3eb3-96c7-44ad-95b0-70d1524d8055`, // +1 Weird max 3
     featType: FeatType.Improvement,
-    abilityImprovement: {ability: Abilities.Weird, bonus: 1, max: 3},
+    offsetStat: {ability: Stats.Weird, offset: 1, max: 3},
   },
 
 
@@ -85,26 +85,14 @@ export let ImprovementFeats: {[key: string]: Feat} = {
     name: `Take another move.`,
     id: `8b14b13e-c08b-4875-ab7b-637d6bcaa465`, // Take another move 1
     featType: FeatType.Improvement,
-    inputs: [{
-      label: `Playbook Move`,
-      inputType: InputTypes.FeatChoiceByType,
-      choose: 1,
-      featType: FeatType.Move,
-      playbookOnly: true,
-    }],
+    addMoves: 1,
   },
   Move2: {
     name: `Take another move.`,
     id: `201b4763-4aef-4cd4-b701-dccf59ae32b4`, // Take another move 2
     featType: FeatType.Improvement,
     prerequisiteFeats: [`8b14b13e-c08b-4875-ab7b-637d6bcaa465`], // Take another move 1
-    inputs: [{
-      label: `Playbook Move`,
-      inputType: InputTypes.FeatChoiceByType,
-      choose: 1,
-      featType: FeatType.Move,
-      playbookOnly: true,
-    }],
+    addMoves: 1,
   },
 
 
@@ -112,24 +100,14 @@ export let ImprovementFeats: {[key: string]: Feat} = {
     name: `Take a move from another playbook.`,
     id: `a41a0217-c16c-478b-b96d-2ac780f55546`, // Take a move from another playbook 1
     featType: FeatType.Improvement,
-    inputs: [{
-      label: `Move`,
-      inputType: InputTypes.FeatChoiceByType,
-      choose: 1,
-      featType: FeatType.Move,
-    }],
+    addAnyMoves: 1,
   },
   AnyMove2: {
     name: `Take a move from another playbook.`,
     id: `3fb2564b-aaee-4dc4-b59a-d21dd8cc35da`, // Take a move from another playbook 2
     featType: FeatType.Improvement,
     prerequisiteFeats: [`a41a0217-c16c-478b-b96d-2ac780f55546`], // Take a move from another playbook 1
-    inputs: [{
-      label: `Move`,
-      inputType: InputTypes.FeatChoiceByType,
-      choose: 1,
-      featType: FeatType.Move,
-    }],
+    addAnyMoves: 1,
   },
 
 
@@ -138,24 +116,14 @@ export let ImprovementFeats: {[key: string]: Feat} = {
     id: `8f3f9023-c1d9-4176-8507-a11b6ff8ffd5`, // Gain a haven with 2 options
     featType: FeatType.Improvement,
     description: `Gain a \`haven\` with two options.`,
-    inputs: [{
-      label: `Haven Picks`,
-      inputType: InputTypes.FeatChoiceByType,
-      choose: 2,
-      featType: FeatType.Haven,
-    }],
+    addHavens: 2,
   },
   HavenPick: {
     name: `Haven Addition`,
     id: `9cd3c9b2-9579-41be-a2ac-9aa56b41970d`, // Haven Addition 1
     featType: FeatType.Improvement,
     description: `Choose an add-on for your \`haven\``,
-    inputs: [{
-      label: `Haven Pick`,
-      inputType: InputTypes.FeatChoiceByType,
-      choose: 1,
-      featType: FeatType.Haven,
-    }],
+    addHavens: 1,
   },
   HavenPick2: {
     name: `Haven Addition`,
@@ -163,12 +131,7 @@ export let ImprovementFeats: {[key: string]: Feat} = {
     featType: FeatType.Improvement,
     prerequisiteFeats: [`9cd3c9b2-9579-41be-a2ac-9aa56b41970d`], // Haven Addition 1
     description: `Choose an add-on for your \`haven\``,
-    inputs: [{
-      label: `Haven Pick`,
-      inputType: InputTypes.FeatChoiceByType,
-      choose: 1,
-      featType: FeatType.Haven,
-    }],
+    addHavens: 1,
   },
 
 
@@ -177,8 +140,9 @@ export let ImprovementFeats: {[key: string]: Feat} = {
     id: `27bb38b4-0acd-4fa2-afea-77adbb5a67d9`, // Gain an Ally
     featType: FeatType.Improvement,
     inputs: [{
-      label: `Ally`,
-      inputType: InputTypes.Ally,
+      label: `Ally`, key: `e421a315-aa9e-4868-a362-91bd1c140f71`,
+      inputType: InputTypes.Character,
+      startingType: CharacterTypes.Ally,
     }]
   },
 
@@ -190,8 +154,9 @@ export let ImprovementFeats: {[key: string]: Feat} = {
     featType: FeatType.Improvement,
 
     inputs: [{
-      label: `Ally`,
-      inputType: InputTypes.Ally,
+      label: `Ally`, key: `4f9f2c0c-b3f7-4358-ac2c-3ea66b1f21db`,
+      inputType: InputTypes.Character,
+      startingType: CharacterTypes.Ally,
     }]
   },
   StashOfMoney: {
@@ -214,9 +179,10 @@ export let ImprovementFeats: {[key: string]: Feat} = {
 
     description: `Gain a lesser divine being as an \`ally\`, send from above to help with your mission.`,
     inputs: [{
-      label: `Ally`,
+      label: `Ally`, key: `662113dc-9468-4abb-b896-110e11f5f49b`,
       subLabel: `A lesser divine being \`ally\`, send from above to help with your mission.`,
-      inputType: InputTypes.Ally,
+      inputType: InputTypes.Character,
+      startingType: CharacterTypes.Ally,
     }]
   },
   GumshoeHaven: {
@@ -227,12 +193,7 @@ export let ImprovementFeats: {[key: string]: Feat} = {
 
     description: `This may be the office where you meed clients, or some other location.`,
 
-    inputs: [{
-      label: `Haven Pick`,
-      inputType: InputTypes.FeatChoiceByType,
-      choose: 1,
-      featType: FeatType.Haven,
-    }],
+    addHavens: 1,
   },
   DelayTheInevitable: {
     name: `Delay the Inevitable`,
@@ -254,7 +215,8 @@ export let ImprovementFeats: {[key: string]: Feat} = {
 
     modChooseInput: [{
       inputKey: `59efa6f6-a69f-4626-b16d-98c2027c2cc0`, // The Naked City
-      offset: 4
+      chooseModType: ChooseModType.add,
+      choose: 4,
     }]
   },
   Rote: {
@@ -298,28 +260,22 @@ export let ImprovementFeats: {[key: string]: Feat} = {
     description: `Take another hex move or **rote**.`,
 
     inputs: [{
-      label: `Addition`,
+      label: `Take`, key: `327813b7-10be-4e30-b2b9-91d4327f49e6`,
       inputType: InputTypes.FeatChoice,
       choose: 1,
       options: [
         {
-          name: `Another Move`,
-          id: `83614600-0df6-49f2-a2bf-6931e44e7405`, // Take another move
-          description: `Take another Hex move.`,
-          inputs: [{
-            label: `Move`,
-            inputType: InputTypes.FeatChoiceByType,
-            choose: 1,
-            featType: FeatType.Move,
-            playbookOnly: true, // The Hex
-          }],
+          name: `Take another move.`,
+          id: `8b14b13e-c08b-4875-ab7b-637d6bcaa465`, // Take another move 1
+          featType: FeatType.Improvement,
+          addMoves: 1,
         },
         {
           name: `Another Rote`,
-          id: `13431c9a-d119-47fc-bed7-35e4899d1e17`, // Take another rote
+          id: `0d6731ba-a558-4e32-94f6-24305e7af85d`, // Take another rote
           description: `Take another **rote**.`,
           addRotes: 1,
-        }
+        },
       ]
     }],
   },
@@ -333,28 +289,23 @@ export let ImprovementFeats: {[key: string]: Feat} = {
     description: `Take another hex move or **rote**.`,
 
     inputs: [{
-      label: `Take`,
+      label: `Take`, key: `fb7261b9-929a-46aa-9c5e-4b629fe62141`,
       inputType: InputTypes.FeatChoice,
       choose: 1,
       options: [
         {
-          name: `Another Move`,
-          id: `f640afd3-c04c-4b75-9102-b8cd42549041`, // Take another move
-          description: `Take another Hex move.`,
-          inputs: [{
-            label: `Move`,
-            inputType: InputTypes.FeatChoiceByType,
-            choose: 1,
-            featType: FeatType.Move,
-            playbookOnly: true,
-          }],
+          name: `Take another move.`,
+          id: `201b4763-4aef-4cd4-b701-dccf59ae32b4`, // Take another move 2
+          featType: FeatType.Improvement,
+          prerequisiteFeats: [`8b14b13e-c08b-4875-ab7b-637d6bcaa465`], // Take another move 1
+          addMoves: 1,
         },
         {
           name: `Another Rote`,
-          id: `0d6731ba-a558-4e32-94f6-24305e7af85d`, // Take another rote
+          id: `13431c9a-d119-47fc-bed7-35e4899d1e17`, // Take another rote
           description: `Take another **rote**.`,
           addRotes: 1,
-        }
+        },
       ]
     }],
   },
@@ -380,9 +331,10 @@ export let ImprovementFeats: {[key: string]: Feat} = {
     description: `Get a **Sect** team under your command.`,
 
     inputs: [{
-      label: `The Team`,
+      label: `The Team`, key: `febeafa4-5016-4071-9935-1841ba4fc55e`,
       subLabel: `This **Sect** team is under your command.`,
-      inputType: InputTypes.Ally,
+      inputType: InputTypes.Character,
+      startingType: CharacterTypes.Ally,
       crewMin: 2,
       crewMax: 5,
     }],
@@ -397,7 +349,8 @@ export let ImprovementFeats: {[key: string]: Feat} = {
 
     modChooseInput: [{
       inputKey: `7bcaaa50-1353-449c-a9eb-3d8088f73ac6`, // Natural Attacks
-      offset: 1
+      chooseModType: ChooseModType.add,
+      choose: 1,
     }]
   },
   AgencyShift: {
@@ -409,7 +362,7 @@ export let ImprovementFeats: {[key: string]: Feat} = {
     description: `Add a new **Resource** tag for your **Agency** _or_ change a **Red Tape** tag.`,
 
     inputs: [{
-      label: `Shift Type`,
+      label: `Shift Type`, key: `588104cd-30fe-4820-be52-02d463e6dff0`,
       inputType: InputTypes.FeatChoice,
       choose: 1,
       options: [
@@ -420,7 +373,8 @@ export let ImprovementFeats: {[key: string]: Feat} = {
 
           modChooseInput: [{
             inputKey: `cda1ce37-f4f2-48e7-8fdd-e104f27bf38d`, // Agency Resources
-            offset: 1
+            chooseModType: ChooseModType.add,
+            choose: 1,
           }]
         },
         {
@@ -430,7 +384,8 @@ export let ImprovementFeats: {[key: string]: Feat} = {
 
           modChooseInput: [{
             inputKey: `4833c3b1-8fed-461f-85f1-36a915190cd6`, // Agency Red Tape
-            offset: 0, // TODO: Is this a good way to do re-picks?
+            chooseModType: ChooseModType.replace,
+            choose: 1,
           }]
         }
       ]
@@ -445,9 +400,10 @@ export let ImprovementFeats: {[key: string]: Feat} = {
     description: `Get command of an **Agency** team of monster hunters.`,
 
     inputs: [{
-      label: `The Team`,
+      label: `The Team`, key: `805a14d5-b78f-4e84-ab3d-4dc6a087332d`,
       subLabel: `Get command of an **Agency** team of monster hunters.`,
-      inputType: InputTypes.Ally,
+      inputType: InputTypes.Character,
+      startingType: CharacterTypes.Ally,
       crewMin: 2,
       crewMax: 5,
     }],
@@ -462,7 +418,8 @@ export let ImprovementFeats: {[key: string]: Feat} = {
 
     modChooseInput: [{
       inputKey: `5a23e324-2336-46cf-be84-f44a8771497d`, // First Encounter pick
-      offset: 1
+      chooseModType: ChooseModType.add,
+      choose: 1,
     }]
   },
   TraumaBonding: {
@@ -483,18 +440,13 @@ export let ImprovementFeats: {[key: string]: Feat} = {
 
     description: `Get a \`haven\` with one option, a film lab, and an editing suite.`,
 
-    inputs: [{
-      label: `Haven Pick`,
-      inputType: InputTypes.FeatChoiceByType,
-      choose: 1,
-      featType: FeatType.Haven,
-    }],
+    addHavens: 1,
     subFeatsById: [
       `3639d3ad-8ee4-46d0-8542-e1ae1e155980`, // Film lab and Editing suite
     ],
   },
-  CombatMagic: {
-    name: `Combat Magic`,
+  ImprovedCombatMagic: {
+    name: `Improved Combat Magic`,
     id: `d400a36e-7458-47ef-9f78-c67efd3dcb61`, // Combat Magic
     playbooks: [`3f493473-f122-4255-8b19-3635908b2664`], // The Spell-Slinger
     featType: FeatType.Improvement,
@@ -503,7 +455,8 @@ export let ImprovementFeats: {[key: string]: Feat} = {
 
     modChooseInput: [{
       inputKey: `2fc056ef-1794-4493-aecb-4fd855c4337f`, // Combat Magic pick
-      offset: 1
+      chooseModType: ChooseModType.add,
+      choose: 1,
     }]
   },
   TheShow: {
@@ -516,7 +469,8 @@ export let ImprovementFeats: {[key: string]: Feat} = {
 
     modChooseInput: [{
       inputKey: `e5a4dda6-6093-4725-867b-c35fc51559e3`, // The Show Specialty pick
-      offset: 1
+      chooseModType: ChooseModType.add,
+      choose: 1,
     }]
   },
   DarkTides: {
@@ -529,7 +483,9 @@ export let ImprovementFeats: {[key: string]: Feat} = {
 
     modChooseInput: [{
       inputKey: `9c21ebec-8035-43a4-8157-5f0c1f6f0e6c`, // Dark Side tags
-      offset: 0, // TODO: Is this a good way to do re-picks?
+      chooseModType: ChooseModType.replace,
+      choose: 1,
+      chooseMax: 3,
     }]
   },
   SpookyLibrary: {
@@ -544,4 +500,6 @@ export let ImprovementFeats: {[key: string]: Feat} = {
       `38639a3f-c64d-459f-920e-a2ccb8ebe8e3`, // Mystical Library
     ],
   },
-}
+} as const;
+
+export let ImprovementsLookup = Object.fromEntries(Object.values(Improvements).map(f => [f.id, f]));

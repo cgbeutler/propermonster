@@ -74,7 +74,9 @@
   </div>
 </Link>
 
-<span class="ext-nav"> Created by<a href="http://corybeutler.com">Cory Beutler</a> </span>
+<Link to="/character/local">Char Sheet Experiment</Link>
+
+<span class="ext-nav"> Created by<a href="https://corybeutler.com">Cory Beutler</a> </span>
 
 
 <style>
@@ -97,8 +99,8 @@
 .title-image {
   display: block;
   position: absolute;
-  left: 0px;
-  top: 0px;
+  left: 0;
+  top: 0;
   height: 100%;
   object-fit: contain;
   margin: 0;
@@ -109,7 +111,7 @@
   position: absolute;
   height: 90%;
   width: 52%;
-  right: 0px;
+  right: 0;
   padding: 0 5% 10% 0;
   align-items: center;
   container-type: inline-size;
@@ -119,7 +121,7 @@
   width: 100%;
   text-align: left;
   color: #FDF6E3;
-  text-shadow: 1px -1px black, 0px -1px black, -1px -1px black, 0px 3px black, 2px 3px black, -1px 2px black;
+  text-shadow: 1px -1px black, 0 -1px black, -1px -1px black, 0 3px black, 2px 3px black, -1px 2px black;
   padding: 0;
   margin: 0;
   font-family: 'Times New Roman', Times, serif;
@@ -147,7 +149,7 @@
   position: absolute;
   right: 0;
   color: whitesmoke;
-  padding: 0pt 10px;
+  padding: 0 10px;
   text-align: right;
 }
 
